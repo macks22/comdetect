@@ -17,23 +17,23 @@
 /********************************************************************/
 
 typedef struct{
-  
-  char infile[200];
-  int num_clusters;
-  char ofile[200];
-  
-}ctrlType;
+
+    char infile[200];
+    int num_clusters;
+    char ofile[200];
+
+} ctrlType;
 
 typedef struct{
-  
+
     int num_nodes;
     int num_edges;
 
-    int *id;    // size = n
-    int *index; // size = n + 1
-    int *edges; // size = |e|
-    
-}sparseComDetectDB;
+    int *id;    // size = |V|
+    int *index; // size = |V| + 1
+    int *edges; // size = |E|
+
+} sparseComDetectDB;
 
 /********************************************************************/
 /*                       FUNCTION PROTOTYPES                        */
@@ -48,5 +48,6 @@ void readSparseMatrixFile (ctrlType *ctrl, sparseComDetectDB *sparse_cddb, int s
 // function used primarily for debugging
 void printSparseMatrix(sparseComDetectDB *sparse_cddb, int storeIDAry);
 
-// added functionality to decrease computational lookup times by saving out the id array to a file and performing translation in post processing
+// added functionality to decrease computational lookup times by saving out the
+// id array to a file and performing translation in post processing
 void storeAndFreeIDAry(ctrlType *ctrl, sparseComDetectDB *sparse_cddb);
