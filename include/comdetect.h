@@ -10,7 +10,6 @@
 #include<sys/time.h>
 #include<stdio.h>
 #include<string.h>
-#include<sys/time.h>
 
 /********************************************************************/
 /*                            STRUCTS                               */
@@ -20,7 +19,7 @@ typedef struct{
 
     char infile[200];
     int num_clusters;
-    char ofile[200];
+    char outfile[200];
 
 } ctrlType;
 
@@ -33,21 +32,21 @@ typedef struct{
     int *index; // size = |V| + 1
     int *edges; // size = |E|
 
-} sparseComDetectDB;
+} crsMatrix;
 
 /********************************************************************/
 /*                       FUNCTION PROTOTYPES                        */
 /********************************************************************/
 
-// frees all 3 CSR arrays
-void freeSparseMatrix (sparseComDetectDB *cddb);
+// frees all 3 CRS arrays
+void freeCRSMatrix (crsMatrix *mat);
 
-// reads in the passed in input file and puts the data into CSR sparse matrix form
-void readSparseMatrixFile (ctrlType *ctrl, sparseComDetectDB *sparse_cddb, int storeIDAry);
+// reads in the passed in input file and puts the data into CRS crs matrix form
+void readCRSMatrix (ctrlType *ctrl, crsMatrix *crs_mat, int storeIDAry);
 
 // function used primarily for debugging
-void printSparseMatrix(sparseComDetectDB *sparse_cddb, int storeIDAry);
+void printCRSMatrix(crsMatrix *crs_mat, int storeIDAry);
 
 // added functionality to decrease computational lookup times by saving out the
 // id array to a file and performing translation in post processing
-void storeAndFreeIDAry(ctrlType *ctrl, sparseComDetectDB *sparse_cddb);
+void storeAndFreeIDAry(ctrlType *ctrl, crsMatrix *crs_mat);
