@@ -1,6 +1,20 @@
 #include "comdetect.h"
 
 
+// Allocate a new int_array struct
+intArray * newIntArray(int length) {
+    intArray *array;
+
+    // allocate space for the int_array (which already contains one int,
+    // plus additional space for the length-1 additional elements of the array
+    array = malloc(sizeof(intArray) + sizeof(int) * (length-1));
+    if (!array) {
+        return NULL;
+    }
+    array->length = length;
+    return array;
+}
+
 void freeCRSMatrix(crsMatrix *mat) {
     free(mat->id);
     free(mat->index);
@@ -58,6 +72,12 @@ void storeAndFreeIDAry(ctrlType *ctrl, crsMatrix *crs_mat) {
 
     free(crs_mat->id);
     printf("ID array stored in %s\n", store_file);
+}
+
+int degree(crsMatrix *graph, int node) {
+    assert(node >= 0);
+    assert(node <= graph->num_nodes);
+    return graph->index[node+1] - graph->index[node];
 }
 
 
