@@ -12,6 +12,7 @@
 #include <stdbool.h>
 
 #include "queue.h"
+#include "vector.h"
 #include "util.h"
 #include "edges.h"
 
@@ -85,18 +86,23 @@ int degree(SparseUGraph *graph, int node);
 // that were found, by using the distance and parent info.
 typedef struct {
 
-    bool *discovered;   // search has found (placed in queue)
-    bool *processed;    // fully explored (children in queue)
     int *parent;        // index represents node; value is index of parent
     int *distance;      // distance from node n to src
     int src;            // the root node of the search
+    Vector *pred;       // predecessors (all possible parents, not just left-most).
 
 } BFSInfo;
+
+// assume distance is initialized with all -1
+#define discovered(info, node) (info->distance[node] > 0)
 
 // Perform a BFS on the sparse undirected graph and return
 // the information discovered. The src node is passed with
 // the info struct.
 void bfs(SparseUGraph *graph, BFSInfo *info);
+
+// print out the path from the target node to the src node
+void printShortestPath(BFSInfo *info, int dest);
 
 // free BFSInfo struct
 void freeBFSInfo(BFSInfo *info);
