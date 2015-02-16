@@ -99,7 +99,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
     // to the input node IDs.
-    // storeAndFreeIDArray(graph);
+    // storeAndFreeNodeIds(graph);
     fclose(fpin);
 }
 
@@ -108,7 +108,7 @@ storeAndFreeNodeIds(SparseUGraph *graph)
 {
     int i;
     FILE *fpout;
-    char store_file[50] = "../output_and_stored_id_ary/storedIDAry.txt";
+    char store_file[50] = "../output/node_ids.txt";
 
     fpout = fopen(store_file, "w");
     for (i=0; i < graph->n; i++) {
