@@ -12,36 +12,12 @@
 #include <stdbool.h>
 
 #include "queue.h"
+#include "util.h"
+#include "edges.h"
 
 /********************************************************************/
 /*                       STRUCTS AND PROTOTYPES                     */
 /********************************************************************/
-
-///////////////////////////////////////
-// UTILITY FUNCTIONS
-
-// print error and exit
-void error(int err_code);
-
-// attempt to calloc memory, error out if failure
-void *tcalloc(size_t nitems, size_t size);
-
-// find the largest number in the array
-int findLargest(int *array, int length);
-
-// perform an in-place radix sort on the array; result is ascending order
-void radixSort(int *array, int length);
-
-// remove all duplicate values from the integer array
-// return the size of the new array
-void removeDuplicates(int *array, int *length);
-
-// print an array of integers
-void printArray(int *array, int length);
-
-
-///////////////////////////////////////
-// EDGE HANDLING
 
 // struct to hold user input arguments
 typedef struct {
@@ -51,43 +27,6 @@ typedef struct {
     char outfile[200];
 
 } InputArgs;
-
-// struct to hold edgelist when converting file to CRS graph
-typedef struct {
-
-    int *nodes[2];  // start and end nodes
-    int length; // number of edges
-
-} EdgeList;
-
-#define ICOL    0
-#define JCOL    1
-
-#define IEND (elist, idx) (elist->nodes[ICOL][idx])
-#define JEND (elist, idx) (elist->nodes[JCOL][idx])
-
-
-// allocate space for a new edge list of the given length
-void newEdgeList(EdgeList *elist, int length);
-
-// copy an entire edgelist into a new one
-void copyEdgeList(EdgeList *cur, EdgeList *new);
-
-// Free the memory allocated for the edgelist.
-void freeEdgeList(EdgeList *elist);
-
-// sort edges by i column or by j column
-void sortEdges(EdgeList *elist, int column);
-
-// find largest value in i or j column
-int findLargestEndpoint(EdgeList *elist, int column);
-
-// Return an array with all unique node ids sorted in ascending order.
-void mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes);
-
-// Print out the edge list (for debugging purposes), up to `num_edges` edges.
-void printEdgeList(EdgeList *elist, int num_edges);
-
 
 ///////////////////////////////////////
 // GRAPH FUNCTIONS
@@ -136,6 +75,9 @@ int hasEdge(SparseUGraph *graph, int a, int b);
 // return the degree of the node
 int degree(SparseUGraph *graph, int node);
 
+
+///////////////////////////////////////
+// BFS STUFF
 
 // Holds information discovered while performing a BFS.
 // This will be useful when finding centrality measures.
