@@ -3,7 +3,7 @@
 
 int main()
 {
-    EdgeList elist;
+    EdgeList elist, new_elist;
     int i = 0, j = 0, size = 10;
     int nums[size];
     int *node_idmap;
@@ -38,6 +38,7 @@ int main()
     }
     printEdgeList(&elist, size);
 
+    // test largest endpoint finding for both i and j columns
     i = findLargestEndpoint(&elist, ICOL);
     printf("largest value in i column: %d\n", i);
     j = findLargestEndpoint(&elist, JCOL);
@@ -53,11 +54,17 @@ int main()
     printf("edges sorted by i column:\n");
     printEdgeList(&elist, size);
 
+    // test copy edgelist
+    copyEdgeList(&elist, &new_elist);
+    printf("copy of edge list:\n");
+    printEdgeList(&new_elist, size);
+
     // test out the node id mapping
     mapNodeIds(&elist, &node_idmap, &size);
     printf("number of unique nodes: %d\n", size);
     printArray(node_idmap, size);
 
+    // clean up and exit
     freeEdgeList(&elist);
     return 0;
 }

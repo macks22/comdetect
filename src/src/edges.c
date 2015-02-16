@@ -10,6 +10,25 @@ newEdgeList(EdgeList *elist, int length)
     elist->nodes[1] = (int *)tcalloc(length, sizeof(int));
 }
 
+// copy an entire edgelist into a new one
+void
+copyEdgeList(EdgeList *cur, EdgeList *new)
+{
+    assert(cur != NULL);
+    int i, j;
+
+    // first allocate space for the copy
+    newEdgeList(new, cur->length);
+    assert(new->length == cur->length);
+
+    // then move over i and j columns
+    for (j = 0; j < 2; j++) {
+        for (i = 0; i < cur->length; i++) {
+            new->nodes[j][i] = cur->nodes[j][i];
+        }
+    }
+}
+
 // Free the memory allocated for the edgelist.
 void
 freeEdgeList(EdgeList *elist)

@@ -30,13 +30,6 @@ typedef struct {
 
 } inputArgs;
 
-// represent an edge.
-typedef struct {
-
-    int nodes[2];  // 0 = start; 1 = end
-
-} Edge;
-
 typedef struct {
 
     int *nodes[2];  // start and end nodes
@@ -50,6 +43,9 @@ typedef struct {
 
 // allocate space for a new edge list of the given length
 void newEdgeList(EdgeList *elist, int length);
+
+// copy an entire edgelist into a new one
+void copyEdgeList(EdgeList *cur, EdgeList *new);
 
 // Free the memory allocated for the edgelist.
 void freeEdgeList(EdgeList *elist);
