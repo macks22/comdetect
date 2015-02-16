@@ -7,6 +7,12 @@ void error(int err_code);
 // attempt to calloc memory, error out if failure
 void *tcalloc(size_t nitems, size_t size);
 
+// attempt to malloc memory, error out if failure
+void *tmalloc(size_t size);
+
+// attempt to realloc memory, error out if failure
+void *trealloc(void *ptr, size_t size);
+
 // find the largest number in the array
 int findLargest(int *array, int length);
 

@@ -11,11 +11,30 @@ void error(int err_code)
 }
 
 // attempt to calloc memory, error out if failure
-void *tcalloc(size_t nitems, size_t size)
+void *
+tcalloc(size_t nitems, size_t size)
 {
     void *block = calloc(nitems, size);
     if (block == NULL) error(OOM_ERROR);
     return block;
+}
+
+// attempt to malloc memory, error out if failure
+void *
+tmalloc(size_t size)
+{
+    void *block = malloc(size);
+    if (block == NULL) error(OOM_ERROR);
+    return block;
+}
+
+// attempt to realloc memory, error out if failure
+void *
+trealloc(void *ptr, size_t size)
+{
+    ptr = realloc(ptr, size);
+    if (ptr == NULL) error(OOM_ERROR);
+    return ptr;
 }
 
 // find the largest number in the array
