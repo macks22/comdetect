@@ -5,29 +5,29 @@ VERNUM = 1.0
 CC=gcc
 
 # path to include (.h) files
-INCDIR=../include
-INCLUDE=comdetect.h
+INCDIR=./
+INCLUDE=graph.h
 INCLUDES=$(patsubst %,$(INCDIR)/%,$(INCLUDE))
 
 # path to added libraries
-LIBSDIR=../lib
+LIBSDIR=./lib
 # lm = math library
 LIBS=-lm
 
 # path to bin dir where executable will end up
-BINDIR=../bin
+BINDIR=./bin
 
 # compiler flags
 CFLAGS=-I$(INCDIR)
 
 # make w/ objects
-MWOBJ=sparsematrix.o comdetect.o
+MWOBJ=test.o util.o edges.o graph.o
 
 %.o: %.c $(INCLUDES)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -g -c -o $@ $< $(CFLAGS)
 
-$(BINDIR)/comdetect$(VERNUM): $(MWOBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+$(BINDIR)/test-$(VERNUM): $(MWOBJ)
+	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
