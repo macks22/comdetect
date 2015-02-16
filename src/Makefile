@@ -5,17 +5,17 @@ VERNUM = 1.0
 CC=gcc
 
 # path to include (.h) files
-INCDIR=./
+INCDIR=../include
 INCLUDE=graph.h
 INCLUDES=$(patsubst %,$(INCDIR)/%,$(INCLUDE))
 
 # path to added libraries
-LIBSDIR=./lib
+LIBSDIR=../lib
 # lm = math library
 LIBS=-lm
 
 # path to bin dir where executable will end up
-BINDIR=./bin
+BINDIR=../bin
 
 # compiler flags
 CFLAGS=-I$(INCDIR)
