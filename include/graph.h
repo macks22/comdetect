@@ -11,6 +11,8 @@
 #include <assert.h>
 #include <stdbool.h>
 
+#include "queue.h"
+
 /********************************************************************/
 /*                       STRUCTS AND PROTOTYPES                     */
 /********************************************************************/
@@ -131,10 +133,6 @@ void writeSparseUGraph(FILE *outfile);
 // return 1 if there is an edge from a to b, else 0
 int hasEdge(SparseUGraph *graph, int a, int b);
 
-// return shortest path distance from src to target node
-// returns -1 if the target is unreachable from the src
-int distance(SparseUGraph *graph, int src, int target);
-
 // return the degree of the node
 int degree(SparseUGraph *graph, int node);
 
@@ -145,15 +143,18 @@ int degree(SparseUGraph *graph, int node);
 // that were found, by using the distance and parent info.
 typedef struct {
 
-    bool *discovered;
-    bool *processed;
-    int *parent;
-    int *distance;
+    bool *discovered;   // search has found (placed in queue)
+    bool *processed;    // fully explored (children in queue)
+    int *parent;        // index represents node; value is index of parent
+    int *distance;      // distance from node n to src
+    int src;            // the root node of the search
 
 } BFSInfo;
 
-
 // Perform a BFS on the sparse undirected graph and return
-// the information discovered.
+// the information discovered. The src node is passed with
+// the info struct.
 void bfs(SparseUGraph *graph, BFSInfo *info);
 
+// free BFSInfo struct
+void freeBFSInfo(BFSInfo *info);

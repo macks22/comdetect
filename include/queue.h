@@ -11,9 +11,10 @@ typedef struct {
 } Queue;
 
 
-Queue * newQueue();
+void newQueue(Queue *q);
+void freeQueue(Queue *q);
 void enqueue(Queue *q, int x);
 int dequeue(Queue *q);
 void doubleQueueSize(Queue *q);
 int queueIsEmpty(Queue *q);
-printQueue(Queue *q)
+void printQueue(Queue *q);
