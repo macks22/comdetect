@@ -7,9 +7,11 @@ main (int argc, char *argv[])
     EdgeList elist, new_elist;
     SparseUGraph graph;
     InputArgs args;
+    BFSInfo info;
     int i = 0, j = 0, size = 10;
     int nums[size];
     int *node_idmap;
+    int dest;
 
     ////////////////////////////////
     // TEST GRAPH READING
@@ -17,12 +19,19 @@ main (int argc, char *argv[])
     if (argc != 2) {
         printf("%s: <edgelist-file>\n", argv[0]);
         exit(1);
-    } else {
-        strcpy(args.infile, argv[1]);
-        printf("Params: edgelist=%s\n", args.infile);
-        readSparseUGraph(&args, &graph);
-        // printSparseUGraph(&graph);
     }
+
+    // read graph
+    strcpy(args.infile, argv[1]);
+    printf("Params: edgelist=%s\n", args.infile);
+    readSparseUGraph(&args, &graph);
+
+    // test bfs
+    info.src = 0;      // start search from node 0
+    bfs(&graph, &info);
+    dest = 6;
+    i = info.distance[dest];
+    printf("distance from %d --> %d: %d\n", info.src, dest, i);
 
     ////////////////////////////////
     // TESTING UTIL FUNCTIONS
