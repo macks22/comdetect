@@ -22,3 +22,6 @@ void vectorAppend(Vector *vec, int item);
 
 // double capacity of vector
 void doubleVectorCap(Vector *vec);
+
+// print full vector contents
+void printVector(Vector *vec);

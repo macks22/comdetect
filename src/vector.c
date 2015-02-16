@@ -31,3 +31,13 @@ doubleVectorCap(Vector *vec)
     vec->cap *= 2;
     vec->data = (int *)trealloc(vec->data, vec->cap*sizeof(int));
 }
+
+void printVector(Vector *vec)
+{   // print full vector contents
+    assert(vec != NULL);
+    int i;
+    for (i = 0; i < vec->size; i++) {
+        printf("%d ", vec->data[i]);
+    }
+    printf("\n");
+}
