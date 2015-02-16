@@ -34,20 +34,27 @@ main (int argc, char *argv[])
     i = info.distance[dest];
     printf("distance from %d --> %d: %d\n", info.src, dest, i);
 
+    // print out predecessor info
+    printf("predecessors:\n");
+    for (i = 0; i < graph.n; i++) {
+        printf("%d: ", i);
+        printVector(&info.pred[i]);
+    }
+
     // now follow the path back up
     printShortestPath(&info, dest);
 
     ////////////////////////////////
     // TESTING VECTOR
 
-    newVector(&vec);
-    for (i = 0; i < vec.cap; i++) {
-        vectorAppend(&vec, i);
-    }
-    assert(vec.cap == INIT_VECTOR_SIZE);
-    assert(vec.size == vec.cap);
-    vectorAppend(&vec, ++i);
-    assert(vec.cap == INIT_VECTOR_SIZE*2);
+    // newVector(&vec);
+    // for (i = 0; i < vec.cap; i++) {
+    //     vectorAppend(&vec, i);
+    // }
+    // assert(vec.cap == INIT_VECTOR_SIZE);
+    // assert(vec.size == vec.cap);
+    // vectorAppend(&vec, ++i);
+    // assert(vec.cap == INIT_VECTOR_SIZE*2);
 
     ////////////////////////////////
     // TESTING UTIL FUNCTIONS

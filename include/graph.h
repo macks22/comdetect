@@ -94,7 +94,7 @@ typedef struct {
 } BFSInfo;
 
 // assume distance is initialized with all -1
-#define discovered(info, node) (info->distance[node] > 0)
+#define discovered(info, node) (info->distance[node] >= 0)
 
 // Perform a BFS on the sparse undirected graph and return
 // the information discovered. The src node is passed with
