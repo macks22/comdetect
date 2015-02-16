@@ -1,23 +1,21 @@
-#include "queue.h"
+#include "graph.h"
 
 
-Queue * newQueue() {
-    q = calloc(1, sizeof(Queue));
-    q->data = calloc(INIT_QUEUE_SIZE, sizeof(int));
-    // TODO: account for calloc failures
-
+void newQueue(Queue *q) {
+    q->data = (int *)tcalloc(INIT_QUEUE_SIZE, sizeof(int));
     q->size = INIT_QUEUE_SIZE;
     q->first = 0;
     q->last = INIT_QUEUE_SIZE - 1;
     q->count = 0;
-    return q;
+}
+
+void freeQueue(Queue *q) {
+    free(q->data);
 }
 
 void enqueue(Queue *q, int x) {
     // double queue size if necessary
-    if (q->count >= q->size) {
-        double_queue_size(q);
-    }
+    if (q->count >= q->size) doubleQueueSize(q);
 
     // add the new element to the end of the queue
     q->last = (q->last+1) % q->size;
@@ -27,7 +25,7 @@ void enqueue(Queue *q, int x) {
 
 void doubleQueueSize(Queue *q) {
     q->size *= 2;
-    realloc(q->data, q->size);
+    q->data = (int *)realloc(q->data, q->size);
 }
 
 int dequeue(Queue *q) {
@@ -46,7 +44,7 @@ int queueIsEmpty(Queue *q) {
     else return 0;
 }
 
-printQueue(Queue *q) {
+void printQueue(Queue *q) {
     int i = q->first;
 
     while (i != q->last) {
@@ -54,6 +52,6 @@ printQueue(Queue *q) {
         i = (i+1) % q->size;
     }
 
-    printf("%2d ",q->q[i]);
+    printf("%2d ",q->data[i]);
     printf("\n");
 }
