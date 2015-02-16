@@ -7,11 +7,12 @@ main (int argc, char *argv[])
     EdgeList elist, new_elist;
     SparseUGraph graph;
     InputArgs args;
+    Vector vec;
     BFSInfo info;
     int i = 0, j = 0, size = 10;
     int nums[size];
     int *node_idmap;
-    int dest;
+    int dest, par;
 
     ////////////////////////////////
     // TEST GRAPH READING
@@ -29,9 +30,24 @@ main (int argc, char *argv[])
     // test bfs
     info.src = 0;      // start search from node 0
     bfs(&graph, &info);
-    dest = 6;
+    dest = 4;
     i = info.distance[dest];
     printf("distance from %d --> %d: %d\n", info.src, dest, i);
+
+    // now follow the path back up
+    printShortestPath(&info, dest);
+
+    ////////////////////////////////
+    // TESTING VECTOR
+
+    newVector(&vec);
+    for (i = 0; i < vec.cap; i++) {
+        vectorAppend(&vec, i);
+    }
+    assert(vec.cap == INIT_VECTOR_SIZE);
+    assert(vec.size == vec.cap);
+    vectorAppend(&vec, ++i);
+    assert(vec.cap == INIT_VECTOR_SIZE*2);
 
     ////////////////////////////////
     // TESTING UTIL FUNCTIONS
