@@ -71,10 +71,10 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
             cur_id = graph->id[id_idx++];
         }
     }
+    freeEdgeList(&elist_j);
 
     // debug
     assert(id_idx-1 == graph->n+1);
-    freeEdgeList(&elist_j);
 }
 
 void
@@ -148,6 +148,7 @@ freeSparseUGraph(SparseUGraph *graph)
 void
 storeAndFreeNodeIds(SparseUGraph *graph)
 {
+    assert(graph->id != NULL);
     int i;
     FILE *fpout;
     char store_file[50] = "../output/node_ids.txt";

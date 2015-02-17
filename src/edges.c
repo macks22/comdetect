@@ -6,7 +6,6 @@
 void
 newEdgeList(EdgeList *elist, int length)
 {
-    int i;
     elist->length = length;
     elist->nodes[0] = tcalloc(length, sizeof(int));
     elist->nodes[1] = tcalloc(length, sizeof(int));
@@ -40,8 +39,10 @@ copyEdgeList(EdgeList *cur, EdgeList *new)
     int i, j;
 
     // first allocate space for the copy
-    newEdgeList(new, cur->length);
-    assert(new->length == cur->length);
+    new->length = cur->length;
+    new->nodes[0] = tcalloc(cur->length, sizeof(int));
+    new->nodes[1] = tcalloc(cur->length, sizeof(int));
+    new->id = tcalloc(cur->length, sizeof(int));
 
     // then move over i and j columns
     for (j = 0; j < 2; j++) {
