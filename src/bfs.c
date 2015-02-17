@@ -36,6 +36,8 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
 
     while (!queueIsEmpty(&q)) {
         par = dequeue(&q);
+        vectorAppend(&info->stack, par);
+
         // explore all children of this node
         for (i = graph->index[par]; i < graph->index[par+1]; i++) {
             child = graph->edges[i];

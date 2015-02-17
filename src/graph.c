@@ -70,7 +70,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 {
     FILE *fpin;
     EdgeList elist;
-    int num_ids, edge_idx=0;
+    int i, num_ids, edge_idx=0;
 
     // read the first line, which contains #nodes #edges
     fpin = fopen(args->infile, "r");
@@ -97,8 +97,14 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 
     // compress edgelist rows to construct index and edge list
     rowCompressEdges(&elist, graph);
+
+    // set remaining data to NULL or empty
     graph->node_id = (int *)tcalloc(graph->n, sizeof(int));
+    for (i = 0; i < graph->n; i++) {
+        graph->node_id[i] = i;
+    }
     graph->degree = NULL;
+    graph->edge_bet = NULL;
 
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
@@ -196,9 +202,6 @@ void sortDegree(SparseUGraph *graph)
     EdgeList elist;
 
     newEdgeList(&elist, graph->n);
-    for (i = 0; i < graph->n; i++) {
-        graph->node_id[i] = i;
-    }
 
     // use the EdgeList to sort the nodes by degree
     elist.nodes[ICOL] = graph->degree;
@@ -217,5 +220,38 @@ printDegree(SparseUGraph *graph)
     printf("node:\tdegree\n");
     for (i = 0; i < graph->n; i++) {
         printf("%d:\t%d\n", graph->node_id[i], graph->degree[i]);
+    }
+}
+
+// calculate edge betweenness
+void
+calculateEdgeBetweenness(SparseUGraph *graph)
+{
+    assert(graph != NULL);
+    int src, dest;
+    int flow[graph->n];
+    BFSInfo info;
+
+    // check for empty graph
+    if (graph->n == 0 || graph->m == 0) {
+        return;  // TODO: handle this better
+    }
+
+    // already done?
+    if (graph->edge_bet != NULL) return;
+
+    // set up edge betweenness storage
+    graph->edge_bet = (float *)tcalloc(graph->m, sizeof(float));
+
+    // begin calculations
+    for (src = 0; src < graph->n; src++) {
+        info.src = src;                 // perform bfs from src node
+        bfs(graph, &info);
+        memset(flow, 1, sizeof(flow));  // each node gets flow of 1 to start
+
+        // now work back up from each other node to calculate betweenness
+        for (dest = 0; dest < graph->n; dest++) {
+            // TODO: what to do??
+        }
     }
 }

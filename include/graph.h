@@ -45,17 +45,18 @@ typedef struct {
 // duplicate the edges, then we must only check i's edgelist.
 typedef struct {
 
-    int n;          // number of nodes: |V|
-    int m;          // number of edges: |E|
+    int n;   // number of nodes: |V|
+    int m;   // number of edges: |E|
 
-    int *id;        // size = |V|; ids for all nodes
-    int *index;     // size = |V| + 1
-    int *edges;     // size = 2|E|
-    int *edge_id;   // size = 2|E|
+    int *id;          // size = |V|; ids for all nodes
+    int *index;       // size = |V| + 1
+    int *edges;       // size = 2|E|
+    int *edge_id;     // size = 2|E|
+    float *edge_bet;  // size = |E|; index corresponds to edge id
 
-    int *degree;    // size = |V|
-    int *node_id;  // size = |V|
-    int *sample;    // size = user specified at run time
+    int *degree;      // size = |V|
+    int *node_id;     // size = |V|
+    int *sample;      // size = user specified at run time
 
 } SparseUGraph;
 
@@ -130,3 +131,6 @@ void printShortestPath(BFSInfo *info, int dest);
 
 // free BFSInfo struct
 void freeBFSInfo(BFSInfo *info);
+
+// calculate edge betweenness
+void calculateEdgeBetweenness(SparseUGraph *graph);
