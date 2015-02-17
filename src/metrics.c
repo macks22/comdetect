@@ -95,7 +95,11 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate)
     sampleNodes(graph, sample_rate);
 
     // set up edge betweenness storage
-    graph->edge_bet = (float *)tcalloc(graph->m, sizeof(float));
+    if (graph->edge_bet != NULL) {
+        graph->edge_bet = trealloc(graph->edge_bet, graph->m*sizeof(float));
+    } else {
+        graph->edge_bet = (float *)tcalloc(graph->m, sizeof(float));
+    }
 
     // begin calculations
     for (i = 0; i < graph->n_s; i++) {
@@ -117,6 +121,7 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate)
                 graph->edge_bet[edge_id] += c;
             }
         }
+        freeBFSInfo(&info);
     }
 }
 
