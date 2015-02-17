@@ -1,12 +1,16 @@
 #include "graph.h"
 
 
-void newQueue(Queue *q) {
-    q->data = (int *)tcalloc(INIT_QUEUE_SIZE, sizeof(int));
-    q->size = INIT_QUEUE_SIZE;
+void initQueue(Queue *q, int size) {
+    q->data = tcalloc(size, sizeof(int));
+    q->size = size;
     q->first = 0;
-    q->last = INIT_QUEUE_SIZE - 1;
+    q->last = size - 1;
     q->count = 0;
+}
+
+void newQueue(Queue *q) {
+    initQueue(q, INIT_QUEUE_SIZE);
 }
 
 void freeQueue(Queue *q) {
@@ -25,7 +29,7 @@ void enqueue(Queue *q, int x) {
 
 void doubleQueueSize(Queue *q) {
     q->size *= 2;
-    q->data = (int *)realloc(q->data, q->size);
+    q->data = realloc(q->data, q->size);
 }
 
 int dequeue(Queue *q) {

@@ -78,7 +78,7 @@ void calculateDegreeAndSort(SparseUGraph *graph);
 void sortDegree(SparseUGraph *graph);
 
 // populate sample array in SparseUGraph with a percentage of the highest degree nodes
-void populateNodeSample(SparseUGraph *graph, float samp_perc_size);
+void sampleNodes(SparseUGraph *graph, float samp_rate);
 
 // print out node degrees
 void printDegree(SparseUGraph *graph);
@@ -91,6 +91,9 @@ void writeSparseUGraph(FILE *outfile);
 
 // return 1 if there is an edge from a to b, else 0
 int hasEdge(SparseUGraph *graph, int a, int b);
+
+// look up the id of the edge (src, dest)
+int findEdgeId(SparseUGraph *graph, int src, int dest);
 
 // return the degree of the node
 int degree(SparseUGraph *graph, int node);
@@ -115,6 +118,7 @@ typedef struct {
     int *parent;        // index represents node; value is index of parent
     int *distance;      // distance from node n to src
     int src;            // the root node of the search
+    int n;              // number of nodes in the graph searched
     int *sigma;         // number of shortest paths from src through each node
     Vector *pred;       // predecessors (all possible parents, not just left-most).
     Vector stack;       // popping should return nodes in order of
@@ -133,12 +137,25 @@ void bfs(SparseUGraph *graph, BFSInfo *info);
 // print out the path from the target node to the src node
 void printShortestPath(BFSInfo *info, int dest);
 
+// print out number of shortest paths
+void printShortestPathCounts(BFSInfo *info);
+
+// print out stack of vertices accumulated during BFS
+// should return vertices in order of non-increasing distance from src
+void printBFSStack(BFSInfo *info);
+
 // free BFSInfo struct
 void freeBFSInfo(BFSInfo *info);
 
-// calculate edge betweenness
-void calculateEdgeBetweenness(SparseUGraph *graph);
+// print out predecessor info from BFS
+void printPredecessors(BFSInfo *info);
 
 float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
 
 int getEdges(SparseUGraph *graph, int node);
+
+void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
+
+// print out edge betweenness per edge
+void printEdgeBetweenness(SparseUGraph *graph);
+

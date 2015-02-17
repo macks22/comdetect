@@ -11,6 +11,7 @@ typedef struct {
 } Queue;
 
 
+void initQueue(Queue *q, int size);
 void newQueue(Queue *q);
 void freeQueue(Queue *q);
 void enqueue(Queue *q, int x);

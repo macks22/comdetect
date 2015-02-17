@@ -7,9 +7,9 @@ newEdgeList(EdgeList *elist, int length)
 {
     int i;
     elist->length = length;
-    elist->nodes[0] = (int *)tcalloc(length, sizeof(int));
-    elist->nodes[1] = (int *)tcalloc(length, sizeof(int));
-    elist->id = (int *)tcalloc(length, sizeof(int));
+    elist->nodes[0] = tcalloc(length, sizeof(int));
+    elist->nodes[1] = tcalloc(length, sizeof(int));
+    elist->id = tcalloc(length, sizeof(int));
     resetEdgeIds(elist);
 }
 
@@ -122,7 +122,7 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
     assert(elist != NULL);
     int i, j;
     int size = elist->length * 2;
-    int nodes[size];
+    int *nodes = tcalloc(size, sizeof(int));
 
     // first add node ids from the i column
     for (i = 0; i < elist->length; i++) {
@@ -139,10 +139,11 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
     *num_nodes = size;
 
     // finally, set the result
-    *idmap = (int *)tcalloc(size, sizeof(int));
+    *idmap = tcalloc(size, sizeof(int));
     for (i = 0; i < size; i++) {
         (*idmap)[i] = nodes[i];
     }
+    free(nodes);
 }
 
 // Print out the edge list (for debugging purposes), up to `num_edges` edges.

@@ -5,7 +5,7 @@ float modularity(SparseUGraph *graph, Vector *communities, int num_comm)
     int i, j;
     int m;
     int e_i = 0;
-    float actual_edges = 0.0, random_edges = 0.0;
+    float actual_edges = 0.0f, random_edges = 0.0f;
 
     m = graph->m;
 
@@ -17,7 +17,7 @@ float modularity(SparseUGraph *graph, Vector *communities, int num_comm)
 	    printf("e_i:%d\n", e_i);
 	}
 
-	actual_edges += ((float) e_i / (float) m);
+	actual_edges += ((float) e_i / (float) (m*2));
 	printf("actual_edges:%f\n", actual_edges);
 	e_i = 0;
     }

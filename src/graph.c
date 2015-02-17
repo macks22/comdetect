@@ -105,6 +105,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     }
     graph->degree = NULL;
     graph->edge_bet = NULL;
+    graph->sample = NULL;
 
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
@@ -175,105 +176,12 @@ graphToEdgeList(SparseUGraph *graph, EdgeList *elist)
     }
 }
 
-void
-calculateDegreeAndSort(SparseUGraph *graph)
-{
-    int index_idx = 0, degree_idx = 0;
-    int prev_value = 0, cur_value = 0;
-
-    assert(graph != NULL);
-    assert(graph->index != NULL);
-    if (graph->degree != NULL) return;
-
-    prev_value = graph->index[index_idx];
-    graph->degree = (int *)tcalloc(graph->n, sizeof(int));
-
-    for (index_idx = 1; index_idx < graph->n+1; index_idx++) {
-        cur_value = graph->index[index_idx];
-        graph->degree[degree_idx] = (cur_value - prev_value);
-        prev_value = cur_value;
-        degree_idx++;
+int
+findEdgeId(SparseUGraph *graph, int src, int dest)
+{   // look up the id of the edge (src, dest)
+    int j;
+    for (j = graph->index[src]; j < graph->index[src+1]; j++) {
+        if (graph->edges[j] == dest) return graph->edge_id[j];
     }
-    sortDegree(graph);
-}
-
-void sortDegree(SparseUGraph *graph)
-{
-    int i, j;
-    EdgeList elist;
-
-    newEdgeList(&elist, graph->n);
-
-    // use the EdgeList to sort the nodes by degree
-    elist.nodes[ICOL] = graph->degree;
-    elist.nodes[JCOL] = graph->node_id;
-    sortEdges(&elist, ICOL);
-
-    graph->degree = elist.nodes[ICOL];
-    graph->node_id = elist.nodes[JCOL];
-}
-
-void populateNodeSample(SparseUGraph *graph, float samp_perc_size)
-{
-    int i, j;
-    int num_nodes_to_keep;
-
-    num_nodes_to_keep = (int) ((graph->n * samp_perc_size) + .5);
-    graph->n_s = num_nodes_to_keep;
-
-    graph->sample = (int *)tcalloc(num_nodes_to_keep, sizeof(int));
-
-    j=0;
-    for(i=graph->n; i>(graph->n - num_nodes_to_keep); i--) {
-	graph->sample[j] = graph->node_id[i];
-	j++;
-    }
-}
-
-// print out node degrees
-void
-printDegree(SparseUGraph *graph)
-{
-    assert(graph != NULL);
-    assert(graph->degree != NULL);
-    int i;
-
-    printf("node:\tdegree\n");
-    for (i = 0; i < graph->n; i++) {
-        printf("%d:\t%d\n", graph->node_id[i], graph->degree[i]);
-
-    }
-}
-
-// calculate edge betweenness
-void
-calculateEdgeBetweenness(SparseUGraph *graph)
-{
-    assert(graph != NULL);
-    int src, dest;
-    int flow[graph->n];
-    BFSInfo info;
-
-    // check for empty graph
-    if (graph->n == 0 || graph->m == 0) {
-        return;  // TODO: handle this better
-    }
-
-    // already done?
-    if (graph->edge_bet != NULL) return;
-
-    // set up edge betweenness storage
-    graph->edge_bet = (float *)tcalloc(graph->m, sizeof(float));
-
-    // begin calculations
-    for (src = 0; src < graph->n; src++) {
-        info.src = src;                 // perform bfs from src node
-        bfs(graph, &info);
-        memset(flow, 1, sizeof(flow));  // each node gets flow of 1 to start
-
-        // now work back up from each other node to calculate betweenness
-        for (dest = 0; dest < graph->n; dest++) {
-            // TODO: what to do??
-        }
-    }
+    return -1;
 }
