@@ -1,4 +1,5 @@
 #include "graph.h"
+#include <string.h>
 
 
 // allocate space for a new edge list of the given length
@@ -156,13 +157,15 @@ lookupNodeId(int orig_id, int *node_id)
     char node_id_str[10];
 
     sprintf(node_id_str, "%d", orig_id);
+    e.key = tcalloc(10, sizeof(char));
     strncpy(e.key, node_id_str, strlen(node_id_str));
     ep = hsearch(e, FIND);
     if (ep == NULL) {
-        printf("unknown node id: %d\n", orig_id);
+        fprintf(stderr, "unknown node id: %d\n", orig_id);
         error(EXIT_FAILURE);
     }
     *node_id = *((int *)ep->data);
+    free(e.key);
 }
 
 void
@@ -171,9 +174,11 @@ addNodeIdToMap(int orig_id, int node_id)
     ENTRY e, *ep;
     char node_id_str[10];
 
-    sprintf(node_id_str, "%d'", orig_id);
+    sprintf(node_id_str, "%d", orig_id);
+    e.key = tcalloc(10, sizeof(char));
     strncpy(e.key, node_id_str, strlen(node_id_str));
-    e.data = (void *)&node_id;
+    e.data = tcalloc(1, sizeof(int));
+    *(int *)e.data = node_id;
     ep = hsearch(e, ENTER);
     if (ep == NULL) {
         fprintf(stderr, "node id map hash entry failed\n");
