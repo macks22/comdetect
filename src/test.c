@@ -26,6 +26,13 @@ main (int argc, char *argv[])
     strcpy(args.infile, argv[1]);
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
+    calculateDegree(&graph);
+
+    sortDegree(&graph);
+    
+    printf("*** Calculate degree ***\n");
+    printArray(graph.degree, graph.n);
+    printf("*** Calculate degree ***\n");
 
     // test bfs
     info.src = 0;      // start search from node 0

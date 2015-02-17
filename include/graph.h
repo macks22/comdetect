@@ -51,7 +51,9 @@ typedef struct {
     int *id;        // size = |V|; ids for all nodes
     int *index;     // size = |V| + 1
     int *edges;     // size = 2|E|
-
+    int *degree;    // size = |V|
+    int *node_ids;  // size = |V|
+    int *sample;    // size = user specified at run time
 } SparseUGraph;
 
 
@@ -63,6 +65,12 @@ void readSparseUGraph(InputArgs *args, SparseUGraph *graph);
 
 // store the id list for the graph and free the space it occupied
 void storeAndFreeNodeIds(SparseUGraph *graph);
+
+// calculate the degree of all nodes in the graph
+void calculateDegree(SparseUGraph *graph);
+
+// sorts nodes based on degree
+void sortDegree(SparseUGraph *graph);
 
 // free the sparse undirected graph
 void freeSparseUGraph(SparseUGraph *graph);
