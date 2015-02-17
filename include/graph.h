@@ -152,8 +152,12 @@ void freeBFSInfo(BFSInfo *info);
 // print out predecessor info from BFS
 void printPredecessors(BFSInfo *info);
 
-// calculate edge betweenness
+float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
+
+int getEdges(SparseUGraph *graph, int node);
+
 void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
+
