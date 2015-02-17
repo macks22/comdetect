@@ -26,6 +26,9 @@ main (int argc, char *argv[])
     strcpy(args.infile, argv[1]);
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
+    printSparseUGraph(&graph, graph.n);
+
+    graphToEdgeList(
 
     // test bfs
     info.src = 0;      // start search from node 0
