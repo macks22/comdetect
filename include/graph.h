@@ -138,3 +138,7 @@ void freeBFSInfo(BFSInfo *info);
 
 // calculate edge betweenness
 void calculateEdgeBetweenness(SparseUGraph *graph);
+
+float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
+
+int getEdges(SparseUGraph *graph, int node);

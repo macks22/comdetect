@@ -14,6 +14,9 @@ main (int argc, char *argv[])
     int *node_idmap;
     int dest, par;
     float sample_percentage = .2;
+    float mod = 0.0;
+    Vector communities[2];
+    int num_comm =2;
 
     ////////////////////////////////
     // TEST GRAPH READING
@@ -55,6 +58,18 @@ main (int argc, char *argv[])
     // now follow the path back up
     printShortestPath(&info, dest);
 
+    ////////////////////////////////
+    // TESTING MODULARITY
+
+    for(i=0; i<num_comm; i++) {
+	newVector(&communities[i]);
+	for(j=0; j<3; j++) {
+	    vectorAppend(&communities[i], j);
+	}
+    }
+    mod = modularity(&graph, communities, num_comm);
+    printf("modularity:%f\n", mod);
+    
     ////////////////////////////////
     // TESTING VECTOR
 
