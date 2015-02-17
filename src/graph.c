@@ -98,6 +98,8 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 
     // compress edgelist rows to construct index and edge list
     rowCompressEdges(&elist, graph);
+    graph->node_id = (int *)tcalloc(graph->n, sizeof(int));
+    graph->degree = NULL;
 
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
@@ -165,5 +167,56 @@ graphToEdgeList(SparseUGraph *graph, EdgeList *elist)
             elist->id[edge_idx] = graph->edge_id[j];
             edge_idx++;
         }
+    }
+}
+
+void
+calculateDegree(SparseUGraph *graph)
+{
+    int index_idx = 0, degree_idx = 0;
+    int prev_value = 0, cur_value = 0;
+
+    assert(graph != NULL);
+    assert(graph->index != NULL);
+    if (graph->degree != NULL) return;
+
+    prev_value = graph->index[index_idx];
+    graph->degree = (int *)tcalloc(graph->n, sizeof(int));
+
+    for (index_idx = 1; index_idx < graph->n+1; index_idx++) {
+        cur_value = graph->index[index_idx];
+        graph->degree[degree_idx] = (cur_value - prev_value);
+        prev_value = cur_value;
+        degree_idx++;
+    }
+}
+
+void sortDegree(SparseUGraph *graph)
+{
+    int i, j;
+    EdgeList elist;
+
+    newEdgeList(&elist, graph->n);
+    for (i = 0; i < graph->n; i++) {
+        graph->node_id[i] = i;
+    }
+
+    // use the EdgeList to sort the nodes by degree
+    elist.nodes[ICOL] = graph->degree;
+    elist.nodes[JCOL] = graph->node_id;
+    sortEdges(&elist, ICOL);
+}
+
+// print out node degrees
+void
+printDegree(SparseUGraph *graph)
+{
+    assert(graph != NULL);
+    assert(graph->degree != NULL);
+    int i;
+
+    printf("node:\tdegree\n");
+    for (i = 0; i < graph->n; i++) {
+        printf("%d:\t%d\n", graph->node_id[i], graph->degree[i]);
     }
 }

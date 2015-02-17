@@ -28,7 +28,15 @@ main (int argc, char *argv[])
     readSparseUGraph(&args, &graph);
     printSparseUGraph(&graph, graph.n);
 
-    graphToEdgeList(
+    calculateDegree(&graph);
+    sortDegree(&graph);
+
+    printf("*** Calculate degree ***\n");
+    printf("node:\tdegree\n");
+    for (i = 0; i < graph.n; i++) {
+        printf("%d:\t%d\n", graph.node_id[i], graph.degree[i]);
+    }
+    printf("*** Calculate degree ***\n");
 
     // test bfs
     info.src = 0;      // start search from node 0
