@@ -1,5 +1,4 @@
 #include "graph.h"
-#include <string.h>
 
 
 // allocate space for a new edge list of the given length
@@ -118,7 +117,7 @@ sortEdges(EdgeList *elist, int col)
 // Return an array with all unique node ids sorted in ascending order.
 // Also set the number of unique nodes after filtering.
 void
-mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
+mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes, IdmapStorage *store)
 {
     assert(elist != NULL);
     int i, j;
@@ -142,8 +141,9 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
 
     // map actual node ids (from the input file) to contiguous ids
     hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
+    newIdmapStorage(store, size);
     for (i = 0; i < size; i++) {
-        addNodeIdToMap(nodes[i], i);
+        addNodeIdToMap(store, nodes[i], i);
     }
 }
 
@@ -166,11 +166,11 @@ lookupNodeId(int orig_id, int *node_id)
 }
 
 void
-addNodeIdToMap(int orig_id, int node_id)
+addNodeIdToMap(IdmapStorage *store, int orig_id, int node_id)
 {   // add a mapping from the original node id to a new one
     ENTRY e, *ep;
     char node_id_str[10];
-    
+
     sprintf(node_id_str, "%d", orig_id);
     e.key = tcalloc(10, sizeof(char));
     strncpy(e.key, node_id_str, strlen(node_id_str));
@@ -181,6 +181,7 @@ addNodeIdToMap(int orig_id, int node_id)
         fprintf(stderr, "node id map hash entry failed\n");
         error(EXIT_FAILURE);
     }
+    addIdmapEntry(store, &e);
 }
 
 // Print out the edge list (for debugging purposes), up to `num_edges` edges.
@@ -196,3 +197,27 @@ printEdgeList(EdgeList *elist, int num_edges)
                elist->id[i], elist->nodes[0][i], elist->nodes[1][i]);
     }
 }
+
+void newIdmapStorage(IdmapStorage *storage, int size)
+{
+    storage->entries = tcalloc(size, sizeof(ENTRY));
+    storage->size = size;
+    storage->count = 0;
+}
+
+void freeIdmapStorage(IdmapStorage *storage)
+{
+    int i;
+    for (i = 0; i < storage->count; i++) {
+        free(storage->entries[i].key);
+        free(storage->entries[i].data);
+    }
+    free(storage->entries);
+}
+
+void addIdmapEntry(IdmapStorage *storage, ENTRY *ep)
+{
+    assert(storage->count <= storage->size);
+    storage->entries[storage->count++] = *ep;
+}
+

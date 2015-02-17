@@ -61,6 +61,8 @@ typedef struct {
     int *node_id;     // size = |V|
     int *sample;      // size = user specified at run time
 
+    IdmapStorage idmap;    // hash table entries for node id map
+
 } SparseUGraph;
 
 
