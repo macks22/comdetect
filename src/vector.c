@@ -25,6 +25,16 @@ vectorAppend(Vector *vec, int item)
     vec->data[vec->size++] = item;
 }
 
+int
+vectorPop(Vector *vec)
+{   // pop an item from the vector; don't call on empty vectors
+    int item;
+    //if (vec->size <= 0) error(EMPTY_VECTOR);
+    assert(vec->size > 0);
+    item = vec->data[--vec->size];
+    return item;
+}
+
 void
 doubleVectorCap(Vector *vec)
 {   // double capacity of vector
