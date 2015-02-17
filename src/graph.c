@@ -63,7 +63,6 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
 
     // debug
     assert(id_idx-1 == graph->n+1);
-    freeEdgeList(&elist_j);
 }
 
 void
