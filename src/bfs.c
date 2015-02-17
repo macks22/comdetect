@@ -12,22 +12,26 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
     int i, j, par, child;
 
     // allocate space for bfs info
+    newVector(&info->stack);
     info->parent = (int *)tcalloc(graph->n, sizeof(int));
     info->distance = (int *)tcalloc(graph->n, sizeof(int));
+    info->sigma = (int *)tcalloc(graph->n, sizeof(int));
     info->pred = (Vector *)tcalloc(graph->n, sizeof(Vector));
     for (i = 0; i < graph->n; i++) {
         newVector(&info->pred[i]);
     }
 
-    // set all distances to -1
+    // set all distances to -1 and all sigmas to 0
     for (i = 0; i < graph->n; i++) {
         info->distance[i] = -1;
+        info->sigma[i] = 0;
     }
 
     // commence the search
     newQueue(&q);
     info->distance[info->src] = 0;        // root node has 0 distance to itself
     info->parent[info->src] = info->src;  // root node has no parent
+    info->sigma[info->src] = 1;
     enqueue(&q, info->src);
 
     while (!queueIsEmpty(&q)) {
@@ -40,9 +44,10 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
                 info->distance[child] = info->distance[par]+1;
                 enqueue(&q, child);
             }
+            // on the shortest path?
             if (info->distance[child] == info->distance[par]+1) {
-                // par is the predecessor of child
                 vectorAppend(&info->pred[child], par);
+                info->sigma[child] += info->sigma[par];
             }
         }
     }
