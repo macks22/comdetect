@@ -140,6 +140,10 @@ void printShortestPath(BFSInfo *info, int dest);
 // print out number of shortest paths
 void printShortestPathCounts(BFSInfo *info);
 
+// print out stack of vertices accumulated during BFS
+// should return vertices in order of non-increasing distance from src
+void printBFSStack(BFSInfo *info);
+
 // free BFSInfo struct
 void freeBFSInfo(BFSInfo *info);
 
@@ -147,7 +151,7 @@ void freeBFSInfo(BFSInfo *info);
 void printPredecessors(BFSInfo *info);
 
 // calculate edge betweenness
-void calculateEdgeBetweenness(SparseUGraph *graph);
+void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);

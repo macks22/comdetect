@@ -90,6 +90,18 @@ printPredecessors(BFSInfo *info)
     }
 }
 
+// print out stack of vertices accumulated during BFS
+// should return vertices in order of non-increasing distance from src
+void
+printBFSStack(BFSInfo *info)
+{
+    int i;
+    assert(info != NULL);
+    for (i = info->stack.size-1; i >= 0; i--) {
+        printf("%d ", info->stack.data[i]);
+    }
+    printf("\n");
+}
 
 // print out number of shortest paths
 void
