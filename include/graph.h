@@ -152,6 +152,7 @@ void freeBFSInfo(BFSInfo *info);
 // print out predecessor info from BFS
 void printPredecessors(BFSInfo *info);
 
+// calculate modularity score for a graph
 float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
 
 int getEdges(SparseUGraph *graph, int node);
@@ -160,4 +161,7 @@ void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
+
+// graph partitioning by graph k medoids method
+void graphKMedoid(SparseUGraph *graph, InputArgs *args);
 
