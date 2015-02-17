@@ -15,6 +15,15 @@ newEdgeList(EdgeList *elist, int length)
 }
 
 void
+freeEdgeList(EdgeList *elist)
+{   // Free the memory allocated for the edgelist.
+    assert(elist != NULL);
+    free(elist->nodes[0]);
+    free(elist->nodes[1]);
+    free(elist->id);
+}
+
+void
 resetEdgeIds(EdgeList *elist)
 {   // reorder id array s.t. the value at each index is the index (0->m-1)
     int i;
@@ -45,16 +54,6 @@ copyEdgeList(EdgeList *cur, EdgeList *new)
     for (i = 0; i < cur->length; i++) {
         new->id[i] = cur->id[i];
     }
-}
-
-// Free the memory allocated for the edgelist.
-void
-freeEdgeList(EdgeList *elist)
-{
-    assert(elist != NULL);
-    free(elist->nodes[0]);
-    free(elist->nodes[1]);
-    free(elist->id);
 }
 
 // find largest value in i or j column
@@ -135,19 +134,16 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
         nodes[i++] = elist->nodes[JCOL][j];
     }
 
-    // now remove duplicates (which sorts) and set number of nodes
+    // now remove duplicates (which sorts) and set results
     removeDuplicates(nodes, &size);
     *num_nodes = size;
+    *idmap = realloc(nodes, size * sizeof(int));
 
-    // finally, set the result
-    *idmap = tcalloc(size, sizeof(int));
-    hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
     // map actual node ids (from the input file) to contiguous ids
+    hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
     for (i = 0; i < size; i++) {
-        (*idmap)[i] = nodes[i];
         addNodeIdToMap(nodes[i], i);
     }
-    free(nodes);
 }
 
 void
