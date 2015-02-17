@@ -5,9 +5,21 @@
 void
 newEdgeList(EdgeList *elist, int length)
 {
+    int i;
     elist->length = length;
     elist->nodes[0] = (int *)tcalloc(length, sizeof(int));
     elist->nodes[1] = (int *)tcalloc(length, sizeof(int));
+    elist->id = (int *)tcalloc(length, sizeof(int));
+    resetEdgeIds(elist);
+}
+
+void
+resetEdgeIds(EdgeList *elist)
+{   // reorder id array s.t. the value at each index is the index (0->m-1)
+    int i;
+    for (i = 0; i < elist->length; i++) {
+        elist->id[i] = i;
+    }
 }
 
 // copy an entire edgelist into a new one
@@ -27,6 +39,11 @@ copyEdgeList(EdgeList *cur, EdgeList *new)
             new->nodes[j][i] = cur->nodes[j][i];
         }
     }
+
+    // copy id array
+    for (i = 0; i < cur->length; i++) {
+        new->id[i] = cur->id[i];
+    }
 }
 
 // Free the memory allocated for the edgelist.
@@ -36,6 +53,7 @@ freeEdgeList(EdgeList *elist)
     assert(elist != NULL);
     free(elist->nodes[0]);
     free(elist->nodes[1]);
+    free(elist->id);
 }
 
 // find largest value in i or j column
@@ -81,11 +99,13 @@ sortEdges(EdgeList *elist, int col)
             loc = --bucket[(elist->nodes[col][i] / sig_digit) % 10];
             semi_sorted.nodes[col][loc] = elist->nodes[col][i];
             semi_sorted.nodes[1-col][loc] = elist->nodes[1-col][i];
+            semi_sorted.id[loc] = elist->id[i];
         }
 
         for (i = 0; i < elist->length; i++) {
             elist->nodes[col][i] = semi_sorted.nodes[col][i];
             elist->nodes[1-col][i] = semi_sorted.nodes[1-col][i];
+            elist->id[i] = semi_sorted.id[i];
         }
 
         // move to next significant digit
@@ -134,6 +154,7 @@ printEdgeList(EdgeList *elist, int num_edges)
 
     num_edges = (num_edges >= elist->length) ? elist->length-1 : num_edges;
     for (i = 0; i <= num_edges; i++) {
-        printf("(%d, %d)\n", elist->nodes[0][i], elist->nodes[1][i]);
+        printf("%d: (%d, %d)\n",
+               elist->id[i], elist->nodes[0][i], elist->nodes[1][i]);
     }
 }

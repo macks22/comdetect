@@ -5,7 +5,8 @@
 typedef struct {
 
     int *nodes[2];  // start and end nodes
-    int length; // number of edges
+    int length;     // number of edges
+    int *id;        // edge ids
 
 } EdgeList;
 
@@ -18,6 +19,9 @@ typedef struct {
 
 // allocate space for a new edge list of the given length
 void newEdgeList(EdgeList *elist, int length);
+
+// reorder id array s.t. the value at each index is the index (0->m-1)
+void resetEdgeIds(EdgeList *elist);
 
 // copy an entire edgelist into a new one
 void copyEdgeList(EdgeList *cur, EdgeList *new);
