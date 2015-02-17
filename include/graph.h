@@ -6,10 +6,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <search.h>
 
 #include "queue.h"
 #include "vector.h"

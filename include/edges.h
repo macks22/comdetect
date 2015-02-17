@@ -38,5 +38,11 @@ int findLargestEndpoint(EdgeList *elist, int column);
 // Return an array with all unique node ids sorted in ascending order.
 void mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes);
 
+// look up the assigned node id using the original id read from the graph
+void lookupNodeId(int orig_id, int *node_id);
+
+// add a mapping from the original node id to a new one
+void addNodeIdToMap(int orig_id, int node_id);
+
 // Print out the edge list (for debugging purposes), up to `num_edges` edges.
 void printEdgeList(EdgeList *elist, int num_edges);
