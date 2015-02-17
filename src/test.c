@@ -13,6 +13,7 @@ main (int argc, char *argv[])
     int nums[size];
     int *node_idmap;
     int dest, par;
+    float sample_percentage = .2;
 
     ////////////////////////////////
     // TEST GRAPH READING
@@ -26,14 +27,17 @@ main (int argc, char *argv[])
     strcpy(args.infile, argv[1]);
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
-    calculateDegree(&graph);
-
-    sortDegree(&graph);
     
     printf("*** Calculate degree ***\n");
+    calculateDegreeAndSort(&graph);
     printArray(graph.degree, graph.n);
     printf("*** Calculate degree ***\n");
 
+    printf("*** Print Node Sample List ***\n");
+    populateNodeSample(&graph, sample_percentage);
+    printArray(graph.sample, graph.n_s);
+    printf("*** Print Node Sample List ***\n");
+    
     // test bfs
     info.src = 0;      // start search from node 0
     bfs(&graph, &info);

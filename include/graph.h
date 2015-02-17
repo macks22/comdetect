@@ -47,6 +47,7 @@ typedef struct {
 
     int n;          // number of nodes: |V|
     int m;          // number of edges: |E|
+    int n_s;        // number of nodes in sample
 
     int *id;        // size = |V|; ids for all nodes
     int *index;     // size = |V| + 1
@@ -67,10 +68,13 @@ void readSparseUGraph(InputArgs *args, SparseUGraph *graph);
 void storeAndFreeNodeIds(SparseUGraph *graph);
 
 // calculate the degree of all nodes in the graph
-void calculateDegree(SparseUGraph *graph);
+void calculateDegreeAndSort(SparseUGraph *graph);
 
 // sorts nodes based on degree
 void sortDegree(SparseUGraph *graph);
+
+// populate sample array in SparseUGraph with a percentage of the highest degree nodes
+void populateNodeSample(SparseUGraph *graph, float samp_perc_size);
 
 // free the sparse undirected graph
 void freeSparseUGraph(SparseUGraph *graph);

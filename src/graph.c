@@ -120,7 +120,7 @@ storeAndFreeNodeIds(SparseUGraph *graph)
     printf("Node id array stored in %s\n", store_file);
 }
 
-void calculateDegree(SparseUGraph *graph)
+void calculateDegreeAndSort(SparseUGraph *graph)
 {
     int index_idx = 0, degree_idx = 0;
     int prev_value = 0, cur_value = 0;
@@ -137,6 +137,7 @@ void calculateDegree(SparseUGraph *graph)
 	prev_value = cur_value;
 	degree_idx++;
     }
+    sortDegree(graph);
 }
 
 void sortDegree(SparseUGraph *graph)
@@ -154,7 +155,24 @@ void sortDegree(SparseUGraph *graph)
     elist.nodes[JCOL] = graph->node_ids;
 
     sortEdges(&elist, ICOL);
-    for(i=0; i<graph->n; i++) {
-	printf("degree:%d node_ids:%d\n", elist.nodes[ICOL][i], elist.nodes[JCOL][i]);
+
+    graph->degree = elist.nodes[ICOL];
+    graph->node_ids = elist.nodes[JCOL];
+}
+
+void populateNodeSample(SparseUGraph *graph, float samp_perc_size)
+{
+    int i, j;
+    int num_nodes_to_keep;
+
+    num_nodes_to_keep = (int) ((graph->n * samp_perc_size) + .5);
+    graph->n_s = num_nodes_to_keep;
+
+    graph->sample = (int *)tcalloc(num_nodes_to_keep, sizeof(int));
+
+    j=0;
+    for(i=graph->n; i>(graph->n - num_nodes_to_keep); i--) {
+	graph->sample[j] = graph->node_ids[i];
+	j++;
     }
 }
