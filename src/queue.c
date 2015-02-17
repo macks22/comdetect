@@ -29,17 +29,17 @@ void enqueue(Queue *q, int x) {
 
 void doubleQueueSize(Queue *q) {
     q->size *= 2;
-    q->data = realloc(q->data, q->size);
+    q->data = realloc(q->data, q->size * sizeof(int));
 }
 
 int dequeue(Queue *q) {
     assert(q->count > 0);
 
-    int x;
-    x = q->data[q->first];
+    int item;
+    item = q->data[q->first];
     q->first = (q->first+1) % q->size;
-    q->count = q->count - 1;
-    return(x);
+    q->count--;
+    return item;
 }
 
 int queueIsEmpty(Queue *q) {
