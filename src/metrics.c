@@ -9,11 +9,12 @@ calculateDegreeAndSort(SparseUGraph *graph)
 
     assert(graph != NULL);
     assert(graph->index != NULL);
-    if (graph->degree != NULL) return;
+
+    if (graph->degree == NULL) {
+        graph->degree = (int *)tcalloc(graph->n, sizeof(int));
+    }
 
     prev_value = graph->index[index_idx];
-    graph->degree = (int *)tcalloc(graph->n, sizeof(int));
-
     for (index_idx = 1; index_idx < graph->n+1; index_idx++) {
         cur_value = graph->index[index_idx];
         graph->degree[degree_idx] = (cur_value - prev_value);
@@ -30,10 +31,19 @@ void sortDegree(SparseUGraph *graph)
     assert(graph != NULL);
 
     // use the EdgeList to sort the nodes by degree
+    // TODO: move to a more generic sorting function
+    // this allocates a bunch of extra memory and sorts the id array
+    // along with the degree and node_id arrays, so it wastes quite a
+    // lot of resources.
     newEdgeList(&elist, graph->n);
+    free(elist.nodes[ICOL]);
+    free(elist.nodes[JCOL]);
     elist.nodes[ICOL] = graph->degree;
     elist.nodes[JCOL] = graph->node_id;
     sortEdges(&elist, ICOL);
+    elist.nodes[ICOL] = NULL;
+    elist.nodes[JCOL] = NULL;
+    free(elist.id);
 }
 
 void
