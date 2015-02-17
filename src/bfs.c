@@ -62,9 +62,24 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
 void
 freeBFSInfo(BFSInfo *info)
 {
+    int i;
     assert(info != NULL);
+
     free(info->parent);
+    info->parent = NULL;
+
     free(info->distance);
+    info->distance = NULL;
+
+    free(info->sigma);
+    info->sigma = NULL;
+
+    freeVector(&info->stack);
+    for (i = 0; i < info->n; i++) {
+        freeVector(&info->pred[i]);
+    }
+    free(info->pred);
+    info->pred = NULL;
 }
 
 // print out the path from the target node to the src node
