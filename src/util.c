@@ -6,7 +6,12 @@ const int OOM_ERROR = -1;
 void error(int err_code)
 {
     // for now, just print generic message and exit with error code
-    printf("fatal error occured; exiting.");
+    if (err_code == OOM_ERROR) {
+        printf("Out of memory.");
+    } else {
+        printf("Fatal error occured.");
+    }
+    printf(" Exiting.\n");
     exit(err_code);
 }
 
@@ -14,8 +19,12 @@ void error(int err_code)
 void *
 tcalloc(size_t nitems, size_t size)
 {
-    void *block = calloc(nitems, size);
-    if (block == NULL) error(OOM_ERROR);
+    void *block;
+    block = calloc(nitems, size);
+    if (block == NULL) {
+        block = calloc(nitems, size);  // try one more time
+        if (block == NULL) error(OOM_ERROR);
+    }
     return block;
 }
 
@@ -23,8 +32,12 @@ tcalloc(size_t nitems, size_t size)
 void *
 tmalloc(size_t size)
 {
-    void *block = malloc(size);
-    if (block == NULL) error(OOM_ERROR);
+    void *block;
+    block= malloc(size);
+    if (block == NULL) {
+        block = malloc(size);  // try one more time
+        if (block == NULL) error(OOM_ERROR);
+    }
     return block;
 }
 
@@ -33,7 +46,10 @@ void *
 trealloc(void *ptr, size_t size)
 {
     ptr = realloc(ptr, size);
-    if (ptr == NULL) error(OOM_ERROR);
+    if (ptr == NULL) {
+        ptr = realloc(ptr, size);  // try one more time
+        if (ptr == NULL) error(OOM_ERROR);
+    }
     return ptr;
 }
 
@@ -55,8 +71,8 @@ void radixSort(int *array, int length)
     int base = 10;        /* base 10 is used */
     int sig_digit = 1;    /* most significant digit */
     int bucket[base];     /* need one bucket for each of 0-base modulus results */
-    int semi_sorted[length];
     int largest = findLargest(array, length);
+    int *semi_sorted = tcalloc(length, sizeof(int));
 
     // Loop until we reach the largest significant digit
     while ((largest / sig_digit) > 0) {
@@ -86,6 +102,7 @@ void radixSort(int *array, int length)
         // Move to next significant digit
         sig_digit *= base;
     }
+    free(semi_sorted);
 }
 
 // remove all duplicate values from the integer array
