@@ -78,7 +78,7 @@ void calculateDegreeAndSort(SparseUGraph *graph);
 void sortDegree(SparseUGraph *graph);
 
 // populate sample array in SparseUGraph with a percentage of the highest degree nodes
-void populateNodeSample(SparseUGraph *graph, float samp_perc_size);
+void sampleNodes(SparseUGraph *graph, float samp_rate);
 
 // print out node degrees
 void printDegree(SparseUGraph *graph);
@@ -135,6 +135,9 @@ void printShortestPath(BFSInfo *info, int dest);
 
 // free BFSInfo struct
 void freeBFSInfo(BFSInfo *info);
+
+// print out predecessor info from BFS
+void printPredecessors(BFSInfo *info, int size);
 
 // calculate edge betweenness
 void calculateEdgeBetweenness(SparseUGraph *graph);

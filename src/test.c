@@ -13,7 +13,7 @@ main (int argc, char *argv[])
     int nums[size];
     int *node_idmap;
     int dest, par;
-    float sample_percentage = .2;
+    float sample_percentage = 0.2f;
 
     ////////////////////////////////
     // TEST GRAPH READING
@@ -27,17 +27,17 @@ main (int argc, char *argv[])
     strcpy(args.infile, argv[1]);
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
-    
+
     printf("*** Calculate degree ***\n");
     calculateDegreeAndSort(&graph);
-    printArray(graph.degree, graph.n);
+    printDegree(&graph);
     printf("*** Calculate degree ***\n");
 
     printf("*** Print Node Sample List ***\n");
-    populateNodeSample(&graph, sample_percentage);
+    sampleNodes(&graph, sample_percentage);
     printArray(graph.sample, graph.n_s);
     printf("*** Print Node Sample List ***\n");
-    
+
     // test bfs
     info.src = 0;      // start search from node 0
     bfs(&graph, &info);
@@ -46,14 +46,10 @@ main (int argc, char *argv[])
     printf("distance from %d --> %d: %d\n", info.src, dest, i);
 
     // print out predecessor info
-    printf("predecessors:\n");
-    for (i = 0; i < graph.n; i++) {
-        printf("%d: ", i);
-        printVector(&info.pred[i]);
-    }
+    printPredecessors(&info, graph.n);
 
     // now follow the path back up
-    printShortestPath(&info, dest);
+    // printShortestPath(&info, dest);
 
     ////////////////////////////////
     // TESTING VECTOR
