@@ -52,9 +52,12 @@ typedef struct {
     int *id;        // size = |V|; ids for all nodes
     int *index;     // size = |V| + 1
     int *edges;     // size = 2|E|
+    int *edge_id;   // size = 2|E|
+
     int *degree;    // size = |V|
-    int *node_ids;  // size = |V|
+    int *node_id;  // size = |V|
     int *sample;    // size = user specified at run time
+
 } SparseUGraph;
 
 
@@ -76,6 +79,9 @@ void sortDegree(SparseUGraph *graph);
 // populate sample array in SparseUGraph with a percentage of the highest degree nodes
 void populateNodeSample(SparseUGraph *graph, float samp_perc_size);
 
+// print out node degrees
+void printDegree(SparseUGraph *graph);
+
 // free the sparse undirected graph
 void freeSparseUGraph(SparseUGraph *graph);
 
@@ -87,6 +93,13 @@ int hasEdge(SparseUGraph *graph, int a, int b);
 
 // return the degree of the node
 int degree(SparseUGraph *graph, int node);
+
+// print the graph, up to `num_nodes`
+void printSparseUGraph(SparseUGraph *graph, int num_nodes);
+
+// convert a graph to an edgelist format; this loses the id list,
+// so be sure to save it first if you want to use it later
+void graphToEdgeList(SparseUGraph *graph, EdgeList *elist);
 
 
 ///////////////////////////////////////
@@ -101,7 +114,10 @@ typedef struct {
     int *parent;        // index represents node; value is index of parent
     int *distance;      // distance from node n to src
     int src;            // the root node of the search
+    int *sigma;         // number of shortest paths from src through each node
     Vector *pred;       // predecessors (all possible parents, not just left-most).
+    Vector stack;       // popping should return nodes in order of
+                        // non-increasing distance from src
 
 } BFSInfo;
 

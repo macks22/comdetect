@@ -20,6 +20,9 @@ void freeVector(Vector *vec);
 // append item to end of vector, expanding if necessary
 void vectorAppend(Vector *vec, int item);
 
+// pop an item from the vector; don't call on empty vectors
+int vectorPop(Vector *vec);
+
 // double capacity of vector
 void doubleVectorCap(Vector *vec);
 
