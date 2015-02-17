@@ -8,14 +8,14 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
     EdgeList elist_j;
     int edge_idx=0, id_idx=0, index_idx=0;
     int cur_id, prev_id = -1;
-    int i_end, j_end, i, j, i_idx=0, j_idx=0;
-    int i_orig, j_orig;
+    int i_end, j_end, i_idx=0, j_idx=0;
+    int i_orig, j_orig, i_end_orig, j_end_orig;
 
     // Allocate space for edge and node storage.
     // Note that the `mapNodeIds` function allocates space for the id array.
-    graph->index = (int *)tcalloc(graph->n+1, sizeof(int));
-    graph->edges = (int *)tcalloc(graph->m*2, sizeof(int));
-    graph->edge_id = (int *)tcalloc(graph->m*2, sizeof(int));
+    graph->index = tcalloc(graph->n+1, sizeof(int));
+    graph->edges = tcalloc(graph->m*2, sizeof(int));
+    graph->edge_id = tcalloc(graph->m*2, sizeof(int));
 
     // Now copy the edgelist and sort the copy on the j column
     copyEdgeList(elist_i, &elist_j);
@@ -40,30 +40,32 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
 
         // get the original ids, then convert with mapping
         i_orig = elist_i->nodes[ICOL][i_idx];
-        lookupNodeId(i_orig, &i);
         j_orig = elist_j.nodes[JCOL][j_idx];
-        lookupNodeId(j_orig, &j);
 
         // add the appropriate edge
-        if (i == cur_id) {
-            i_end = elist_i->nodes[JCOL][i_idx];
-            if (j == cur_id) {
+        if (i_orig == cur_id) {
+            i_end_orig = elist_i->nodes[JCOL][i_idx];
+            if (j_orig == cur_id) {
                 // add whichever is smaller
-                j_end = elist_j.nodes[ICOL][j_idx];
-                if (i_end < j_end) {  // i endpoint is smaller
+                j_end_orig = elist_j.nodes[ICOL][j_idx];
+                if (i_end_orig < j_end_orig) {  // i endpoint is smaller
+                    lookupNodeId(i_end_orig, &i_end);
                     graph->edges[edge_idx] = i_end;
                     graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
                 } else {  // j endpoint is smaller
+                    lookupNodeId(j_end_orig, &j_end);
                     graph->edges[edge_idx] = j_end;
                     graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
                 }
             } else {
                 // add i value
+                lookupNodeId(i_end_orig, &i_end);
                 graph->edges[edge_idx] = i_end;
                 graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
             }
-        } else if (j == cur_id) {  // add j value
-            graph->edges[edge_idx] = elist_j.nodes[ICOL][j_idx];
+        } else if (j_orig == cur_id) {  // add j value
+            lookupNodeId(elist_j.nodes[ICOL][j_idx], &j_end);
+            graph->edges[edge_idx] = j_end;
             graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
         } else {  // done with this node
             cur_id = graph->id[id_idx++];
@@ -72,6 +74,7 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
 
     // debug
     assert(id_idx-1 == graph->n+1);
+    freeEdgeList(&elist_j);
 }
 
 void
@@ -119,9 +122,27 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
     // to the input node IDs.
-    // storeAndFreeNodeIds(graph);
+    storeAndFreeNodeIds(graph);
     freeEdgeList(&elist);
     fclose(fpin);
+}
+
+void
+freeSparseUGraph(SparseUGraph *graph)
+{   // free all memory allocated for sparse undirected graph
+    free(graph->index);
+    free(graph->edges);
+    free(graph->edge_id);
+    free(graph->node_id);
+
+    // now check for others and free as necessary
+    if (graph->id != NULL) free(graph->id);
+    if (graph->edge_bet != NULL) free(graph->edge_bet);
+    if (graph->degree != NULL) free(graph->degree);
+    if (graph->sample != NULL) free(graph->sample);
+
+    // free hashtable used for node id mapping
+    hdestroy();
 }
 
 void
@@ -138,7 +159,9 @@ storeAndFreeNodeIds(SparseUGraph *graph)
 
     fclose(fpout);
     free(graph->id);
+    graph->id = NULL;
     printf("Node id array stored in %s\n", store_file);
+    hdestroy(); // remove node id hash table mapping
 }
 
 // print the graph, up to `num_nodes`
