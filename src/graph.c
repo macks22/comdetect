@@ -9,6 +9,7 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
     int edge_idx=0, id_idx=0, index_idx=0;
     int cur_id, prev_id = -1;
     int i_end, j_end, i, j, i_idx=0, j_idx=0;
+    int i_orig, j_orig;
 
     // Allocate space for edge and node storage.
     // Note that the `mapNodeIds` function allocates space for the id array.
@@ -26,6 +27,9 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
 
     // For each node in the id array, move through the 2 edge
     // lists to build up the index and edges arrays.
+    // Note that these ids must be converted to the contiguous ids
+    // using the node id map built in `mapNodeIds`, which is available
+    // globally via the <search.h> header functions.
     cur_id = graph->id[id_idx];
     while (id_idx <= graph->n+1) {
         if (prev_id != cur_id) {
@@ -34,8 +38,13 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
             prev_id = cur_id;
         }
 
-        i = elist_i->nodes[ICOL][i_idx];
-        j = elist_j.nodes[JCOL][j_idx];
+        // get the original ids, then convert with mapping
+        i_orig = elist_i->nodes[ICOL][i_idx];
+        lookupNodeId(i_orig, &i);
+        j_orig = elist_j.nodes[JCOL][j_idx];
+        lookupNodeId(j_orig, &j);
+
+        // add the appropriate edge
         if (i == cur_id) {
             i_end = elist_i->nodes[JCOL][i_idx];
             if (j == cur_id) {
@@ -88,7 +97,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
         edge_idx++;
     }
     printf("# edges read: %d\n", --edge_idx);
-    printEdgeList(&elist, edge_idx);
+    // printEdgeList(&elist, edge_idx);
     assert(graph->m == edge_idx);
 
     // get listing of all unique node ids

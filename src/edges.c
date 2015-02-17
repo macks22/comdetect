@@ -140,10 +140,45 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
 
     // finally, set the result
     *idmap = tcalloc(size, sizeof(int));
+    hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
+    // map actual node ids (from the input file) to contiguous ids
     for (i = 0; i < size; i++) {
         (*idmap)[i] = nodes[i];
+        addNodeIdToMap(nodes[i], i);
     }
     free(nodes);
+}
+
+void
+lookupNodeId(int orig_id, int *node_id)
+{   // look up the assigned node id using the original id read from the graph
+    ENTRY e, *ep;
+    char node_id_str[10];
+
+    sprintf(node_id_str, "%d", orig_id);
+    strncpy(e.key, node_id_str, strlen(node_id_str));
+    ep = hsearch(e, FIND);
+    if (ep == NULL) {
+        printf("unknown node id: %d\n", orig_id);
+        error(EXIT_FAILURE);
+    }
+    *node_id = *((int *)ep->data);
+}
+
+void
+addNodeIdToMap(int orig_id, int node_id)
+{   // add a mapping from the original node id to a new one
+    ENTRY e, *ep;
+    char node_id_str[10];
+
+    sprintf(node_id_str, "%d'", orig_id);
+    strncpy(e.key, node_id_str, strlen(node_id_str));
+    e.data = (void *)&node_id;
+    ep = hsearch(e, ENTER);
+    if (ep == NULL) {
+        fprintf(stderr, "node id map hash entry failed\n");
+        error(EXIT_FAILURE);
+    }
 }
 
 // Print out the edge list (for debugging purposes), up to `num_edges` edges.
