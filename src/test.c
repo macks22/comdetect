@@ -1,6 +1,9 @@
 #include "graph.h"
 
 
+void hash_test();
+
+
 int
 main (int argc, char *argv[])
 {
@@ -18,35 +21,52 @@ main (int argc, char *argv[])
     ////////////////////////////////
     // TEST GRAPH READING
 
-    if (argc != 2) {
-        printf("%s: <edgelist-file>\n", argv[0]);
-        exit(1);
-    }
+    hcreate(30);
+    addNodeIdToMap(10, 0);
+    //addNodeIdToMap(16, 1);
+    //addNodeIdToMap(21, 2);
+    //addNodeIdToMap(32, 3);
+    //addNodeIdToMap(50, 4);
+    lookupNodeId(10, &dest);
+    printf("id %d mapped to %d\n", 10, dest);
 
-    // read graph
-    strcpy(args.infile, argv[1]);
-    printf("Params: edgelist=%s\n", args.infile);
-    readSparseUGraph(&args, &graph);
+    // if (argc != 2) {
+    //     printf("%s: <edgelist-file>\n", argv[0]);
+    //     exit(1);
+    // }
 
-    printf("*** Calculate degree ***\n");
-    calculateDegreeAndSort(&graph);
-    printDegree(&graph);
-    printf("*** Calculate degree ***\n");
+    // // read graph
+    // strcpy(args.infile, argv[1]);
+    // printf("Params: edgelist=%s\n", args.infile);
+    // readSparseUGraph(&args, &graph);
+    // printSparseUGraph(&graph, graph.n);
 
-    printf("*** Print Node Sample List ***\n");
-    sampleNodes(&graph, sample_percentage);
-    printArray(graph.sample, graph.n_s);
-    printf("*** Print Node Sample List ***\n");
+    // ///////////////////////////////////////
+    // // TEST EDGE BETWEENNESS
 
-    // test bfs
-    info.src = 0;      // start search from node 0
-    bfs(&graph, &info);
-    dest = 4;
-    i = info.distance[dest];
-    printf("distance from %d --> %d: %d\n", info.src, dest, i);
+    // calculateEdgeBetweenness(&graph, 0.2);
+    // printf("*** Calculate degree ***\n");
+    // printDegree(&graph);
+    // printf("*** Calculate degree ***\n");
+    // printf("*** Node Sample List ***\n");
+    // printArray(graph.sample, graph.n_s);
+    // printf("*** Node Sample List ***\n");
+    // printEdgeBetweenness(&graph);
 
-    // print out predecessor info
-    printPredecessors(&info, graph.n);
+    ///////////////////////////////////
+    // TEST BFS
+
+    // info.src = 0;      // start search from node 0
+    // bfs(&graph, &info);
+    // printf("nodes in non-increasing distance from src:\n");
+    // printBFSStack(&info);
+    // dest = 4;
+    // i = info.distance[dest];
+    // printf("distance from %d --> %d: %d\n", info.src, dest, i);
+
+    // // print out predecessor info
+    // printPredecessors(&info);
+    // printShortestPathCounts(&info);
 
     // now follow the path back up
     // printShortestPath(&info, dest);
@@ -122,4 +142,24 @@ main (int argc, char *argv[])
     // // clean up and exit
     // freeEdgeList(&elist);
     return 0;
+}
+
+void hash_test()
+{
+    ENTRY e, *ep;
+    int i = 10, j = 0;
+    char node_id[10];
+
+    hcreate(30);
+    sprintf(node_id, "%d", i);
+    e.key = node_id;
+    e.data = (void *)&j;
+    ep = hsearch(e, ENTER);
+
+    ep = hsearch(e, FIND);
+    if (ep == NULL) {
+        printf("not found\n");
+    } else {
+        printf("key: %s\nvalue: %d\n", ep->key, *((int *)ep->data));
+    }
 }
