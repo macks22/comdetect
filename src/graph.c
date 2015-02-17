@@ -127,6 +127,21 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 }
 
 void
+freeSparseUGraph(SparseUGraph *graph)
+{   // free all memory allocated for sparse undirected graph
+    free(graph->index);
+    free(graph->edges);
+    free(graph->edge_id);
+    free(graph->node_id);
+
+    // now check for others and free as necessary
+    if (graph->id != NULL) free(graph->id);
+    if (graph->edge_bet != NULL) free(graph->edge_bet);
+    if (graph->degree != NULL) free(graph->degree);
+    if (graph->sample != NULL) free(graph->sample);
+}
+
+void
 storeAndFreeNodeIds(SparseUGraph *graph)
 {
     int i;

@@ -70,6 +70,9 @@ void rowCompressEdges(EdgeList *elist, SparseUGraph *graph);
 // read a sparse undirected graph from an edgelist file
 void readSparseUGraph(InputArgs *args, SparseUGraph *graph);
 
+// free all memory allocated for sparse undirected graph
+void freeSparseUGraph(SparseUGraph *graph);
+
 // store the id list for the graph and free the space it occupied
 void storeAndFreeNodeIds(SparseUGraph *graph);
 
