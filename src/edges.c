@@ -169,7 +169,7 @@ addNodeIdToMap(int orig_id, int node_id)
 {   // add a mapping from the original node id to a new one
     ENTRY e, *ep;
     char node_id_str[10];
-
+    
     sprintf(node_id_str, "%d", orig_id);
     e.key = tcalloc(10, sizeof(char));
     strncpy(e.key, node_id_str, strlen(node_id_str));
