@@ -2,11 +2,17 @@
 
 
 void
+initVector(Vector *vec, int size)
+{   // allocate space for new vector, with non-default initial size
+    vec->data = tcalloc(size, sizeof(int));
+    vec->cap = size;
+    vec->size = 0;
+}
+
+void
 newVector(Vector *vec)
 {   // allocate space for new vector
-    vec->data = (int *)tcalloc(INIT_VECTOR_SIZE, sizeof(int));
-    vec->cap = INIT_VECTOR_SIZE;
-    vec->size = 0;
+    initVector(vec, INIT_VECTOR_SIZE);
 }
 
 void

@@ -14,6 +14,9 @@ typedef struct {
 // allocate space for new vector
 void newVector(Vector *vec);
 
+// allocate space for new vector, with non-default initial size
+void initVector(Vector *vec, int size);
+
 // free mem allocation for vector
 void freeVector(Vector *vec);
 
