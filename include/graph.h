@@ -51,6 +51,7 @@ typedef struct {
     int *id;        // size = |V|; ids for all nodes
     int *index;     // size = |V| + 1
     int *edges;     // size = 2|E|
+    int *edge_id;   // size = 2|E|
 
 } SparseUGraph;
 
@@ -76,6 +77,13 @@ int hasEdge(SparseUGraph *graph, int a, int b);
 // return the degree of the node
 int degree(SparseUGraph *graph, int node);
 
+// print the graph, up to `num_nodes`
+void printSparseUGraph(SparseUGraph *graph, int num_nodes);
+
+// convert a graph to an edgelist format; this loses the id list,
+// so be sure to save it first if you want to use it later
+void graphToEdgeList(SparseUGraph *graph, EdgeList *elist);
+
 
 ///////////////////////////////////////
 // BFS STUFF
@@ -89,7 +97,10 @@ typedef struct {
     int *parent;        // index represents node; value is index of parent
     int *distance;      // distance from node n to src
     int src;            // the root node of the search
+    int *sigma;         // number of shortest paths from src through each node
     Vector *pred;       // predecessors (all possible parents, not just left-most).
+    Vector stack;       // popping should return nodes in order of
+                        // non-increasing distance from src
 
 } BFSInfo;
 
