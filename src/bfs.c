@@ -13,6 +13,7 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
 
     // allocate space for bfs info
     newVector(&info->stack);
+    info->n = graph->n;
     info->parent = (int *)tcalloc(graph->n, sizeof(int));
     info->distance = (int *)tcalloc(graph->n, sizeof(int));
     info->sigma = (int *)tcalloc(graph->n, sizeof(int));
@@ -76,4 +77,27 @@ printShortestPath(BFSInfo *info, int dest)
         par = info->parent[par];
     }
     printf("%d\n", info->src);
+}
+
+void
+printPredecessors(BFSInfo *info)
+{   // print out predecessor info from BFS
+    int i;
+    printf("predecessors:\n");
+    for (i = 0; i < info->n; i++) {
+        printf("%d: ", i);
+        printVector(&info->pred[i]);
+    }
+}
+
+
+// print out number of shortest paths
+void
+printShortestPathCounts(BFSInfo *info)
+{
+    int i;
+    printf("node\tnum_shortest_paths\n");
+    for (i = 0; i < info->n; i++) {
+        printf("%d\t%d\n", i, info->sigma[i]);
+    }
 }
