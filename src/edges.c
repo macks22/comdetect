@@ -170,8 +170,9 @@ addNodeIdToMap(int orig_id, int node_id)
 {   // add a mapping from the original node id to a new one
     ENTRY e, *ep;
     char node_id_str[10];
+    
 
-    sprintf(node_id_str, "%d'", orig_id);
+    sprintf(node_id_str, "%d", orig_id);
     strncpy(e.key, node_id_str, strlen(node_id_str));
     e.data = (void *)&node_id;
     ep = hsearch(e, ENTER);
