@@ -20,30 +20,34 @@ main (int argc, char *argv[])
     Vector communities[2];
     int num_comm =2;
     float sample_percentage = 0.2f;
-
+    kMedoidInfo k_med;
 
     ////////////////////////////////
     // TEST GRAPH READING
 
-    hcreate(30);
-    addNodeIdToMap(10, 0);
+    //hcreate(30);
+    //addNodeIdToMap(10, 0);
     //addNodeIdToMap(16, 1);
     //addNodeIdToMap(21, 2);
     //addNodeIdToMap(32, 3);
     //addNodeIdToMap(50, 4);
-    lookupNodeId(10, &dest);
-    printf("id %d mapped to %d\n", 10, dest);
+    //lookupNodeId(10, &dest);
+    //printf("id %d mapped to %d\n", 10, dest);
 
-    // if (argc != 2) {
-    //     printf("%s: <edgelist-file>\n", argv[0]);
-    //     exit(1);
-    // }
+    if (argc != 3) {
+	printf("%s: <edgelist-file>\n", argv[0]);
+	exit(1);
+    }
 
-    // // read graph
-    // strcpy(args.infile, argv[1]);
-    // printf("Params: edgelist=%s\n", args.infile);
-    // readSparseUGraph(&args, &graph);
+    // read graph
+    strcpy(args.infile, argv[1]);
+    args.num_clusters = atoi(argv[2]);
+    printf("Params: edgelist=%s\n", args.infile);
+    readSparseUGraph(&args, &graph);
     // printSparseUGraph(&graph, graph.n);
+    k_med.k = args.num_clusters;
+    k_med.z = 3;
+    graphKMedoid(&graph, &k_med);
 
     // ///////////////////////////////////////
     // // TEST EDGE BETWEENNESS
