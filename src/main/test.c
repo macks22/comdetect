@@ -15,7 +15,7 @@ main (int argc, char *argv[])
     int i = 0, j = 0, size = 10;
     int nums[size];
     int *node_idmap;
-    int dest, par;
+    int dest, par, src;
     float mod = 0.0;
     Vector communities[2];
     int num_comm =2;
@@ -34,6 +34,7 @@ main (int argc, char *argv[])
     //lookupNodeId(10, &dest);
     //printf("id %d mapped to %d\n", 10, dest);
 
+    /*
     if (argc != 3) {
 	printf("%s: <edgelist-file>\n", argv[0]);
 	exit(1);
@@ -44,22 +45,45 @@ main (int argc, char *argv[])
     args.num_clusters = atoi(argv[2]);
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
+    */
     // printSparseUGraph(&graph, graph.n);
     //    k_med.k = args.num_clusters;
     //    k_med.z = 3;
     //    graphKMedoid(&graph, &k_med);
 
+    // hcreate(30);
+    // addNodeIdToMap(10, 0);
+    // addNodeIdToMap(16, 1);
+    // addNodeIdToMap(21, 2);
+    // addNodeIdToMap(32, 3);
+    // addNodeIdToMap(50, 4);
+    // lookupNodeId(10, &dest);
+    // printf("id %d mapped to %d\n", 10, dest);
+
+    if (argc != 2) {
+        printf("%s: <edgelist-file>\n", argv[0]);
+        exit(1);
+    }
+
+
     // ///////////////////////////////////////
     // // TEST EDGE BETWEENNESS
 
-    // calculateEdgeBetweenness(&graph, 0.2);
-    // printf("*** Calculate degree ***\n");
-    // printDegree(&graph);
-    // printf("*** Calculate degree ***\n");
-    // printf("*** Node Sample List ***\n");
-    // printArray(graph.sample, graph.n_s);
-    // printf("*** Node Sample List ***\n");
-    // printEdgeBetweenness(&graph);
+    Vector largest;
+    calculateEdgeBetweenness(&graph, 0.2, &largest);
+    for (i = 0; i < largest.size; i++) {
+        src = largest.data[i++];
+        dest = largest.data[i];
+        printf("(%d, %d)\n", src, dest);
+    }
+    printf("*** Node Sample List ***\n");
+    printArray(graph.sample, graph.n_s);
+    printf("*** Node Sample List ***\n");
+    printEdgeBetweenness(&graph);
+    freeSparseUGraph(&graph);
+    printf("*** Calculate degree ***\n");
+    printDegree(&graph);
+    printf("*** Calculate degree ***\n");
 
     ///////////////////////////////////
     // TEST BFS

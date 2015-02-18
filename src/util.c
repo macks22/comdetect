@@ -1,7 +1,5 @@
 #include "graph.h"
 
-const int OOM_ERROR = -1;
-
 // print error and exit
 void error(int err_code)
 {

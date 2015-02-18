@@ -147,8 +147,8 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes, IdmapStorage *store)
     }
 }
 
-void
-lookupNodeId(int orig_id, int *node_id)
+int
+lookupNodeId(int orig_id)
 {   // look up the assigned node id using the original id read from the graph
     ENTRY e, *ep;
     char node_id_str[10];
@@ -161,8 +161,8 @@ lookupNodeId(int orig_id, int *node_id)
         fprintf(stderr, "unknown node id: %d\n", orig_id);
         error(EXIT_FAILURE);
     }
-    *node_id = *((int *)ep->data);
     free(e.key);
+    return *((int *)ep->data);
 }
 
 void

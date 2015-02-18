@@ -25,3 +25,8 @@ void removeDuplicates(int *array, int *length);
 
 // print an array of integers
 void printArray(int *array, int length);
+
+
+// ERROR CODES
+#define OOM_ERROR   -1
+#define BAD_FP    -2

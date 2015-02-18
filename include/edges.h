@@ -54,7 +54,7 @@ int findLargestEndpoint(EdgeList *elist, int column);
 void mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes, IdmapStorage *store);
 
 // look up the assigned node id using the original id read from the graph
-void lookupNodeId(int orig_id, int *node_id);
+int lookupNodeId(int orig_id);
 
 // add a mapping from the original node id to a new one
 void addNodeIdToMap(IdmapStorage *store, int orig_id, int node_id);

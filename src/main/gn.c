@@ -1,6 +1,48 @@
 #include "graph.h"
 
 
+int
+main (int argc, char *argv[])
+{
+    int k, i, j;
+    Vector *comms;
+    SparseUGraph graph;
+    InputArgs args;
+    FILE *fpout;
+
+    if (argc < 4) {
+        printf("%s: <edgelist-file> <k> <outfile>\n", argv[0]);
+        exit(1);
+    }
+
+    // read input arguments
+    strcpy(args.infile, argv[1]);
+    args.num_clusters = atoi(argv[2]);
+    strcpy(args.outfile, argv[3]);
+    printf("Params: edgelist=%s, num_clusters=%d, outfile=%s\n",
+           args.infile, args.num_clusters, args.outfile);
+
+    // read graph and run Girvan Newman
+    readSparseUGraph(&args, &graph);
+    // printSparseUGraph(&graph, graph.n);
+    girvanNewman(&graph, args.num_clusters, 1.0);
+    k = labelCommunities(&graph, &comms);
+
+    // output community memberships
+    fpout = fopen(args.outfile, "w");
+    if (fpout == NULL) {
+        fprintf(stderr, "unable to open output file: %s", args.outfile);
+        error(BAD_FP);
+    }
+    for (i = 0; i < k; i++) {
+        for (j = 0; j < comms[i].size; j++) {
+            fprintf(fpout, "%d %d\n", graph.id[comms[i].data[j]], i);
+        }
+    }
+    exit(EXIT_SUCCESS);
+}
+
+
 // Use the Girvan Newman (2004) algorithm to divisely
 // cluster the graph into k partitions.
 void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
@@ -23,7 +65,7 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
         edges_cut += largest.size / 2;
         iteration++;
         freeVector(&largest);
-        printSparseUGraph(graph, graph->n);
+        // printSparseUGraph(graph, graph->n);
     }
 }
 
@@ -100,11 +142,10 @@ int labelCommunities(SparseUGraph *graph, Vector **comms)
     free(elist.id);
 
     // now accumulate all community members
-    comm_id = 0;
     j = 0;
     prev_root = -1;
     *comms = tcalloc(k, sizeof(Vector));
-    for (i = 0; i < comm_id; i++) {
+    for (i = 0; i < k; i++) {
         newVector(&(*comms)[i]);
         root = roots[j];
         vectorAppend(&(*comms)[i], node_ids[j++]);
