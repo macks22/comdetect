@@ -45,9 +45,9 @@ main (int argc, char *argv[])
     printf("Params: edgelist=%s\n", args.infile);
     readSparseUGraph(&args, &graph);
     // printSparseUGraph(&graph, graph.n);
-    k_med.k = args.num_clusters;
-    k_med.z = 3;
-    graphKMedoid(&graph, &k_med);
+    //    k_med.k = args.num_clusters;
+    //    k_med.z = 3;
+    //    graphKMedoid(&graph, &k_med);
 
     // ///////////////////////////////////////
     // // TEST EDGE BETWEENNESS
