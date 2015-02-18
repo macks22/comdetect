@@ -49,22 +49,22 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
                 // add whichever is smaller
                 j_end_orig = elist_j.nodes[ICOL][j_idx];
                 if (i_end_orig < j_end_orig) {  // i endpoint is smaller
-                    lookupNodeId(i_end_orig, &i_end);
+                    i_end = lookupNodeId(i_end_orig);
                     graph->edges[edge_idx] = i_end;
                     graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
                 } else {  // j endpoint is smaller
-                    lookupNodeId(j_end_orig, &j_end);
+                    j_end = lookupNodeId(j_end_orig);
                     graph->edges[edge_idx] = j_end;
                     graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
                 }
             } else {
                 // add i value
-                lookupNodeId(i_end_orig, &i_end);
+                i_end = lookupNodeId(i_end_orig);
                 graph->edges[edge_idx] = i_end;
                 graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
             }
         } else if (j_orig == cur_id) {  // add j value
-            lookupNodeId(elist_j.nodes[ICOL][j_idx], &j_end);
+            j_end = lookupNodeId(elist_j.nodes[ICOL][j_idx]);
             graph->edges[edge_idx] = j_end;
             graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
         } else {  // done with this node
@@ -86,6 +86,10 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 
     // read the first line, which contains #nodes #edges
     fpin = fopen(args->infile, "r");
+    if (fpin == NULL) {
+        fprintf(stderr, "Unable to open graph edgelist: %s", args->infile);
+        error(BAD_FP);
+    }
     fscanf(fpin, "%d %d", &graph->n, &graph->m);
     printf("reading: %d nodes, %d edges\n", graph->n, graph->m);
 
@@ -122,7 +126,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
     // to the input node IDs.
-    storeAndFreeNodeIds(graph);
+    // storeAndFreeNodeIds(graph);
     freeEdgeList(&elist);
     fclose(fpin);
 }
