@@ -11,22 +11,8 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
     Queue q;
     int i, j, par, child;
 
-    // allocate space for bfs info
-    initVector(&info->stack, graph->n);
-    info->n = graph->n;
-    info->parent = (int *)tcalloc(graph->n, sizeof(int));
-    info->distance = (int *)tcalloc(graph->n, sizeof(int));
-    info->sigma = (int *)tcalloc(graph->n, sizeof(int));
-    info->pred = (Vector *)tcalloc(graph->n, sizeof(Vector));
-    for (i = 0; i < graph->n; i++) {
-        newVector(&info->pred[i]);
-    }
-
-    // set all distances to -1 and all sigmas to 0
-    for (i = 0; i < graph->n; i++) {
-        info->distance[i] = -1;
-        info->sigma[i] = 0;
-    }
+    // reset the information storage
+    resetBFSInfo(info);
 
     // set up queue for the search
     newQueue(&q);
@@ -62,6 +48,35 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
     freeQueue(&q);
 }
 
+void
+resetBFSInfo(BFSInfo *info)
+{   // Zero out all BFS info data, to prepare for new run
+    // this assumes the grpah size has not changed.
+    int i;
+    info->stack.size = 0;
+    for (i = 0; i < info->n; i++) {
+        info->pred[i].size = 0;
+        info->distance[i] = -1;
+        info->parent[i] = 0;
+        info->sigma[i] = 0;
+    }
+}
+
+void
+newBFSInfo(BFSInfo *info, int n)
+{   // allocate new BFSInfo struct, for size `n` graph.
+    int i;
+    info->n = n;
+    initVector(&info->stack, n);
+    info->parent = tcalloc(n, sizeof(int));
+    info->distance = tcalloc(n, sizeof(int));
+    info->sigma = tcalloc(n, sizeof(int));
+    info->pred = (Vector *)tcalloc(n, sizeof(Vector));
+    for (i = 0; i < n; i++) {
+        newVector(&info->pred[i]);
+    }
+}
+
 // free BFSInfo struct
 void
 freeBFSInfo(BFSInfo *info)
@@ -71,10 +86,8 @@ freeBFSInfo(BFSInfo *info)
 
     free(info->parent);
     info->parent = NULL;
-
     free(info->distance);
     info->distance = NULL;
-
     free(info->sigma);
     info->sigma = NULL;
 

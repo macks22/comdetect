@@ -4,15 +4,22 @@
 int
 main (int argc, char *argv[])
 {
-    int k, i, j;
+    int k;
     Vector *comms;
     SparseUGraph graph;
     InputArgs args;
-    FILE *fpout;
 
+    // validate input args
     if (argc < 4) {
         printf("%s: <edgelist-file> <k> <outfile>\n", argv[0]);
         exit(1);
+    }
+
+    // check for sample size input
+    if (argc == 5) {
+        args.sample_rate = strtod(argv[4], NULL);
+    } else {
+        args.sample_rate = 0.2;
     }
 
     // read input arguments
@@ -25,21 +32,29 @@ main (int argc, char *argv[])
     // read graph and run Girvan Newman
     readSparseUGraph(&args, &graph);
     // printSparseUGraph(&graph, graph.n);
-    girvanNewman(&graph, args.num_clusters, 1.0);
+    girvanNewman(&graph, args.num_clusters, args.sample_rate);
     k = labelCommunities(&graph, &comms);
 
     // output community memberships
-    fpout = fopen(args.outfile, "w");
+    writeCommunities(graph.id, comms, k, args.outfile);
+    exit(EXIT_SUCCESS);
+}
+
+// print out node community membership to outfile
+void writeCommunities(int *idmap, Vector *comms, int k, char *outfile)
+{
+    int i, j;
+    FILE *fpout;
+    fpout = fopen(outfile, "w");
     if (fpout == NULL) {
-        fprintf(stderr, "unable to open output file: %s", args.outfile);
+        fprintf(stderr, "unable to open output file: %s", outfile);
         error(BAD_FP);
     }
     for (i = 0; i < k; i++) {
         for (j = 0; j < comms[i].size; j++) {
-            fprintf(fpout, "%d %d\n", graph.id[comms[i].data[j]], i);
+            fprintf(fpout, "%d %d\n", idmap[comms[i].data[j]], i);
         }
     }
-    exit(EXIT_SUCCESS);
 }
 
 
@@ -56,7 +71,17 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
     if (graph->m <= 0) return;
 
     while (edges_cut < k && edges_cut < graph->m) {
-        calculateEdgeBetweenness(graph, sample_rate, &largest);
+
+        // Calculate degree, then sample the nodes
+        calculateDegreeAndSort(graph);
+        sampleNodes(graph, sample_rate);
+        if (graph->n_s <= 0) {
+            printf("0 nodes are sampled with a sample rate of %f\n", sample_rate);
+            exit(INVALID_SAMPLE_SIZE);
+        }
+
+        // calculate edge betweenness and cut edge(s) with highest value(s)
+        calculateEdgeBetweenness(graph, &largest);
         for (i = 0; i < largest.size; i++) {
             src = largest.data[i++];
             dest = largest.data[i];

@@ -28,5 +28,6 @@ void printArray(int *array, int length);
 
 
 // ERROR CODES
-#define OOM_ERROR   -1
-#define BAD_FP    -2
+#define OOM_ERROR           -1
+#define BAD_FP              -2
+#define INVALID_SAMPLE_SIZE -3

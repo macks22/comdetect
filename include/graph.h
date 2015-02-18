@@ -29,6 +29,7 @@ typedef struct {
     char infile[200];
     int num_clusters;
     char outfile[200];
+    float sample_rate;
 
 } InputArgs;
 
@@ -137,6 +138,16 @@ typedef struct {
 // assume distance is initialized with all -1
 #define discovered(info, node) (info->distance[node] >= 0)
 
+// Zero out all BFS info data, to prepare for new run
+// this assumes the grpah size has not changed.
+void resetBFSInfo(BFSInfo *info);
+
+// allocate new BFSInfo struct, setting `src` node for search root
+void newBFSInfo(BFSInfo *info, int n);
+
+// free BFSInfo struct
+void freeBFSInfo(BFSInfo *info);
+
 // Perform a BFS on the sparse undirected graph and return
 // the information discovered. The src node is passed with
 // the info struct.
@@ -152,9 +163,6 @@ void printShortestPathCounts(BFSInfo *info);
 // should return vertices in order of non-increasing distance from src
 void printBFSStack(BFSInfo *info);
 
-// free BFSInfo struct
-void freeBFSInfo(BFSInfo *info);
-
 // print out predecessor info from BFS
 void printPredecessors(BFSInfo *info);
 
@@ -167,7 +175,7 @@ int getEdges(SparseUGraph *graph, int node);
 // note that multiple calls calculate multiple times.
 // The Vector will be returned with the indices of the edges
 // with the largest betweenness centrality.
-void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest);
+void calculateEdgeBetweenness(SparseUGraph *graph, Vector *largest);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
@@ -182,6 +190,9 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
 // Build up the communities from the divided graph
 // using a union-find data structure
 int labelCommunities(SparseUGraph *graph, Vector **comms);
+
+// print out node community membership to outfile
+void writeCommunities(int *idmap, Vector *comms, int k, char *outfile);
 
 // Cut an edge from the graph by marking it with the negative
 // of the iteration number in which it was cut.

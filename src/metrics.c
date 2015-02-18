@@ -76,7 +76,7 @@ printDegree(SparseUGraph *graph)
 }
 
 void
-calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest)
+calculateEdgeBetweenness(SparseUGraph *graph, Vector *largest)
 {   // calculate edge betweenness centrality using sampling
     // note that multiple calls calculate multiple times
     assert(graph != NULL);
@@ -92,10 +92,6 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest
         return;  // TODO: handle this better
     }
 
-    // Calculate degree, then sample the nodes
-    calculateDegreeAndSort(graph);
-    sampleNodes(graph, sample_rate);
-
     // set up edge betweenness storage
     if (graph->edge_bet != NULL) {
         graph->edge_bet = trealloc(graph->edge_bet, graph->m*sizeof(float));
@@ -105,6 +101,7 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest
 
     // begin calculations
     newVector(largest);
+    newBFSInfo(&info, graph->n);
     largest_val = 0.0;
     for (i = 0; i < graph->n_s; i++) {
         info.src = graph->sample[i];  // perform bfs from src node
@@ -141,8 +138,8 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest
                 }
             }
         }
-        freeBFSInfo(&info);
     }
+    freeBFSInfo(&info);
 }
 
 // print out edge betweenness per edge
