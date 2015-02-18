@@ -43,11 +43,15 @@ void bfs(SparseUGraph *graph, BFSInfo *info)
         // explore all children of this node
         for (i = graph->index[par]; i < graph->index[par+1]; i++) {
             child = graph->edges[i];
+            if (child < 0) continue;  // account for edges that have been cut
+
+            // process child and queue its children if not already discovered
             if (!discovered(info, child)) {
                 info->parent[child] = par;
                 info->distance[child] = info->distance[par]+1;
                 enqueue(&q, child);
             }
+
             // on the shortest path?
             if (info->distance[child] == info->distance[par]+1) {
                 vectorAppend(&info->pred[child], par);

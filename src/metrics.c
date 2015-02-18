@@ -76,21 +76,23 @@ printDegree(SparseUGraph *graph)
 }
 
 void
-calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate)
-{   // calculate edge betweenness using sampling
+calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest)
+{   // calculate edge betweenness centrality using sampling
     // note that multiple calls calculate multiple times
     assert(graph != NULL);
     BFSInfo info;
     int i, j, pred, node, edge_id;
     float flow[graph->m];
     float coeff, c;
+    float new_val;
+    float largest_val; // largest value seen so far
 
     // check for empty graph
     if (graph->n == 0 || graph->m == 0) {
         return;  // TODO: handle this better
     }
 
-    // Calculate degree if not already done, then sample the nodes
+    // Calculate degree, then sample the nodes
     calculateDegreeAndSort(graph);
     sampleNodes(graph, sample_rate);
 
@@ -102,6 +104,8 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate)
     }
 
     // begin calculations
+    newVector(largest);
+    largest_val = 0.0;
     for (i = 0; i < graph->n_s; i++) {
         info.src = graph->sample[i];  // perform bfs from src node
         bfs(graph, &info);
@@ -119,6 +123,22 @@ calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate)
                 flow[pred] += c;
                 edge_id = findEdgeId(graph, node, pred);
                 graph->edge_bet[edge_id] += c;
+
+                // check for new largest
+                // do some hacky business with the vector:
+                // instead of adding edge ids, just add both
+                // the src and the dest nodes for the edge ->
+                // this is a faster lookup with CRS format
+                new_val = graph->edge_bet[edge_id];
+                if (new_val > largest_val) {
+                    largest->size = 0;
+                    vectorAppend(largest, node);
+                    vectorAppend(largest, pred);
+                    largest_val = new_val;
+                } else if (new_val == largest_val) {
+                    vectorAppend(largest, node);
+                    vectorAppend(largest, pred);
+                }
             }
         }
         freeBFSInfo(&info);

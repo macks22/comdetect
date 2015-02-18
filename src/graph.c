@@ -179,8 +179,10 @@ printSparseUGraph(SparseUGraph *graph, int num_nodes)
     if (graph->n <= 0) return;
     num_nodes = (num_nodes > graph->n) ? graph->n : num_nodes;
 
-    printf("node id mapping:\n");
-    printArray(graph->id, graph->n);
+    if (graph->id != NULL) {
+        printf("node id mapping:\n");
+        printArray(graph->id, graph->n);
+    }
     printf("graph index:\n");
     printArray(graph->index, graph->n+1);
     printf("graph edgelist:\n");

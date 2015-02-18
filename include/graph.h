@@ -162,7 +162,11 @@ float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
 
 int getEdges(SparseUGraph *graph, int node);
 
-void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
+// Calculate edge betweenness centrality using sampling
+// note that multiple calls calculate multiple times.
+// The Vector will be returned with the indices of the edges
+// with the largest betweenness centrality.
+void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
@@ -170,3 +174,10 @@ void printEdgeBetweenness(SparseUGraph *graph);
 // graph partitioning by graph k medoids method
 void graphKMedoid(SparseUGraph *graph, InputArgs *args);
 
+// Use the Girvan Newman (2004) algorithm to divisely
+// cluster the graph into k partitions.
+void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
+
+// Cut an edge from the graph by marking it with the negative
+// of the iteration number in which it was cut.
+void cutEdge(SparseUGraph *graph, int src, int dest, int iteration);
