@@ -29,5 +29,8 @@ int vectorPop(Vector *vec);
 // double capacity of vector
 void doubleVectorCap(Vector *vec);
 
+// remove all duplicate elements from the vector
+void uniqueVector(Vector *vec);
+
 // print full vector contents
 void printVector(Vector *vec);

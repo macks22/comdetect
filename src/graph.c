@@ -71,10 +71,10 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
             cur_id = graph->id[id_idx++];
         }
     }
+    freeEdgeList(&elist_j);
 
     // debug
     assert(id_idx-1 == graph->n+1);
-    freeEdgeList(&elist_j);
 }
 
 void
@@ -104,7 +104,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     assert(graph->m == edge_idx);
 
     // get listing of all unique node ids
-    mapNodeIds(&elist, &graph->id, &num_ids);
+    mapNodeIds(&elist, &graph->id, &num_ids, &graph->idmap);
     assert(graph->n == num_ids);
 
     // compress edgelist rows to construct index and edge list
@@ -136,7 +136,10 @@ freeSparseUGraph(SparseUGraph *graph)
     free(graph->node_id);
 
     // now check for others and free as necessary
-    if (graph->id != NULL) free(graph->id);
+    if (graph->id != NULL) {
+        free(graph->id);
+        freeIdmapStorage(&graph->idmap);
+    }
     if (graph->edge_bet != NULL) free(graph->edge_bet);
     if (graph->degree != NULL) free(graph->degree);
     if (graph->sample != NULL) free(graph->sample);
@@ -148,6 +151,7 @@ freeSparseUGraph(SparseUGraph *graph)
 void
 storeAndFreeNodeIds(SparseUGraph *graph)
 {
+    assert(graph->id != NULL);
     int i;
     FILE *fpout;
     char store_file[50] = "../output/node_ids.txt";
@@ -159,6 +163,7 @@ storeAndFreeNodeIds(SparseUGraph *graph)
 
     fclose(fpout);
     free(graph->id);
+    freeIdmapStorage(&graph->idmap);
     graph->id = NULL;
     printf("Node id array stored in %s\n", store_file);
     hdestroy(); // remove node id hash table mapping
@@ -174,8 +179,10 @@ printSparseUGraph(SparseUGraph *graph, int num_nodes)
     if (graph->n <= 0) return;
     num_nodes = (num_nodes > graph->n) ? graph->n : num_nodes;
 
-    printf("node id mapping:\n");
-    printArray(graph->id, graph->n);
+    if (graph->id != NULL) {
+        printf("node id mapping:\n");
+        printArray(graph->id, graph->n);
+    }
     printf("graph index:\n");
     printArray(graph->index, graph->n+1);
     printf("graph edgelist:\n");

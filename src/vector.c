@@ -20,6 +20,7 @@ freeVector(Vector *vec)
 {   // free mem allocation for vector
     assert(vec != NULL);
     free(vec->data);
+    vec->data = NULL;
     vec->size = 0;
     vec->cap = 0;
 }
@@ -46,6 +47,14 @@ doubleVectorCap(Vector *vec)
 {   // double capacity of vector
     vec->cap *= 2;
     vec->data = (int *)trealloc(vec->data, vec->cap*sizeof(int));
+}
+
+// remove all duplicate elements from the vector
+void
+uniqueVector(Vector *vec)
+{
+    assert(vec->data != NULL);
+    removeDuplicates(vec->data, &vec->size);
 }
 
 void printVector(Vector *vec)

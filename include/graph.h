@@ -17,6 +17,7 @@
 #include "vector.h"
 #include "util.h"
 #include "edges.h"
+#include "wqupc.h"
 
 /********************************************************************/
 /*                       STRUCTS AND PROTOTYPES                     */
@@ -60,6 +61,8 @@ typedef struct {
     int *degree;      // size = |V|
     int *node_id;     // size = |V|
     int *sample;      // size = user specified at run time
+
+    IdmapStorage idmap;    // hash table entries for node id map
 
 } SparseUGraph;
 
@@ -164,7 +167,11 @@ int getEdgesInComm(SparseUGraph *graph, int node);
 // returns the expected number of random edges
 int getDegreeInNetwork(SparseUGraph *graph, int node);
 
-void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate);
+// Calculate edge betweenness centrality using sampling
+// note that multiple calls calculate multiple times.
+// The Vector will be returned with the indices of the edges
+// with the largest betweenness centrality.
+void calculateEdgeBetweenness(SparseUGraph *graph, float sample_rate, Vector *largest);
 
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
@@ -201,3 +208,14 @@ void genKSeeds(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
 void labelDTZidx(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
 
 
+// Use the Girvan Newman (2004) algorithm to divisely
+// cluster the graph into k partitions.
+void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
+
+// Build up the communities from the divided graph
+// using a union-find data structure
+int labelCommunities(SparseUGraph *graph, Vector **comms);
+
+// Cut an edge from the graph by marking it with the negative
+// of the iteration number in which it was cut.
+void cutEdge(SparseUGraph *graph, int src, int dest, int iteration);

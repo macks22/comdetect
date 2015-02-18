@@ -1,17 +1,24 @@
 #include "graph.h"
-#include <string.h>
 
 
 // allocate space for a new edge list of the given length
 void
 newEdgeList(EdgeList *elist, int length)
 {
-    int i;
     elist->length = length;
     elist->nodes[0] = tcalloc(length, sizeof(int));
     elist->nodes[1] = tcalloc(length, sizeof(int));
     elist->id = tcalloc(length, sizeof(int));
     resetEdgeIds(elist);
+}
+
+void
+freeEdgeList(EdgeList *elist)
+{   // Free the memory allocated for the edgelist.
+    assert(elist != NULL);
+    free(elist->nodes[0]);
+    free(elist->nodes[1]);
+    free(elist->id);
 }
 
 void
@@ -31,8 +38,10 @@ copyEdgeList(EdgeList *cur, EdgeList *new)
     int i, j;
 
     // first allocate space for the copy
-    newEdgeList(new, cur->length);
-    assert(new->length == cur->length);
+    new->length = cur->length;
+    new->nodes[0] = tcalloc(cur->length, sizeof(int));
+    new->nodes[1] = tcalloc(cur->length, sizeof(int));
+    new->id = tcalloc(cur->length, sizeof(int));
 
     // then move over i and j columns
     for (j = 0; j < 2; j++) {
@@ -45,16 +54,6 @@ copyEdgeList(EdgeList *cur, EdgeList *new)
     for (i = 0; i < cur->length; i++) {
         new->id[i] = cur->id[i];
     }
-}
-
-// Free the memory allocated for the edgelist.
-void
-freeEdgeList(EdgeList *elist)
-{
-    assert(elist != NULL);
-    free(elist->nodes[0]);
-    free(elist->nodes[1]);
-    free(elist->id);
 }
 
 // find largest value in i or j column
@@ -118,7 +117,7 @@ sortEdges(EdgeList *elist, int col)
 // Return an array with all unique node ids sorted in ascending order.
 // Also set the number of unique nodes after filtering.
 void
-mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
+mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes, IdmapStorage *store)
 {
     assert(elist != NULL);
     int i, j;
@@ -135,19 +134,17 @@ mapNodeIds(EdgeList *elist, int **idmap, int *num_nodes)
         nodes[i++] = elist->nodes[JCOL][j];
     }
 
-    // now remove duplicates (which sorts) and set number of nodes
+    // now remove duplicates (which sorts) and set results
     removeDuplicates(nodes, &size);
     *num_nodes = size;
+    *idmap = realloc(nodes, size * sizeof(int));
 
-    // finally, set the result
-    *idmap = tcalloc(size, sizeof(int));
-    hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
     // map actual node ids (from the input file) to contiguous ids
+    hcreate((int)(size + size*0.25 + 0.5));  // make new hash table for ids
+    newIdmapStorage(store, size);
     for (i = 0; i < size; i++) {
-        (*idmap)[i] = nodes[i];
-        addNodeIdToMap(nodes[i], i);
+        addNodeIdToMap(store, nodes[i], i);
     }
-    free(nodes);
 }
 
 void
@@ -169,11 +166,11 @@ lookupNodeId(int orig_id, int *node_id)
 }
 
 void
-addNodeIdToMap(int orig_id, int node_id)
+addNodeIdToMap(IdmapStorage *store, int orig_id, int node_id)
 {   // add a mapping from the original node id to a new one
     ENTRY e, *ep;
     char node_id_str[10];
-    
+
     sprintf(node_id_str, "%d", orig_id);
     e.key = tcalloc(10, sizeof(char));
     strncpy(e.key, node_id_str, strlen(node_id_str));
@@ -184,6 +181,7 @@ addNodeIdToMap(int orig_id, int node_id)
         fprintf(stderr, "node id map hash entry failed\n");
         error(EXIT_FAILURE);
     }
+    addIdmapEntry(store, &e);
 }
 
 // Print out the edge list (for debugging purposes), up to `num_edges` edges.
@@ -199,3 +197,27 @@ printEdgeList(EdgeList *elist, int num_edges)
                elist->id[i], elist->nodes[0][i], elist->nodes[1][i]);
     }
 }
+
+void newIdmapStorage(IdmapStorage *storage, int size)
+{
+    storage->entries = tcalloc(size, sizeof(ENTRY));
+    storage->size = size;
+    storage->count = 0;
+}
+
+void freeIdmapStorage(IdmapStorage *storage)
+{
+    int i;
+    for (i = 0; i < storage->count; i++) {
+        free(storage->entries[i].key);
+        free(storage->entries[i].data);
+    }
+    free(storage->entries);
+}
+
+void addIdmapEntry(IdmapStorage *storage, ENTRY *ep)
+{
+    assert(storage->count <= storage->size);
+    storage->entries[storage->count++] = *ep;
+}
+
