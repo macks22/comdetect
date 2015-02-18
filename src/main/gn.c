@@ -71,6 +71,7 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
     if (graph->m <= 0) return;
 
     while (edges_cut < k && edges_cut < graph->m) {
+        printf("running iteration %d; total edges cut: %d\n", iteration, edges_cut);
 
         // Calculate degree, then sample the nodes
         calculateDegreeAndSort(graph);
@@ -92,6 +93,7 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
         freeVector(&largest);
         // printSparseUGraph(graph, graph->n);
     }
+    printf("completed %d iterations; total edges cut: %d\n", iteration-1, edges_cut);
 }
 
 // Cut an edge from the graph by marking it with the negative

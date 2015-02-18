@@ -219,12 +219,29 @@ graphToEdgeList(SparseUGraph *graph, EdgeList *elist)
     }
 }
 
+int findIndex(int *arr, int low, int high, int val)
+{   // invariants: value > A[i] for all i < low
+    //value < A[i] for all i > high
+    int mid;
+
+    while (low <= high) {
+        mid = (low + high) / 2;
+        if (arr[mid] > val) {
+            high = mid - 1;
+        } else if (arr[mid] < val) {
+            low = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+    return -1;  // value not found
+}
+
 int
 findEdgeId(SparseUGraph *graph, int src, int dest)
 {   // look up the id of the edge (src, dest)
-    int j;
-    for (j = graph->index[src]; j < graph->index[src+1]; j++) {
-        if (graph->edges[j] == dest) return graph->edge_id[j];
-    }
-    return -1;
+    int idx;
+    idx = findIndex(graph->edges, graph->index[src], graph->index[src+1]-1, dest);
+    if (idx < 0) return idx;
+    else return graph->edge_id[idx];
 }
