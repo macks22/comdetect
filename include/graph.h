@@ -179,6 +179,10 @@ void graphKMedoid(SparseUGraph *graph, InputArgs *args);
 // cluster the graph into k partitions.
 void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
 
+// Build up the communities from the divided graph
+// using a union-find data structure
+int labelCommunities(SparseUGraph *graph, Vector **comms);
+
 // Cut an edge from the graph by marking it with the negative
 // of the iteration number in which it was cut.
 void cutEdge(SparseUGraph *graph, int src, int dest, int iteration);
