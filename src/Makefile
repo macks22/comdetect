@@ -21,7 +21,7 @@ BINDIR=../bin
 CFLAGS=-I$(INCDIR)
 
 # make w/ objects
-MWOBJ=test.o util.o edges.o graph.o bfs.o queue.o vector.o metrics.o modularity.o
+MWOBJ=test.o util.o edges.o graph.o bfs.o queue.o vector.o metrics.o modularity.o gn.o wqupc.o
 
 
 %.o: %.c $(INCLUDES)
