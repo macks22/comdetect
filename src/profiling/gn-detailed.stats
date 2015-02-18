@@ -1,0 +1,355 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 10.64     83.58    83.58                             findEdgeId (graph.c:227 @ 4041ca)
+  9.26    156.26    72.68                             calculateEdgeBetweenness (metrics.c:121 @ 40349b)
+  8.86    225.86    69.60                             bfs (bfs.c:49 @ 402acc)
+  7.85    287.54    61.68                             bfs (bfs.c:58 @ 402b99)
+  7.78    348.64    61.10                             bfs (bfs.c:45 @ 402aa7)
+  7.73    409.34    60.70                             vectorAppend (vector.c:31 @ 4014b7)
+  6.85    463.10    53.76                             calculateEdgeBetweenness (metrics.c:117 @ 403446)
+  5.57    506.83    43.74                             calculateEdgeBetweenness (metrics.c:125 @ 40351f)
+  5.03    546.36    39.53                             bfs (bfs.c:44 @ 402a88)
+  4.84    584.41    38.04                             findEdgeId (graph.c:226 @ 4041ae)
+  3.29    610.28    25.87                             calculateEdgeBetweenness (metrics.c:122 @ 4034c1)
+  2.68    631.31    21.03                             calculateEdgeBetweenness (metrics.c:120 @ 403600)
+  2.31    649.46    18.14                             vectorAppend (vector.c:32 @ 4014d5)
+  1.88    664.23    14.78                             vectorAppend (vector.c:33 @ 4014fc)
+  1.46    675.72    11.49                             bfs (bfs.c:56 @ 402b42)
+  1.43    686.94    11.22                             findEdgeId (graph.c:226 @ 4041ff)
+  0.98    694.67     7.73                             bfs (bfs.c:44 @ 402be0)
+  0.98    702.40     7.73                             bfs (bfs.c:50 @ 402ae7)
+  0.97    710.05     7.65                             calculateEdgeBetweenness (metrics.c:123 @ 4034e2)
+  0.53    714.24     4.19                             bfs (bfs.c:46 @ 402ac1)
+  0.53    718.43     4.19                             calculateEdgeBetweenness (metrics.c:133 @ 403579)
+  0.50    722.39     3.96                             dequeue (queue.c:40 @ 4043cb)
+  0.39    725.42     3.03                             bfs (bfs.c:57 @ 402b77)
+  0.37    728.33     2.91                             bfs (bfs.c:21 @ 402985)
+  0.35    731.07     2.74                             enqueue (queue.c:25 @ 4042ea)
+  0.33    733.67     2.60                             calculateEdgeBetweenness (metrics.c:132 @ 40355c)
+  0.31    736.13     2.46                             enqueue (queue.c:26 @ 404307)
+  0.27    738.21     2.08                             vectorPop (vector.c:41 @ 40152e)
+  0.25    740.19     1.98                             newVector (vector.c:15 @ 401437)
+  0.25    742.13     1.94                             vectorAppend (vector.c:30 @ 4014a8)
+  0.21    743.81     1.68                             tcalloc (util.c:21 @ 400f42)
+  0.21    745.42     1.61                             bfs (bfs.c:51 @ 402b00)
+  0.20    747.01     1.60                             queueIsEmpty (queue.c:47 @ 404406)
+  0.20    748.60     1.59                             calculateEdgeBetweenness (metrics.c:124 @ 403505)
+  0.20    750.18     1.58                             bfs (bfs.c:27 @ 40299d)
+  0.19    751.68     1.50                             bfs (bfs.c:52 @ 402b31)
+  0.18    753.12     1.44                             dequeue (queue.c:39 @ 4043af)
+  0.18    754.55     1.43                             initVector (vector.c:7 @ 4013fb)
+  0.17    755.87     1.33                             enqueue (queue.c:27 @ 404323)
+  0.17    757.18     1.31                             bfs (bfs.c:21 @ 40295f)
+  0.14    758.29     1.11                             bfs (bfs.c:22 @ 402968)
+  0.14    759.38     1.09                             tcalloc (util.c:22 @ 400f59)
+  0.14    760.44     1.06                             bfs (bfs.c:39 @ 402c08)
+  0.13    761.43     1.00                             dequeue (queue.c:36 @ 40438b)
+  0.12    762.41     0.97                             bfs (bfs.c:41 @ 402a73)
+  0.11    763.31     0.90                             bfs (bfs.c:28 @ 4029b8)
+  0.11    764.16     0.85                             calculateEdgeBetweenness (metrics.c:116 @ 403433)
+  0.11    765.00     0.84                             vectorPop (vector.c:42 @ 40155b)
+  0.09    765.74     0.74                             tcalloc (util.c:19 @ 400f32)
+  0.09    766.47     0.73                             enqueue (queue.c:22 @ 4042cc)
+  0.09    767.19     0.72                             freeVector (vector.c:25 @ 40149b)
+  0.09    767.90     0.71                             bfs (bfs.c:26 @ 4029d3)
+  0.09    768.57     0.68                             initVector (vector.c:6 @ 4013ec)
+  0.09    769.24     0.67                             queueIsEmpty (queue.c:45 @ 4043fe)
+  0.08    769.90     0.66                             freeBFSInfo (bfs.c:82 @ 402cde)
+  0.08    770.51     0.61                             calculateEdgeBetweenness (metrics.c:137 @ 4035ba)
+  0.08    771.10     0.59                             freeVector (vector.c:21 @ 401456)
+  0.07    771.67     0.57                             initVector (vector.c:9 @ 40141e)
+  0.07    772.23     0.57                             freeVector (vector.c:22 @ 401476)
+  0.07    772.80     0.56                             initVector (vector.c:8 @ 401414)
+  0.07    773.35     0.56                             freeBFSInfo (bfs.c:83 @ 402cc1)
+  0.07    773.90     0.55                             calculateEdgeBetweenness (metrics.c:138 @ 4035c2)
+  0.07    774.43     0.53                             vectorPop (vector.c:40 @ 40150a)
+  0.07    774.95     0.52                             dequeue (queue.c:35 @ 40437f)
+  0.07    775.47     0.52                             newVector (vector.c:16 @ 401448)
+  0.06    775.97     0.50                             findEdgeId (graph.c:229 @ 404223)
+  0.06    776.46     0.49                             findEdgeId (graph.c:224 @ 4041a0)
+  0.06    776.94     0.48                             freeVector (vector.c:20 @ 40144a)
+  0.06    777.41     0.47                             calculateEdgeBetweenness (metrics.c:120 @ 40348f)
+  0.06    777.85     0.44                             dequeue (queue.c:43 @ 4043fc)
+  0.05    778.26     0.42                             tcalloc (util.c:26 @ 400f88)
+  0.05    778.67     0.41                             initVector (vector.c:10 @ 401429)
+  0.05    779.06     0.39                             enqueue (queue.c:20 @ 4042bd)
+  0.05    779.45     0.39                             newVector (vector.c:14 @ 40142b)
+  0.05    779.83     0.38                             freeBFSInfo (bfs.c:82 @ 402cb8)
+  0.05    780.21     0.38                             vectorPop (vector.c:37 @ 4014fe)
+  0.05    780.57     0.36                             dequeue (queue.c:42 @ 4043f9)
+  0.04    780.91     0.34                             bfs (bfs.c:39 @ 402a5f)
+  0.04    781.25     0.34                             dequeue (queue.c:41 @ 4043e8)
+  0.04    781.57     0.32                             freeVector (vector.c:24 @ 401490)
+  0.04    781.88     0.31                             graphToEdgeList (graph.c:212 @ 40418b)
+  0.04    782.19     0.31                             graphToEdgeList (graph.c:220 @ 40419e)
+  0.04    782.49     0.30                             bfs (bfs.c:26 @ 402994)
+  0.03    782.75     0.26                             calculateEdgeBetweenness (metrics.c:140 @ 4035ec)
+  0.03    783.01     0.26                             freeVector (vector.c:23 @ 401485)
+  0.03    783.25     0.24                             freeVector (vector.c:26 @ 4014a6)
+  0.03    783.49     0.24                             tcalloc (util.c:24 @ 400f77)
+  0.03    783.72     0.24                             radixSort (util.c:93 @ 4011ff)
+  0.02    783.90     0.18                             tcalloc (util.c:27 @ 400f8c)
+  0.02    784.07     0.17                             sortEdges (edges.c:99 @ 40210c)
+  0.02    784.22     0.16                             doubleQueueSize (queue.c:33 @ 40437d)
+  0.02    784.36     0.14                             radixSort (util.c:81 @ 401171)
+  0.02    784.48     0.12                             error (util.c:13 @ 400f28)
+  0.01    784.60     0.12                             calculateEdgeBetweenness (metrics.c:115 @ 403621)
+  0.01    784.71     0.11                             freeQueue (queue.c:17 @ 4042ac)
+  0.01    784.82     0.11                             freeQueue (queue.c:18 @ 4042bb)
+  0.01    784.92     0.10                             sortEdges (edges.c:88 @ 40206c)
+  0.01    784.99     0.07                             uf_root (wqupc.c:44 @ 4017df)
+  0.01    785.05     0.07                             sortEdges (edges.c:100 @ 402173)
+  0.01    785.11     0.06                             queueIsEmpty (queue.c:48 @ 404418)
+  0.01    785.17     0.06                             uf_root (wqupc.c:45 @ 401788)
+  0.01    785.21     0.05                             printQueue (queue.c:51 @ 40441f)
+  0.01    785.26     0.05                             queueIsEmpty (queue.c:49 @ 40441d)
+  0.01    785.30     0.04        1    40.02    40.02  labelCommunities
+  0.01    785.34     0.04                             sortEdges (edges.c:101 @ 4021aa)
+  0.00    785.37     0.04                             sortEdges (edges.c:107 @ 402267)
+  0.00    785.40     0.03                             calculateEdgeBetweenness (metrics.c:115 @ 40342e)
+  0.00    785.43     0.03                             printArray (util.c:128 @ 4013ea)
+  0.00    785.45     0.03                             radixSort (util.c:92 @ 401268)
+  0.00    785.47     0.02                             bfs (bfs.c:40 @ 402a64)
+  0.00    785.49     0.02                             uf_root (wqupc.c:44 @ 401786)
+  0.00    785.50     0.02                             sortEdges (edges.c:106 @ 402231)
+  0.00    785.51     0.01                             copyEdgeList (edges.c:49 @ 401e82)
+  0.00    785.52     0.01                             copyEdgeList (edges.c:55 @ 401ee0)
+  0.00    785.53     0.01                             findLargest (util.c:59 @ 40104f)
+  0.00    785.54     0.01                             mapNodeIds (edges.c:133 @ 4023f3)
+  0.00    785.55     0.01                             radixSort (util.c:96 @ 401272)
+  0.00    785.56     0.01                             radixSort (util.c:97 @ 40127b)
+  0.00    785.57     0.01                             removeDuplicates (util.c:114 @ 401348)
+  0.00    785.58     0.01                             removeDuplicates (util.c:112 @ 401378)
+  0.00    785.59     0.01                             resetEdgeIds (edges.c:28 @ 401dc7)
+  0.00    785.60     0.01                             rowCompressEdges (graph.c:58 @ 40399c)
+  0.00    785.61     0.01                             rowCompressEdges (graph.c:71 @ 403aae)
+  0.00    785.62     0.01                             sortEdges (edges.c:108 @ 4022a9)
+  0.00    785.63     0.01                             uf_root (wqupc.c:46 @ 4017c6)
+  0.00    785.64     0.01                             uf_union (wqupc.c:56 @ 401811)
+  0.00    785.64     0.00       29     0.00     0.00  cutEdge
+  0.00    785.64     0.00        1     0.00     0.00  girvanNewman
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.00% of 785.64 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[30]     0.2    1.94    0.00                 vectorAppend (vector.c:30 @ 4014a8) [30]
+-----------------------------------------------
+                                                 <spontaneous>
+[49]     0.1    0.74    0.00                 tcalloc (util.c:19 @ 400f32) [49]
+-----------------------------------------------
+                                                 <spontaneous>
+[53]     0.1    0.68    0.00                 initVector (vector.c:6 @ 4013ec) [53]
+-----------------------------------------------
+                                                 <spontaneous>
+[54]     0.1    0.67    0.00                 queueIsEmpty (queue.c:45 @ 4043fe) [54]
+-----------------------------------------------
+                                                 <spontaneous>
+[64]     0.1    0.52    0.00                 dequeue (queue.c:35 @ 40437f) [64]
+-----------------------------------------------
+                                                 <spontaneous>
+[67]     0.1    0.49    0.00                 findEdgeId (graph.c:224 @ 4041a0) [67]
+-----------------------------------------------
+                                                 <spontaneous>
+[68]     0.1    0.48    0.00                 freeVector (vector.c:20 @ 40144a) [68]
+-----------------------------------------------
+                                                 <spontaneous>
+[73]     0.0    0.39    0.00                 enqueue (queue.c:20 @ 4042bd) [73]
+-----------------------------------------------
+                                                 <spontaneous>
+[74]     0.0    0.39    0.00                 newVector (vector.c:14 @ 40142b) [74]
+-----------------------------------------------
+                                                 <spontaneous>
+[76]     0.0    0.38    0.00                 vectorPop (vector.c:37 @ 4014fe) [76]
+-----------------------------------------------
+                                                 <spontaneous>
+[102]    0.0    0.05    0.00                 printQueue (queue.c:51 @ 40441f) [102]
+-----------------------------------------------
+                0.04    0.00       1/1           main [105]
+[104]    0.0    0.04    0.00       1         labelCommunities [104]
+-----------------------------------------------
+                                                 <spontaneous>
+[105]    0.0    0.00    0.04                 main [105]
+                0.04    0.00       1/1           labelCommunities [104]
+                0.00    0.00       1/1           girvanNewman [129]
+-----------------------------------------------
+                0.00    0.00      29/29          girvanNewman [129]
+[128]    0.0    0.00    0.00      29         cutEdge [128]
+-----------------------------------------------
+                0.00    0.00       1/1           main [105]
+[129]    0.0    0.00    0.00       1         girvanNewman [129]
+                0.00    0.00      29/29          cutEdge [128]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [40] bfs (bfs.c:21 @ 40295f) [37] dequeue (queue.c:39 @ 4043af) [109] printArray (util.c:128 @ 4013ea)
+  [41] bfs (bfs.c:22 @ 402968) [22] dequeue (queue.c:40 @ 4043cb) [102] printQueue (queue.c:51 @ 40441f)
+  [24] bfs (bfs.c:21 @ 402985) [79] dequeue (queue.c:41 @ 4043e8) [54] queueIsEmpty (queue.c:45 @ 4043fe)
+  [83] bfs (bfs.c:26 @ 402994) [77] dequeue (queue.c:42 @ 4043f9) [33] queueIsEmpty (queue.c:47 @ 404406)
+  [35] bfs (bfs.c:27 @ 40299d) [70] dequeue (queue.c:43 @ 4043fc) [100] queueIsEmpty (queue.c:48 @ 404418)
+  [46] bfs (bfs.c:28 @ 4029b8) [91] doubleQueueSize (queue.c:33 @ 40437d) [103] queueIsEmpty (queue.c:49 @ 40441d)
+  [52] bfs (bfs.c:26 @ 4029d3) [73] enqueue (queue.c:20 @ 4042bd) [92] radixSort (util.c:81 @ 401171)
+  [78] bfs (bfs.c:39 @ 402a5f) [50] enqueue (queue.c:22 @ 4042cc) [88] radixSort (util.c:93 @ 4011ff)
+ [111] bfs (bfs.c:40 @ 402a64) [25] enqueue (queue.c:25 @ 4042ea) [110] radixSort (util.c:92 @ 401268)
+  [45] bfs (bfs.c:41 @ 402a73) [27] enqueue (queue.c:26 @ 404307) [118] radixSort (util.c:96 @ 401272)
+   [9] bfs (bfs.c:44 @ 402a88) [39] enqueue (queue.c:27 @ 404323) [119] radixSort (util.c:97 @ 40127b)
+   [5] bfs (bfs.c:45 @ 402aa7) [93] error (util.c:13 @ 400f28) [120] removeDuplicates (util.c:114 @ 401348)
+  [20] bfs (bfs.c:46 @ 402ac1) [67] findEdgeId (graph.c:224 @ 4041a0) [121] removeDuplicates (util.c:112 @ 401378)
+   [3] bfs (bfs.c:49 @ 402acc) [10] findEdgeId (graph.c:226 @ 4041ae) [122] resetEdgeIds (edges.c:28 @ 401dc7)
+  [18] bfs (bfs.c:50 @ 402ae7) [1] findEdgeId (graph.c:227 @ 4041ca) [123] rowCompressEdges (graph.c:58 @ 40399c)
+  [32] bfs (bfs.c:51 @ 402b00) [16] findEdgeId (graph.c:226 @ 4041ff) [124] rowCompressEdges (graph.c:71 @ 403aae)
+  [36] bfs (bfs.c:52 @ 402b31) [66] findEdgeId (graph.c:229 @ 404223) [97] sortEdges (edges.c:88 @ 40206c)
+  [15] bfs (bfs.c:56 @ 402b42) [116] findLargest (util.c:59 @ 40104f) [90] sortEdges (edges.c:99 @ 40210c)
+  [23] bfs (bfs.c:57 @ 402b77) [75] freeBFSInfo (bfs.c:82 @ 402cb8) [99] sortEdges (edges.c:100 @ 402173)
+   [4] bfs (bfs.c:58 @ 402b99) [61] freeBFSInfo (bfs.c:83 @ 402cc1) [106] sortEdges (edges.c:101 @ 4021aa)
+  [17] bfs (bfs.c:44 @ 402be0) [55] freeBFSInfo (bfs.c:82 @ 402cde) [113] sortEdges (edges.c:106 @ 402231)
+  [43] bfs (bfs.c:39 @ 402c08) [95] freeQueue (queue.c:17 @ 4042ac) [107] sortEdges (edges.c:107 @ 402267)
+ [108] calculateEdgeBetweenness (metrics.c:115 @ 40342e) [96] freeQueue (queue.c:18 @ 4042bb) [125] sortEdges (edges.c:108 @ 4022a9)
+  [47] calculateEdgeBetweenness (metrics.c:116 @ 403433) [68] freeVector (vector.c:20 @ 40144a) [49] tcalloc (util.c:19 @ 400f32)
+   [7] calculateEdgeBetweenness (metrics.c:117 @ 403446) [57] freeVector (vector.c:21 @ 401456) [31] tcalloc (util.c:21 @ 400f42)
+  [69] calculateEdgeBetweenness (metrics.c:120 @ 40348f) [59] freeVector (vector.c:22 @ 401476) [42] tcalloc (util.c:22 @ 400f59)
+   [2] calculateEdgeBetweenness (metrics.c:121 @ 40349b) [85] freeVector (vector.c:23 @ 401485) [87] tcalloc (util.c:24 @ 400f77)
+  [11] calculateEdgeBetweenness (metrics.c:122 @ 4034c1) [80] freeVector (vector.c:24 @ 401490) [71] tcalloc (util.c:26 @ 400f88)
+  [19] calculateEdgeBetweenness (metrics.c:123 @ 4034e2) [51] freeVector (vector.c:25 @ 40149b) [89] tcalloc (util.c:27 @ 400f8c)
+  [34] calculateEdgeBetweenness (metrics.c:124 @ 403505) [86] freeVector (vector.c:26 @ 4014a6) [112] uf_root (wqupc.c:44 @ 401786)
+   [8] calculateEdgeBetweenness (metrics.c:125 @ 40351f) [129] girvanNewman [101] uf_root (wqupc.c:45 @ 401788)
+  [26] calculateEdgeBetweenness (metrics.c:132 @ 40355c) [81] graphToEdgeList (graph.c:212 @ 40418b) [126] uf_root (wqupc.c:46 @ 4017c6)
+  [21] calculateEdgeBetweenness (metrics.c:133 @ 403579) [82] graphToEdgeList (graph.c:220 @ 40419e) [98] uf_root (wqupc.c:44 @ 4017df)
+  [56] calculateEdgeBetweenness (metrics.c:137 @ 4035ba) [53] initVector (vector.c:6 @ 4013ec) [127] uf_union (wqupc.c:56 @ 401811)
+  [62] calculateEdgeBetweenness (metrics.c:138 @ 4035c2) [38] initVector (vector.c:7 @ 4013fb) [30] vectorAppend (vector.c:30 @ 4014a8)
+  [84] calculateEdgeBetweenness (metrics.c:140 @ 4035ec) [60] initVector (vector.c:8 @ 401414) [6] vectorAppend (vector.c:31 @ 4014b7)
+  [12] calculateEdgeBetweenness (metrics.c:120 @ 403600) [58] initVector (vector.c:9 @ 40141e) [13] vectorAppend (vector.c:32 @ 4014d5)
+  [94] calculateEdgeBetweenness (metrics.c:115 @ 403621) [72] initVector (vector.c:10 @ 401429) [14] vectorAppend (vector.c:33 @ 4014fc)
+ [114] copyEdgeList (edges.c:49 @ 401e82) [104] labelCommunities [76] vectorPop (vector.c:37 @ 4014fe)
+ [115] copyEdgeList (edges.c:55 @ 401ee0) [117] mapNodeIds (edges.c:133 @ 4023f3) [63] vectorPop (vector.c:40 @ 40150a)
+ [128] cutEdge                [74] newVector (vector.c:14 @ 40142b) [28] vectorPop (vector.c:41 @ 40152e)
+  [64] dequeue (queue.c:35 @ 40437f) [29] newVector (vector.c:15 @ 401437) [48] vectorPop (vector.c:42 @ 40155b)
+  [44] dequeue (queue.c:36 @ 40438b) [65] newVector (vector.c:16 @ 401448)

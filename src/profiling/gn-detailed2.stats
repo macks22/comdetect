@@ -1,0 +1,534 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 10.30     82.65    82.65                             findEdgeId (graph.c:227 @ 404378)
+ 10.01    162.98    80.33                             calculateEdgeBetweenness (metrics.c:118 @ 40361d)
+  8.72    232.91    69.93                             bfs (bfs.c:35 @ 402ace)
+  8.09    297.77    64.87                             vectorAppend (vector.c:31 @ 401547)
+  7.73    359.77    62.00                             bfs (bfs.c:44 @ 402b9b)
+  7.65    421.14    61.37                             bfs (bfs.c:31 @ 402aa9)
+  6.66    474.60    53.46                             calculateEdgeBetweenness (metrics.c:114 @ 4035c8)
+  6.44    526.31    51.71                             bfs (bfs.c:30 @ 402a8a)
+  5.84    573.20    46.89                             calculateEdgeBetweenness (metrics.c:122 @ 4036a1)
+  4.75    611.28    38.08                             findEdgeId (graph.c:226 @ 40435c)
+  3.25    637.38    26.10                             calculateEdgeBetweenness (metrics.c:119 @ 403643)
+  2.39    656.55    19.17                             vectorAppend (vector.c:32 @ 401565)
+  2.27    674.73    18.18                             calculateEdgeBetweenness (metrics.c:117 @ 403782)
+  1.94    690.26    15.53                             vectorAppend (vector.c:33 @ 40158c)
+  1.30    700.73    10.47                             findEdgeId (graph.c:226 @ 4043ad)
+  1.26    710.83    10.09                             bfs (bfs.c:42 @ 402b44)
+  1.09    719.59     8.77                             bfs (bfs.c:30 @ 402be2)
+  1.05    728.03     8.43                             calculateEdgeBetweenness (metrics.c:120 @ 403664)
+  0.78    734.27     6.24                             dequeue (queue.c:39 @ 40457b)
+  0.59    739.00     4.73                             bfs (bfs.c:32 @ 402ac3)
+  0.59    743.72     4.72                             vectorPop (vector.c:41 @ 4015c3)
+  0.58    748.37     4.65                             dequeue (queue.c:40 @ 404597)
+  0.54    752.74     4.37                             bfs (bfs.c:36 @ 402ae9)
+  0.48    756.59     3.85                             calculateEdgeBetweenness (metrics.c:130 @ 4036fb)
+  0.48    760.44     3.85                             enqueue (queue.c:25 @ 4044ac)
+  0.44    763.94     3.50                             bfs (bfs.c:37 @ 402b02)
+  0.41    767.24     3.29                             enqueue (queue.c:26 @ 4044c9)
+  0.34    769.93     2.69                             calculateEdgeBetweenness (metrics.c:129 @ 4036de)
+  0.33    772.58     2.65                             bfs (bfs.c:43 @ 402b79)
+  0.30    775.02     2.44                             bfs (bfs.c:38 @ 402b33)
+  0.27    777.18     2.16 2301876832     0.00     0.00  vectorAppend (vector.c:30 @ 401533)
+  0.22    778.98     1.80                             resetBFSInfo (bfs.c:61 @ 402ca2)
+  0.19    780.50     1.52                             resetBFSInfo (bfs.c:58 @ 402c51)
+  0.19    782.01     1.51                             resetBFSInfo (bfs.c:59 @ 402c6d)
+  0.18    783.45     1.45 1403944503     0.00     0.00  findEdgeId (graph.c:224 @ 404345)
+  0.16    784.75     1.30                             resetBFSInfo (bfs.c:60 @ 402c88)
+  0.13    785.76     1.02                             bfs (bfs.c:27 @ 402a75)
+  0.12    786.73     0.97                             bfs (bfs.c:25 @ 402c0a)
+  0.12    787.66     0.93                             queueIsEmpty (queue.c:47 @ 4045db)
+  0.11    788.54     0.89                             calculateEdgeBetweenness (metrics.c:121 @ 403687)
+  0.10    789.35     0.81                             calculateEdgeBetweenness (metrics.c:135 @ 403744)
+  0.10    790.15     0.80 922957798     0.00     0.00  queueIsEmpty (queue.c:45 @ 4045ca)
+  0.10    790.92     0.77 922954627     0.00     0.00  enqueue (queue.c:20 @ 40447a)
+  0.09    791.67     0.75                             enqueue (queue.c:27 @ 4044e5)
+  0.09    792.36     0.69 922954627     0.00     0.00  dequeue (queue.c:35 @ 404546)
+  0.08    793.02     0.66                             findEdgeId (graph.c:229 @ 4043d1)
+  0.08    793.66     0.64                             resetBFSInfo (bfs.c:57 @ 402cbd)
+  0.07    794.25     0.59 922954627     0.00     0.00  vectorPop (vector.c:37 @ 40158e)
+  0.07    794.82     0.57                             calculateEdgeBetweenness (metrics.c:113 @ 4035b5)
+  0.07    795.38     0.56                             vectorPop (vector.c:40 @ 40159f)
+  0.06    795.86     0.48                             dequeue (queue.c:41 @ 4045b4)
+  0.06    796.33     0.47                             enqueue (queue.c:22 @ 40448e)
+  0.06    796.79     0.46                             calculateEdgeBetweenness (metrics.c:137 @ 40376e)
+  0.05    797.23     0.44                             dequeue (queue.c:43 @ 4045c8)
+  0.05    797.60     0.38                             vectorPop (vector.c:42 @ 4015f0)
+  0.04    797.96     0.36                             dequeue (queue.c:36 @ 404557)
+  0.04    798.30     0.34                             resetBFSInfo (bfs.c:57 @ 402c48)
+  0.04    798.61     0.31                             dequeue (queue.c:42 @ 4045c5)
+  0.04    798.90     0.29                             calculateEdgeBetweenness (metrics.c:117 @ 403611)
+  0.03    799.18     0.28                             graphToEdgeList (graph.c:220 @ 404343)
+  0.03    799.41     0.23                             enqueue (queue.c:28 @ 4044f6)
+  0.03    799.63     0.22                             radixSort (util.c:93 @ 401271)
+  0.02    799.83     0.20                             calculateEdgeBetweenness (metrics.c:134 @ 40373c)
+  0.02    800.02     0.20                             freeQueue (queue.c:17 @ 404469)
+  0.02    800.22     0.20                             freeQueue (queue.c:18 @ 404478)
+  0.02    800.40     0.19                             doubleQueueSize (queue.c:33 @ 404544)
+  0.02    800.58     0.18                             queueIsEmpty (queue.c:48 @ 4045ed)
+  0.02    800.75     0.18                             queueIsEmpty (queue.c:49 @ 4045f2)
+  0.02    800.92     0.17                             bfs (bfs.c:26 @ 402a66)
+  0.02    801.08     0.17                             freeVector (vector.c:25 @ 401526)
+  0.02    801.25     0.17                             freeVector (vector.c:26 @ 401531)
+  0.02    801.40     0.16                             bfs (bfs.c:25 @ 402a61)
+  0.02    801.55     0.15                             sortEdges (edges.c:99 @ 4021f5)
+  0.02    801.68     0.13                             radixSort (util.c:81 @ 4011e3)
+  0.01    801.78     0.10       98   969.81   969.81  doubleVectorCap (vector.c:47 @ 4015f5)
+  0.01    801.88     0.10                             vectorPop (vector.c:43 @ 4015f3)
+  0.01    801.94     0.06                             sortEdges (edges.c:88 @ 402155)
+  0.01    802.00     0.06                             uf_root (wqupc.c:45 @ 40183b)
+  0.01    802.05     0.05                             sortEdges (edges.c:101 @ 402293)
+  0.00    802.09     0.04                             calculateEdgeBetweenness (metrics.c:112 @ 4037a3)
+  0.00    802.12     0.03                             radixSort (util.c:80 @ 401219)
+  0.00    802.15     0.03                             sortEdges (edges.c:100 @ 40225c)
+  0.00    802.18     0.03                             sortEdges (edges.c:106 @ 40231a)
+  0.00    802.21     0.03                             sortEdges (edges.c:107 @ 402350)
+  0.00    802.24     0.03                             sortEdges (edges.c:98 @ 402300)
+  0.00    802.27     0.03                             uf_root (wqupc.c:44 @ 401892)
+  0.00    802.29     0.03                             radixSort (util.c:97 @ 4012ed)
+  0.00    802.31     0.02                             calculateEdgeBetweenness (metrics.c:112 @ 4035b0)
+  0.00    802.33     0.02                             rowCompressEdges (graph.c:64 @ 403b88)
+  0.00    802.35     0.02                             uf_union (wqupc.c:56 @ 4018c9)
+  0.00    802.36     0.01                             copyEdgeList (edges.c:49 @ 401f61)
+  0.00    802.37     0.01                             copyEdgeList (edges.c:55 @ 401fbf)
+  0.00    802.38     0.01                             findLargest (util.c:59 @ 4010bc)
+  0.00    802.39     0.01                             findLargest (util.c:58 @ 4010f0)
+  0.00    802.40     0.01                             labelCommunities (gn.c:128 @ 405318)
+  0.00    802.41     0.01                             labelCommunities (gn.c:129 @ 405332)
+  0.00    802.42     0.01                             lookupNodeId (edges.c:156 @ 4025d7)
+  0.00    802.43     0.01                             mapNodeIds (edges.c:134 @ 4024ae)
+  0.00    802.44     0.01                             removeDuplicates (util.c:113 @ 40138f)
+  0.00    802.45     0.01                             removeDuplicates (util.c:112 @ 4013ef)
+  0.00    802.46     0.01                             rowCompressEdges (graph.c:47 @ 403a59)
+  0.00    802.47     0.01                             sortEdges (edges.c:87 @ 402192)
+  0.00    802.48     0.01                             sortEdges (edges.c:108 @ 402392)
+  0.00    802.49     0.01                             tcalloc (util.c:21 @ 400f9c)
+  0.00    802.50     0.01                             tcalloc (util.c:22 @ 400fb3)
+  0.00    802.51     0.01                             uf_root (wqupc.c:42 @ 40182f)
+  0.00    802.52     0.01                             uf_root (wqupc.c:44 @ 401839)
+  0.00    802.53     0.01                             uf_root (wqupc.c:46 @ 401879)
+  0.00    802.54     0.01                             bfs (bfs.c:20 @ 402a0e)
+  0.00    802.54     0.01                             bfs (bfs.c:21 @ 402a2e)
+  0.00    802.55     0.01                             radixSort (util.c:96 @ 4012e4)
+  0.00    802.55     0.01                             uf_root (wqupc.c:48 @ 4018ad)
+  0.00    802.56     0.01                             uf_root (wqupc.c:49 @ 4018b0)
+  0.00    802.56     0.00  4516540     0.00     0.00  uf_root (wqupc.c:38 @ 401805)
+  0.00    802.56     0.00  3054183     0.00     0.00  tcalloc (util.c:19 @ 400f87)
+  0.00    802.56     0.00  2099732     0.00     0.00  lookupNodeId (edges.c:152 @ 4025b7)
+  0.00    802.56     0.00  2099730     0.00     0.00  uf_union (wqupc.c:51 @ 4018b2)
+  0.00    802.56     0.00   317083     0.00     0.00  initVector (vector.c:6 @ 401468)
+  0.00    802.56     0.00   317082     0.00     0.00  freeVector (vector.c:20 @ 4014d0)
+  0.00    802.56     0.00   317082     0.00     0.00  newVector (vector.c:14 @ 4014ac)
+  0.00    802.56     0.00   317080     0.00     0.00  addIdmapEntry (edges.c:219 @ 40291f)
+  0.00    802.56     0.00   317080     0.00     0.00  addNodeIdToMap (edges.c:170 @ 40269f)
+  0.00    802.56     0.00    22197     0.00     0.00  doubleQueueSize (queue.c:30 @ 4044f8)
+  0.00    802.56     0.00     3171     0.00     0.00  bfs (bfs.c:7 @ 402995)
+  0.00    802.56     0.00     3171     0.00     0.00  freeQueue (queue.c:16 @ 404458)
+  0.00    802.56     0.00     3171     0.00     0.00  initQueue (queue.c:4 @ 4043d8)
+  0.00    802.56     0.00     3171     0.00     0.00  newQueue (queue.c:12 @ 404434)
+  0.00    802.56     0.00     3171     0.00     0.00  resetBFSInfo (bfs.c:53 @ 402c2c)
+  0.00    802.56     0.00       98     0.00     0.00  trealloc (util.c:45 @ 401037)
+  0.00    802.56     0.00       29     0.00     0.00  cutEdge (gn.c:100 @ 4051a0)
+  0.00    802.56     0.00        5     0.00     0.00  findLargest (util.c:56 @ 401098)
+  0.00    802.56     0.00        5     0.00     0.00  freeEdgeList (edges.c:17 @ 401e0b)
+  0.00    802.56     0.00        5     0.00     0.00  newEdgeList (edges.c:7 @ 401d92)
+  0.00    802.56     0.00        5     0.00     0.00  resetEdgeIds (edges.c:26 @ 401e6d)
+  0.00    802.56     0.00        3     0.00     0.00  findLargestEndpoint (edges.c:61 @ 401fff)
+  0.00    802.56     0.00        3     0.00     0.00  sortEdges (edges.c:70 @ 402054)
+  0.00    802.56     0.00        2     0.00     0.00  radixSort (util.c:66 @ 401101)
+  0.00    802.56     0.00        2     0.00     0.00  removeDuplicates (util.c:109 @ 401356)
+  0.00    802.56     0.00        1     0.00     0.00  calculateDegreeAndSort (metrics.c:6 @ 403054)
+  0.00    802.56     0.00        1     0.00     0.00  calculateEdgeBetweenness (metrics.c:80 @ 4033dc)
+  0.00    802.56     0.00        1     0.00     0.00  copyEdgeList (edges.c:36 @ 401eb3)
+  0.00    802.56     0.00        1     0.00     0.00  freeBFSInfo (bfs.c:83 @ 402d9d)
+  0.00    802.56     0.00        1     0.00     0.00  girvanNewman (gn.c:64 @ 40504f)
+  0.00    802.56     0.00        1     0.00     0.00  labelCommunities (gn.c:118 @ 4052ac)
+  0.00    802.56     0.00        1     0.00     0.00  mapNodeIds (edges.c:121 @ 402401)
+  0.00    802.56     0.00        1     0.00     0.00  newBFSInfo (bfs.c:67 @ 402ccf)
+  0.00    802.56     0.00        1     0.00     0.00  newIdmapStorage (edges.c:202 @ 402861)
+  0.00    802.56     0.00        1     0.00     0.00  readSparseUGraph (graph.c:82 @ 403ca5)
+  0.00    802.56     0.00        1     0.00     0.00  rowCompressEdges (graph.c:7 @ 40390e)
+  0.00    802.56     0.00        1     0.00     0.00  sampleNodes (metrics.c:51 @ 40321d)
+  0.00    802.56     0.00        1     0.00     0.00  sortDegree (metrics.c:28 @ 403179)
+  0.00    802.56     0.00        1     0.00     0.00  uf_create (wqupc.c:14 @ 401712)
+  0.00    802.56     0.00        1     0.00     0.00  writeCommunities (gn.c:45 @ 404f5c)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.00% of 802.56 seconds
+
+index % time    self  children    called     name
+                0.00    0.00       1/2301876832     labelCommunities (gn.c:176 @ 40554c) [119]
+                0.00    0.00     103/2301876832     calculateEdgeBetweenness (metrics.c:132 @ 403714) [117]
+                0.00    0.00     103/2301876832     calculateEdgeBetweenness (metrics.c:133 @ 403728) [118]
+                0.00    0.00   11944/2301876832     calculateEdgeBetweenness (metrics.c:136 @ 40375a) [115]
+                0.00    0.00   11944/2301876832     calculateEdgeBetweenness (metrics.c:137 @ 40376e) [54]
+                0.00    0.00  317079/2301876832     labelCommunities (gn.c:178 @ 405588) [114]
+                0.87    0.00 922954627/2301876832     bfs (bfs.c:27 @ 402a75) [33]
+                1.29    0.00 1378581031/2301876832     bfs (bfs.c:43 @ 402b79) [24]
+[32]     0.3    2.16    0.00 2301876832         vectorAppend (vector.c:30 @ 401533) [32]
+-----------------------------------------------
+                1.45    0.00 1403944503/1403944503     calculateEdgeBetweenness (metrics.c:121 @ 403687) [31]
+[38]     0.2    1.45    0.00 1403944503         findEdgeId (graph.c:224 @ 404345) [38]
+-----------------------------------------------
+                0.80    0.00 922957798/922957798     bfs (bfs.c:25 @ 402c0a) [35]
+[44]     0.1    0.80    0.00 922957798         queueIsEmpty (queue.c:45 @ 4045ca) [44]
+-----------------------------------------------
+                0.00    0.00    3171/922954627     bfs (bfs.c:22 @ 402a4c) [116]
+                0.77    0.00 922951456/922954627     bfs (bfs.c:38 @ 402b33) [29]
+[45]     0.1    0.77    0.00 922954627         enqueue (queue.c:20 @ 40447a) [45]
+-----------------------------------------------
+                0.69    0.00 922954627/922954627     bfs (bfs.c:26 @ 402a66) [42]
+[47]     0.1    0.69    0.00 922954627         dequeue (queue.c:35 @ 404546) [47]
+-----------------------------------------------
+                0.59    0.00 922954627/922954627     calculateEdgeBetweenness (metrics.c:113 @ 4035b5) [40]
+[50]     0.1    0.59    0.00 922954627         vectorPop (vector.c:37 @ 40158e) [50]
+-----------------------------------------------
+                0.10    0.00      98/98          vectorAppend (vector.c:31 @ 401547) [4]
+[75]     0.0    0.10    0.00      98         doubleVectorCap (vector.c:47 @ 4015f5) [75]
+-----------------------------------------------
+                0.00    0.00  317080/4516540     labelCommunities (gn.c:138 @ 4053a5) [409]
+                0.00    0.00 2099730/4516540     uf_union (wqupc.c:59 @ 4018e6) [857]
+                0.00    0.00 2099730/4516540     uf_union (wqupc.c:60 @ 4018fa) [858]
+[120]    0.0    0.00    0.00 4516540         uf_root (wqupc.c:38 @ 401805) [120]
+-----------------------------------------------
+                0.00    0.00       1/3054183     copyEdgeList (edges.c:42 @ 401ef6) [217]
+                0.00    0.00       1/3054183     copyEdgeList (edges.c:43 @ 401f13) [218]
+                0.00    0.00       1/3054183     copyEdgeList (edges.c:44 @ 401f31) [219]
+                0.00    0.00       1/3054183     mapNodeIds (edges.c:125 @ 40244a) [472]
+                0.00    0.00       1/3054183     newIdmapStorage (edges.c:203 @ 402875) [520]
+                0.00    0.00       1/3054183     newBFSInfo (bfs.c:71 @ 402d02) [506]
+                0.00    0.00       1/3054183     newBFSInfo (bfs.c:72 @ 402d1b) [507]
+                0.00    0.00       1/3054183     newBFSInfo (bfs.c:73 @ 402d35) [508]
+                0.00    0.00       1/3054183     newBFSInfo (bfs.c:74 @ 402d4f) [509]
+                0.00    0.00       1/3054183     calculateDegreeAndSort (metrics.c:14 @ 4030d4) [187]
+                0.00    0.00       1/3054183     sampleNodes (metrics.c:57 @ 4032a3) [732]
+                0.00    0.00       1/3054183     calculateEdgeBetweenness (metrics.c:99 @ 4034fc) [203]
+                0.00    0.00       1/3054183     rowCompressEdges (graph.c:16 @ 40394d) [695]
+                0.00    0.00       1/3054183     rowCompressEdges (graph.c:17 @ 40396d) [696]
+                0.00    0.00       1/3054183     rowCompressEdges (graph.c:18 @ 40398d) [697]
+                0.00    0.00       1/3054183     readSparseUGraph (graph.c:118 @ 403e2a) [669]
+                0.00    0.00       1/3054183     labelCommunities (gn.c:136 @ 405383) [407]
+                0.00    0.00       1/3054183     labelCommunities (gn.c:142 @ 4053dc) [411]
+                0.00    0.00       1/3054183     labelCommunities (gn.c:156 @ 40544f) [417]
+                0.00    0.00       1/3054183     labelCommunities (gn.c:172 @ 4054f2) [429]
+                0.00    0.00       2/3054183     radixSort (util.c:73 @ 4011a3) [632]
+                0.00    0.00       5/3054183     newEdgeList (edges.c:9 @ 401db0) [515]
+                0.00    0.00       5/3054183     newEdgeList (edges.c:10 @ 401dc9) [516]
+                0.00    0.00       5/3054183     newEdgeList (edges.c:11 @ 401de3) [517]
+                0.00    0.00    3171/3054183     initQueue (queue.c:5 @ 4043ec) [390]
+                0.00    0.00  317080/3054183     addNodeIdToMap (edges.c:175 @ 4026de) [164]
+                0.00    0.00  317080/3054183     addNodeIdToMap (edges.c:177 @ 402713) [166]
+                0.00    0.00  317083/3054183     initVector (vector.c:7 @ 40147c) [396]
+                0.00    0.00 2099732/3054183     lookupNodeId (edges.c:157 @ 4025f0) [445]
+[121]    0.0    0.00    0.00 3054183         tcalloc (util.c:19 @ 400f87) [121]
+-----------------------------------------------
+                0.00    0.00  323662/2099732     rowCompressEdges (graph.c:67 @ 403bcd) [720]
+                0.00    0.00  726204/2099732     rowCompressEdges (graph.c:54 @ 403ac4) [713]
+                0.00    0.00 1049866/2099732     rowCompressEdges (graph.c:58 @ 403b28) [716]
+[122]    0.0    0.00    0.00 2099732         lookupNodeId (edges.c:152 @ 4025b7) [122]
+-----------------------------------------------
+                0.00    0.00 2099730/2099730     labelCommunities (gn.c:130 @ 405338) [404]
+[123]    0.0    0.00    0.00 2099730         uf_union (wqupc.c:51 @ 4018b2) [123]
+-----------------------------------------------
+                0.00    0.00       1/317083      newBFSInfo (bfs.c:70 @ 402ced) [505]
+                0.00    0.00  317082/317083      newVector (vector.c:15 @ 4014bd) [526]
+[124]    0.0    0.00    0.00  317083         initVector (vector.c:6 @ 401468) [124]
+-----------------------------------------------
+                0.00    0.00       1/317082      freeBFSInfo (bfs.c:95 @ 402e30) [266]
+                0.00    0.00       1/317082      girvanNewman (gn.c:92 @ 40517a) [363]
+                0.00    0.00  317080/317082      freeBFSInfo (bfs.c:96 @ 402e39) [267]
+[125]    0.0    0.00    0.00  317082         freeVector (vector.c:20 @ 4014d0) [125]
+-----------------------------------------------
+                0.00    0.00       1/317082      calculateEdgeBetweenness (metrics.c:103 @ 403520) [204]
+                0.00    0.00       1/317082      labelCommunities (gn.c:174 @ 405517) [431]
+                0.00    0.00  317080/317082      newBFSInfo (bfs.c:76 @ 402d72) [511]
+[126]    0.0    0.00    0.00  317082         newVector (vector.c:14 @ 4014ac) [126]
+-----------------------------------------------
+                0.00    0.00  317080/317080      addNodeIdToMap (edges.c:184 @ 40277a) [172]
+[127]    0.0    0.00    0.00  317080         addIdmapEntry (edges.c:219 @ 40291f) [127]
+-----------------------------------------------
+                0.00    0.00  317080/317080      mapNodeIds (edges.c:146 @ 402582) [484]
+[128]    0.0    0.00    0.00  317080         addNodeIdToMap (edges.c:170 @ 40269f) [128]
+-----------------------------------------------
+                0.00    0.00   22197/22197       enqueue (queue.c:22 @ 40448e) [53]
+[129]    0.0    0.00    0.00   22197         doubleQueueSize (queue.c:30 @ 4044f8) [129]
+-----------------------------------------------
+                0.00    0.00    3171/3171        calculateEdgeBetweenness (metrics.c:108 @ 40357e) [209]
+[130]    0.0    0.00    0.00    3171         bfs (bfs.c:7 @ 402995) [130]
+-----------------------------------------------
+                0.00    0.00    3171/3171        bfs (bfs.c:48 @ 402c1e) [180]
+[131]    0.0    0.00    0.00    3171         freeQueue (queue.c:16 @ 404458) [131]
+-----------------------------------------------
+                0.00    0.00    3171/3171        newQueue (queue.c:13 @ 404445) [524]
+[132]    0.0    0.00    0.00    3171         initQueue (queue.c:4 @ 4043d8) [132]
+-----------------------------------------------
+                0.00    0.00    3171/3171        bfs (bfs.c:19 @ 4029f0) [179]
+[133]    0.0    0.00    0.00    3171         newQueue (queue.c:12 @ 404434) [133]
+-----------------------------------------------
+                0.00    0.00    3171/3171        bfs (bfs.c:15 @ 4029d8) [177]
+[134]    0.0    0.00    0.00    3171         resetBFSInfo (bfs.c:53 @ 402c2c) [134]
+-----------------------------------------------
+                0.00    0.00      98/98          doubleVectorCap (vector.c:49 @ 401617) [240]
+[135]    0.0    0.00    0.00      98         trealloc (util.c:45 @ 401037) [135]
+-----------------------------------------------
+                0.00    0.00      29/29          girvanNewman (gn.c:88 @ 405146) [359]
+[136]    0.0    0.00    0.00      29         cutEdge (gn.c:100 @ 4051a0) [136]
+-----------------------------------------------
+                0.00    0.00       2/5           radixSort (util.c:72 @ 40118f) [631]
+                0.00    0.00       3/5           findLargestEndpoint (edges.c:63 @ 402033) [255]
+[137]    0.0    0.00    0.00       5         findLargest (util.c:56 @ 401098) [137]
+-----------------------------------------------
+                0.00    0.00       1/5           rowCompressEdges (graph.c:74 @ 403c6b) [725]
+                0.00    0.00       1/5           readSparseUGraph (graph.c:130 @ 403e9d) [676]
+                0.00    0.00       3/5           sortEdges (edges.c:114 @ 4023e9) [766]
+[138]    0.0    0.00    0.00       5         freeEdgeList (edges.c:17 @ 401e0b) [138]
+-----------------------------------------------
+                0.00    0.00       1/5           sortDegree (metrics.c:38 @ 4031aa) [738]
+                0.00    0.00       1/5           readSparseUGraph (graph.c:97 @ 403d44) [653]
+                0.00    0.00       3/5           sortEdges (edges.c:79 @ 402102) [752]
+[139]    0.0    0.00    0.00       5         newEdgeList (edges.c:7 @ 401d92) [139]
+-----------------------------------------------
+                0.00    0.00       5/5           newEdgeList (edges.c:12 @ 401dfd) [518]
+[140]    0.0    0.00    0.00       5         resetEdgeIds (edges.c:26 @ 401e6d) [140]
+-----------------------------------------------
+                0.00    0.00       3/3           sortEdges (edges.c:80 @ 402117) [753]
+[141]    0.0    0.00    0.00       3         findLargestEndpoint (edges.c:61 @ 401fff) [141]
+-----------------------------------------------
+                0.00    0.00       1/3           sortDegree (metrics.c:43 @ 4031ee) [743]
+                0.00    0.00       1/3           rowCompressEdges (graph.c:22 @ 4039c0) [699]
+                0.00    0.00       1/3           labelCommunities (gn.c:159 @ 405478) [420]
+[142]    0.0    0.00    0.00       3         sortEdges (edges.c:70 @ 402054) [142]
+-----------------------------------------------
+                0.00    0.00       2/2           removeDuplicates (util.c:111 @ 401372) [681]
+[143]    0.0    0.00    0.00       2         radixSort (util.c:66 @ 401101) [143]
+-----------------------------------------------
+                0.00    0.00       1/2           mapNodeIds (edges.c:138 @ 4024f1) [478]
+                0.00    0.00       1/2           labelCommunities (gn.c:166 @ 4054c5) [425]
+[144]    0.0    0.00    0.00       2         removeDuplicates (util.c:109 @ 401356) [144]
+-----------------------------------------------
+                0.00    0.00       1/1           girvanNewman (gn.c:76 @ 4050aa) [350]
+[145]    0.0    0.00    0.00       1         calculateDegreeAndSort (metrics.c:6 @ 403054) [145]
+-----------------------------------------------
+                0.00    0.00       1/1           girvanNewman (gn.c:84 @ 4050f9) [355]
+[146]    0.0    0.00    0.00       1         calculateEdgeBetweenness (metrics.c:80 @ 4033dc) [146]
+-----------------------------------------------
+                0.00    0.00       1/1           rowCompressEdges (graph.c:22 @ 4039c0) [699]
+[147]    0.0    0.00    0.00       1         copyEdgeList (edges.c:36 @ 401eb3) [147]
+-----------------------------------------------
+                0.00    0.00       1/1           calculateEdgeBetweenness (metrics.c:142 @ 4037cb) [213]
+[148]    0.0    0.00    0.00       1         freeBFSInfo (bfs.c:83 @ 402d9d) [148]
+-----------------------------------------------
+                0.00    0.00       1/1           main (gn.c:35 @ 404ee1) [466]
+[149]    0.0    0.00    0.00       1         girvanNewman (gn.c:64 @ 40504f) [149]
+-----------------------------------------------
+                0.00    0.00       1/1           main (gn.c:36 @ 404f09) [467]
+[150]    0.0    0.00    0.00       1         labelCommunities (gn.c:118 @ 4052ac) [150]
+-----------------------------------------------
+                0.00    0.00       1/1           readSparseUGraph (graph.c:111 @ 403dd1) [666]
+[151]    0.0    0.00    0.00       1         mapNodeIds (edges.c:121 @ 402401) [151]
+-----------------------------------------------
+                0.00    0.00       1/1           calculateEdgeBetweenness (metrics.c:104 @ 40352f) [205]
+[152]    0.0    0.00    0.00       1         newBFSInfo (bfs.c:67 @ 402ccf) [152]
+-----------------------------------------------
+                0.00    0.00       1/1           mapNodeIds (edges.c:144 @ 402568) [482]
+[153]    0.0    0.00    0.00       1         newIdmapStorage (edges.c:202 @ 402861) [153]
+-----------------------------------------------
+                0.00    0.00       1/1           main (gn.c:33 @ 404ec8) [465]
+[154]    0.0    0.00    0.00       1         readSparseUGraph (graph.c:82 @ 403ca5) [154]
+-----------------------------------------------
+                0.00    0.00       1/1           readSparseUGraph (graph.c:115 @ 403e17) [668]
+[155]    0.0    0.00    0.00       1         rowCompressEdges (graph.c:7 @ 40390e) [155]
+-----------------------------------------------
+                0.00    0.00       1/1           girvanNewman (gn.c:77 @ 4050b6) [351]
+[156]    0.0    0.00    0.00       1         sampleNodes (metrics.c:51 @ 40321d) [156]
+-----------------------------------------------
+                0.00    0.00       1/1           calculateDegreeAndSort (metrics.c:24 @ 40316b) [195]
+[157]    0.0    0.00    0.00       1         sortDegree (metrics.c:28 @ 403179) [157]
+-----------------------------------------------
+                0.00    0.00       1/1           labelCommunities (gn.c:119 @ 4052c2) [400]
+[158]    0.0    0.00    0.00       1         uf_create (wqupc.c:14 @ 401712) [158]
+-----------------------------------------------
+                0.00    0.00       1/1           main (gn.c:39 @ 404f28) [468]
+[159]    0.0    0.00    0.00       1         writeCommunities (gn.c:45 @ 404f5c) [159]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+ [127] addIdmapEntry (edges.c:219 @ 40291f) [75] doubleVectorCap (vector.c:47 @ 4015f5) [144] removeDuplicates (util.c:109 @ 401356)
+ [128] addNodeIdToMap (edges.c:170 @ 40269f) [45] enqueue (queue.c:20 @ 40447a) [99] removeDuplicates (util.c:113 @ 40138f)
+ [130] bfs (bfs.c:7 @ 402995) [53] enqueue (queue.c:22 @ 40448e) [100] removeDuplicates (util.c:112 @ 4013ef)
+ [109] bfs (bfs.c:20 @ 402a0e) [26] enqueue (queue.c:25 @ 4044ac) [134] resetBFSInfo (bfs.c:53 @ 402c2c)
+ [110] bfs (bfs.c:21 @ 402a2e) [28] enqueue (queue.c:26 @ 4044c9) [58] resetBFSInfo (bfs.c:57 @ 402c48)
+  [72] bfs (bfs.c:25 @ 402a61) [46] enqueue (queue.c:27 @ 4044e5) [36] resetBFSInfo (bfs.c:58 @ 402c51)
+  [42] bfs (bfs.c:26 @ 402a66) [62] enqueue (queue.c:28 @ 4044f6) [37] resetBFSInfo (bfs.c:59 @ 402c6d)
+  [33] bfs (bfs.c:27 @ 402a75) [38] findEdgeId (graph.c:224 @ 404345) [39] resetBFSInfo (bfs.c:60 @ 402c88)
+   [8] bfs (bfs.c:30 @ 402a8a) [10] findEdgeId (graph.c:226 @ 40435c) [34] resetBFSInfo (bfs.c:61 @ 402ca2)
+   [6] bfs (bfs.c:31 @ 402aa9) [1] findEdgeId (graph.c:227 @ 404378) [49] resetBFSInfo (bfs.c:57 @ 402cbd)
+  [20] bfs (bfs.c:32 @ 402ac3) [15] findEdgeId (graph.c:226 @ 4043ad) [140] resetEdgeIds (edges.c:26 @ 401e6d)
+   [3] bfs (bfs.c:35 @ 402ace) [48] findEdgeId (graph.c:229 @ 4043d1) [155] rowCompressEdges (graph.c:7 @ 40390e)
+  [23] bfs (bfs.c:36 @ 402ae9) [137] findLargest (util.c:56 @ 401098) [101] rowCompressEdges (graph.c:47 @ 403a59)
+  [27] bfs (bfs.c:37 @ 402b02) [93] findLargest (util.c:59 @ 4010bc) [89] rowCompressEdges (graph.c:64 @ 403b88)
+  [29] bfs (bfs.c:38 @ 402b33) [94] findLargest (util.c:58 @ 4010f0) [156] sampleNodes (metrics.c:51 @ 40321d)
+  [16] bfs (bfs.c:42 @ 402b44) [141] findLargestEndpoint (edges.c:61 @ 401fff) [157] sortDegree (metrics.c:28 @ 403179)
+  [24] bfs (bfs.c:43 @ 402b79) [148] freeBFSInfo (bfs.c:83 @ 402d9d) [142] sortEdges (edges.c:70 @ 402054)
+   [5] bfs (bfs.c:44 @ 402b9b) [138] freeEdgeList (edges.c:17 @ 401e0b) [77] sortEdges (edges.c:88 @ 402155)
+  [17] bfs (bfs.c:30 @ 402be2) [131] freeQueue (queue.c:16 @ 404458) [102] sortEdges (edges.c:87 @ 402192)
+  [35] bfs (bfs.c:25 @ 402c0a) [65] freeQueue (queue.c:17 @ 404469) [73] sortEdges (edges.c:99 @ 4021f5)
+ [145] calculateDegreeAndSort (metrics.c:6 @ 403054) [66] freeQueue (queue.c:18 @ 404478) [82] sortEdges (edges.c:100 @ 40225c)
+ [146] calculateEdgeBetweenness (metrics.c:80 @ 4033dc) [125] freeVector (vector.c:20 @ 4014d0) [79] sortEdges (edges.c:101 @ 402293)
+  [88] calculateEdgeBetweenness (metrics.c:112 @ 4035b0) [70] freeVector (vector.c:25 @ 401526) [85] sortEdges (edges.c:98 @ 402300)
+  [40] calculateEdgeBetweenness (metrics.c:113 @ 4035b5) [71] freeVector (vector.c:26 @ 401531) [83] sortEdges (edges.c:106 @ 40231a)
+   [7] calculateEdgeBetweenness (metrics.c:114 @ 4035c8) [149] girvanNewman (gn.c:64 @ 40504f) [84] sortEdges (edges.c:107 @ 402350)
+  [60] calculateEdgeBetweenness (metrics.c:117 @ 403611) [61] graphToEdgeList (graph.c:220 @ 404343) [103] sortEdges (edges.c:108 @ 402392)
+   [2] calculateEdgeBetweenness (metrics.c:118 @ 40361d) [132] initQueue (queue.c:4 @ 4043d8) [121] tcalloc (util.c:19 @ 400f87)
+  [11] calculateEdgeBetweenness (metrics.c:119 @ 403643) [124] initVector (vector.c:6 @ 401468) [104] tcalloc (util.c:21 @ 400f9c)
+  [18] calculateEdgeBetweenness (metrics.c:120 @ 403664) [150] labelCommunities (gn.c:118 @ 4052ac) [105] tcalloc (util.c:22 @ 400fb3)
+  [31] calculateEdgeBetweenness (metrics.c:121 @ 403687) [95] labelCommunities (gn.c:128 @ 405318) [135] trealloc (util.c:45 @ 401037)
+   [9] calculateEdgeBetweenness (metrics.c:122 @ 4036a1) [96] labelCommunities (gn.c:129 @ 405332) [158] uf_create (wqupc.c:14 @ 401712)
+  [30] calculateEdgeBetweenness (metrics.c:129 @ 4036de) [122] lookupNodeId (edges.c:152 @ 4025b7) [120] uf_root (wqupc.c:38 @ 401805)
+  [25] calculateEdgeBetweenness (metrics.c:130 @ 4036fb) [97] lookupNodeId (edges.c:156 @ 4025d7) [106] uf_root (wqupc.c:42 @ 40182f)
+  [64] calculateEdgeBetweenness (metrics.c:134 @ 40373c) [151] mapNodeIds (edges.c:121 @ 402401) [107] uf_root (wqupc.c:44 @ 401839)
+  [43] calculateEdgeBetweenness (metrics.c:135 @ 403744) [98] mapNodeIds (edges.c:134 @ 4024ae) [78] uf_root (wqupc.c:45 @ 40183b)
+  [54] calculateEdgeBetweenness (metrics.c:137 @ 40376e) [152] newBFSInfo (bfs.c:67 @ 402ccf) [108] uf_root (wqupc.c:46 @ 401879)
+  [13] calculateEdgeBetweenness (metrics.c:117 @ 403782) [139] newEdgeList (edges.c:7 @ 401d92) [86] uf_root (wqupc.c:44 @ 401892)
+  [80] calculateEdgeBetweenness (metrics.c:112 @ 4037a3) [153] newIdmapStorage (edges.c:202 @ 402861) [112] uf_root (wqupc.c:48 @ 4018ad)
+ [147] copyEdgeList (edges.c:36 @ 401eb3) [133] newQueue (queue.c:12 @ 404434) [113] uf_root (wqupc.c:49 @ 4018b0)
+  [91] copyEdgeList (edges.c:49 @ 401f61) [126] newVector (vector.c:14 @ 4014ac) [123] uf_union (wqupc.c:51 @ 4018b2)
+  [92] copyEdgeList (edges.c:55 @ 401fbf) [44] queueIsEmpty (queue.c:45 @ 4045ca) [90] uf_union (wqupc.c:56 @ 4018c9)
+ [136] cutEdge (gn.c:100 @ 4051a0) [41] queueIsEmpty (queue.c:47 @ 4045db) [32] vectorAppend (vector.c:30 @ 401533)
+  [47] dequeue (queue.c:35 @ 404546) [68] queueIsEmpty (queue.c:48 @ 4045ed) [4] vectorAppend (vector.c:31 @ 401547)
+  [57] dequeue (queue.c:36 @ 404557) [69] queueIsEmpty (queue.c:49 @ 4045f2) [12] vectorAppend (vector.c:32 @ 401565)
+  [19] dequeue (queue.c:39 @ 40457b) [143] radixSort (util.c:66 @ 401101) [14] vectorAppend (vector.c:33 @ 40158c)
+  [22] dequeue (queue.c:40 @ 404597) [74] radixSort (util.c:81 @ 4011e3) [50] vectorPop (vector.c:37 @ 40158e)
+  [52] dequeue (queue.c:41 @ 4045b4) [81] radixSort (util.c:80 @ 401219) [51] vectorPop (vector.c:40 @ 40159f)
+  [59] dequeue (queue.c:42 @ 4045c5) [63] radixSort (util.c:93 @ 401271) [21] vectorPop (vector.c:41 @ 4015c3)
+  [55] dequeue (queue.c:43 @ 4045c8) [111] radixSort (util.c:96 @ 4012e4) [56] vectorPop (vector.c:42 @ 4015f0)
+ [129] doubleQueueSize (queue.c:30 @ 4044f8) [87] radixSort (util.c:97 @ 4012ed) [76] vectorPop (vector.c:43 @ 4015f3)
+  [67] doubleQueueSize (queue.c:33 @ 404544) [154] readSparseUGraph (graph.c:82 @ 403ca5) [159] writeCommunities (gn.c:45 @ 404f5c)
