@@ -30,6 +30,7 @@ SRCS=$(shell find ./ -maxdepth 1 -name "*.c" | sed 's!.*/!!')
 OBJS  = $(addprefix $(OBJDIR), \
         $(patsubst %.c, %.o, $(SRCS)))
 
+
 $(OBJDIR)%.o : %.c $(INCLUDES)
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CC) -c $(CFLAGS) $@ $<

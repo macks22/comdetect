@@ -169,7 +169,11 @@ void printPredecessors(BFSInfo *info);
 // calculate modularity score for a graph
 float modularity(SparseUGraph *graph, Vector *communities, int num_comm);
 
-int getEdges(SparseUGraph *graph, int node);
+// returns actual number of edges for a node in a community
+int getEdgesInComm(SparseUGraph *graph, int node);
+
+// returns the expected number of random edges
+int getDegreeInNetwork(SparseUGraph *graph, int node);
 
 // Calculate edge betweenness centrality using sampling
 // note that multiple calls calculate multiple times.
@@ -180,8 +184,37 @@ void calculateEdgeBetweenness(SparseUGraph *graph, Vector *largest);
 // print out edge betweenness per edge
 void printEdgeBetweenness(SparseUGraph *graph);
 
+/************ K-MEDOID ***********/
+#define LABELED -1
+typedef struct {
+
+    int k;
+    int z; // num partitions
+    
+    int *seed_nodes; // labeled
+    int *unlabeled;  // labeled nodes are still in this array, but they are marked with a -1
+
+} kMedoidInfo;
+
+typedef struct {
+
+    int n; // node #
+    int label; //zone #, -1 for unlabeled
+
+    int *distances; //distances to other zones
+} DTZ;
+
 // graph partitioning by graph k medoids method
-void graphKMedoid(SparseUGraph *graph, InputArgs *args);
+void graphKMedoid(SparseUGraph *graph, kMedoidInfo *k_med);
+
+// generate dtz idx
+void genDTZidx(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
+
+// generate initial k random seeds for k-medoids
+void genKSeeds(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
+
+void labelDTZidx(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
+
 
 // Use the Girvan Newman (2004) algorithm to divisely
 // cluster the graph into k partitions.
