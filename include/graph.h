@@ -17,6 +17,7 @@
 #include "vector.h"
 #include "util.h"
 #include "edges.h"
+#include "wqupc.h"
 
 /********************************************************************/
 /*                       STRUCTS AND PROTOTYPES                     */
