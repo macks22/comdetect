@@ -9,28 +9,39 @@ INCDIR=../include
 INCLUDE=graph.h
 INCLUDES=$(patsubst %,$(INCDIR)/%,$(INCLUDE))
 
+
+# path to bin dir where executable will end up
+BINDIR=../bin/
+
+# path to directory for temporary object file storage
+OBJDIR=./obj/
+
 # path to added libraries
-LIBSDIR=../lib
+LIBSDIR=../lib/
 # lm = math library
 LIBS=-lm
 
-# path to bin dir where executable will end up
-BINDIR=../bin
-
 # compiler flags
-CFLAGS=-I$(INCDIR)
+CFLAGS=-I$(INCDIR) -g -o
 
-# make w/ objects
-MWOBJ=test.o util.o edges.o graph.o bfs.o queue.o vector.o metrics.o modularity.o gn.o wqupc.o
+# source files
+SRCS=$(shell find ./ -maxdepth 1 -name "*.c" | sed 's!.*/!!')
 
+OBJS  = $(addprefix $(OBJDIR), \
+        $(patsubst %.c, %.o, $(SRCS)))
 
-%.o: %.c $(INCLUDES)
-	$(CC) -g -c -o $@ $< $(CFLAGS)
+$(OBJDIR)%.o : %.c $(INCLUDES)
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	$(CC) -c $(CFLAGS) $@ $<
 
-$(BINDIR)/test-$(VERNUM): $(MWOBJ)
-	$(CC) -g -o $@ $^ $(CFLAGS) $(LIBS)
+test: $(OBJS) main/test.c
+	$(CC) $(CFLAGS) $(BINDIR)test-$(VERNUM) $^ $(LIBS)
+
+gn: $(OBJS) main/gn.c
+	$(CC) $(CFLAGS) $(BINDIR)gn-$(VERNUM) $^ $(LIBS)
+
 
 .PHONY: clean
 
 clean:
-	rm -f *.o
+	rm -f $(OBJDIR)*.o
