@@ -103,9 +103,9 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
                &elist.nodes[JCOL][edge_idx]);
         edge_idx++;
     }
-    printf("# edges read: %d\n", --edge_idx);
+    assert(graph->m == --edge_idx);
+    // printf("# edges read: %d\n", --edge_idx);
     // printEdgeList(&elist, edge_idx);
-    assert(graph->m == edge_idx);
 
     // get listing of all unique node ids
     mapNodeIds(&elist, &graph->id, &num_ids, &graph->idmap);

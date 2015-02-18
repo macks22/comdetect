@@ -65,7 +65,7 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
         edges_cut += largest.size / 2;
         iteration++;
         freeVector(&largest);
-        printSparseUGraph(graph, graph->n);
+        // printSparseUGraph(graph, graph->n);
     }
 }
 
