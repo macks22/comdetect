@@ -218,7 +218,7 @@ void labelDTZidx(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
 
 // Use the Girvan Newman (2004) algorithm to divisely
 // cluster the graph into k partitions.
-void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
+int girvanNewman(SparseUGraph *graph, int k, float sample_rate, Vector **comms);
 
 // Build up the communities from the divided graph
 // using a union-find data structure

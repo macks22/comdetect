@@ -4,22 +4,24 @@
 void
 calculateDegreeAndSort(SparseUGraph *graph)
 {
-    int index_idx = 0, degree_idx = 0;
-    int prev_value = 0, cur_value = 0;
+    int i, j, j_idx, degree;
 
     assert(graph != NULL);
     assert(graph->index != NULL);
 
+    // allocate n integers for degree storage if not already allocated
     if (graph->degree == NULL) {
         graph->degree = (int *)tcalloc(graph->n, sizeof(int));
     }
 
-    prev_value = graph->index[index_idx];
-    for (index_idx = 1; index_idx < graph->n+1; index_idx++) {
-        cur_value = graph->index[index_idx];
-        graph->degree[degree_idx] = (cur_value - prev_value);
-        prev_value = cur_value;
-        degree_idx++;
+    // calculate degree for each node
+    for (i = 0; i < graph->n; i++) {
+        degree = 0;
+        for (j_idx = graph->index[i]; j_idx < graph->index[i+1]; j_idx++) {
+            j = graph->edges[j_idx];
+            if (j >= 0) degree++;  // ignore edges which have been cut
+        }
+        graph->degree[i] = degree;
     }
     sortDegree(graph);
 }
@@ -51,10 +53,11 @@ sampleNodes(SparseUGraph *graph, float sample_rate)
 {
     int i, j=0;
     assert(graph != NULL);
-    if (graph->sample != NULL) free(graph->sample);
 
-    graph->n_s = (int) ((graph->n * sample_rate) + .5);
-    graph->sample = (int *)tcalloc(graph->n_s, sizeof(int));
+    if (graph->sample == NULL) {
+        graph->n_s = (int) ((graph->n * sample_rate) + .5);
+        graph->sample = tcalloc(graph->n_s, sizeof(int));
+    }
 
     for (i = graph->n-1; i > (graph->n - graph->n_s)-1; i--) {
         graph->sample[j++] = graph->node_id[i];
@@ -92,18 +95,21 @@ calculateEdgeBetweenness(SparseUGraph *graph, Vector *largest)
         return;  // TODO: handle this better
     }
 
-    // set up edge betweenness storage
-    if (graph->edge_bet != NULL) {
-        graph->edge_bet = trealloc(graph->edge_bet, graph->m*sizeof(float));
-    } else {
-        graph->edge_bet = (float *)tcalloc(graph->m, sizeof(float));
+    // set up edge betweenness storage, if not already present
+    if (graph->edge_bet == NULL) {
+        graph->edge_bet = tcalloc(graph->m, sizeof(float));
+    } else {  // reset if already in use
+        memset(graph->edge_bet, 0, graph->m * sizeof(float));
     }
 
-    // begin calculations
+    // set up data
     newVector(largest);
     newBFSInfo(&info, graph->n);
     largest_val = 0.0;
+
+    // begin calculations
     for (i = 0; i < graph->n_s; i++) {
+        resetBFSInfo(&info);  // prepare for bfs, clearing any current info
         info.src = graph->sample[i];  // perform bfs from src node
         bfs(graph, &info);
 
@@ -139,7 +145,7 @@ calculateEdgeBetweenness(SparseUGraph *graph, Vector *largest)
             }
         }
     }
-    freeBFSInfo(&info);
+    freeBFSInfo(&info);  // done with calculations
 }
 
 // print out edge betweenness per edge

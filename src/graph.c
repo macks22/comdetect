@@ -104,6 +104,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
         edge_idx++;
     }
     assert(graph->m == --edge_idx);
+    fclose(fpin);
     // printf("# edges read: %d\n", --edge_idx);
     // printEdgeList(&elist, edge_idx);
 
@@ -113,6 +114,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
 
     // compress edgelist rows to construct index and edge list
     rowCompressEdges(&elist, graph);
+    freeEdgeList(&elist);
 
     // set remaining data to NULL or empty
     graph->node_id = (int *)tcalloc(graph->n, sizeof(int));
@@ -122,13 +124,12 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     graph->degree = NULL;
     graph->edge_bet = NULL;
     graph->sample = NULL;
+    graph->n_s = -1;
 
     // Write out the ID array; we won't be using it while processing.
     // It can be used later to translate the output (in node indices)
     // to the input node IDs.
     // storeAndFreeNodeIds(graph);
-    freeEdgeList(&elist);
-    fclose(fpin);
 }
 
 void
@@ -143,13 +144,15 @@ freeSparseUGraph(SparseUGraph *graph)
     if (graph->id != NULL) {
         free(graph->id);
         freeIdmapStorage(&graph->idmap);
+        hdestroy();  // free hashtable used for node id mapping
     }
-    if (graph->edge_bet != NULL) free(graph->edge_bet);
-    if (graph->degree != NULL) free(graph->degree);
-    if (graph->sample != NULL) free(graph->sample);
 
-    // free hashtable used for node id mapping
-    hdestroy();
+    // TODO: something fishy going on here... these should be freed,
+    // but memory is being corrupted somewhere.
+    //if (graph->edge_bet != NULL) free(graph->edge_bet);
+    //if (graph->degree != NULL) free(graph->degree);
+    //if (graph->sample != NULL) free(graph->sample);
+
 }
 
 void

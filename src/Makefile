@@ -22,7 +22,7 @@ LIBSDIR=../lib/
 LIBS=-lm
 
 # compiler flags
-CFLAGS=-I$(INCDIR) -pg -O3 -o
+CFLAGS=-I$(INCDIR) -O3 -o
 
 # source files
 SRCS=$(shell find ./ -maxdepth 1 -name "*.c" | sed 's!.*/!!')
