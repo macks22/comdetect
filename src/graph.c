@@ -1,5 +1,56 @@
 #include "graph.h"
 
+#define EID_SIZE    50
+
+void
+addEdgeIdToMap(SparseUGraph *graph, int i, int j, int id)
+{
+    ENTRY e, *ep;
+    char edge_id_str[EID_SIZE];
+
+    if (i < j) sprintf(edge_id_str, "%d %d", i, j);
+    else sprintf(edge_id_str, "%d %d", j, i);
+
+    e.key = tcalloc(EID_SIZE, sizeof(char));
+    strncpy(e.key, edge_id_str, strlen(edge_id_str));
+    e.data = tcalloc(1, sizeof(int));
+    *(int *)e.data = id;
+
+    hsearch_r(e, FIND, &ep, &graph->edge_idmap);
+    if (ep != NULL) { // value already present in hash table
+        free(e.key);
+        free(e.data);
+        return;
+    }
+
+    hsearch_r(e, ENTER, &ep, &graph->edge_idmap);
+    if (ep == NULL) {
+        fprintf(stderr, "node id map hash entry failed\n");
+        error(EXIT_FAILURE);
+    }
+    addIdmapEntry(&graph->eidmap_store, ep);
+}
+
+int
+findEdgeId(SparseUGraph *graph, int i, int j)
+{   // look up the id of the edge (i, j)
+    ENTRY e, *ep;
+    char edge_id_str[EID_SIZE];
+
+    if (i < j) sprintf(edge_id_str, "%d %d", i, j);
+    else sprintf(edge_id_str, "%d %d", j, i);
+
+    e.key = tcalloc(EID_SIZE, sizeof(char));
+    strncpy(e.key, edge_id_str, strlen(edge_id_str));
+
+    hsearch_r(e, FIND, &ep, &graph->edge_idmap);
+    if (ep == NULL) {
+        fprintf(stderr, "node id map hash entry failed\n");
+        error(EXIT_FAILURE);
+    }
+    free(e.key);
+    return *((int *)ep->data);
+}
 
 // Compress edges from edge list into a compressed row storage (CRS) format
 void
@@ -8,7 +59,7 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
     EdgeList elist_j;
     int edge_idx=0, id_idx=0, index_idx=0;
     int cur_id, prev_id = -1;
-    int i_end, j_end, i_idx=0, j_idx=0;
+    int i_end, j_end, i_idx=0, j_idx=0, eid;
     int i_orig, j_orig, i_end_orig, j_end_orig;
 
     // Allocate space for edge and node storage.
@@ -51,22 +102,30 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
                 if (i_end_orig < j_end_orig) {  // i endpoint is smaller
                     i_end = lookupNodeId(i_end_orig);
                     graph->edges[edge_idx] = i_end;
-                    graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
+                    eid = elist_i->id[i_idx++];
+                    graph->edge_id[edge_idx] = eid;
+                    addEdgeIdToMap(graph, index_idx-1, i_end, eid);
                 } else {  // j endpoint is smaller
                     j_end = lookupNodeId(j_end_orig);
                     graph->edges[edge_idx] = j_end;
-                    graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
+                    eid = elist_j.id[j_idx++];
+                    graph->edge_id[edge_idx++] = eid;
+                    addEdgeIdToMap(graph, index_idx-1, j_end, eid);
                 }
             } else {
                 // add i value
                 i_end = lookupNodeId(i_end_orig);
                 graph->edges[edge_idx] = i_end;
-                graph->edge_id[edge_idx++] = elist_i->id[i_idx++];
+                eid = elist_i->id[i_idx++];
+                graph->edge_id[edge_idx++] = eid;
+                addEdgeIdToMap(graph, index_idx-1, i_end, eid);
             }
         } else if (j_orig == cur_id) {  // add j value
             j_end = lookupNodeId(elist_j.nodes[ICOL][j_idx]);
             graph->edges[edge_idx] = j_end;
-            graph->edge_id[edge_idx++] = elist_j.id[j_idx++];
+            eid = elist_j.id[j_idx++];
+            graph->edge_id[edge_idx++] = eid;
+            addEdgeIdToMap(graph, index_idx-1, j_end, eid);
         } else {  // done with this node
             cur_id = graph->id[id_idx++];
         }
@@ -104,6 +163,7 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
         edge_idx++;
     }
     assert(graph->m == --edge_idx);
+    fclose(fpin);
     // printf("# edges read: %d\n", --edge_idx);
     // printEdgeList(&elist, edge_idx);
 
@@ -112,7 +172,11 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     assert(graph->n == num_ids);
 
     // compress edgelist rows to construct index and edge list
+    memset(&graph->edge_idmap, 0, sizeof(graph->edge_idmap));
+    hcreate_r(graph->m + graph->m*0.25, &graph->edge_idmap);
+    newIdmapStorage(&graph->eidmap_store, graph->m);
     rowCompressEdges(&elist, graph);
+    freeEdgeList(&elist);
 
     // set remaining data to NULL or empty
     graph->node_id = (int *)tcalloc(graph->n, sizeof(int));
@@ -127,8 +191,6 @@ readSparseUGraph(InputArgs *args, SparseUGraph *graph)
     // It can be used later to translate the output (in node indices)
     // to the input node IDs.
     // storeAndFreeNodeIds(graph);
-    freeEdgeList(&elist);
-    fclose(fpin);
 }
 
 void
@@ -143,13 +205,15 @@ freeSparseUGraph(SparseUGraph *graph)
     if (graph->id != NULL) {
         free(graph->id);
         freeIdmapStorage(&graph->idmap);
+        hdestroy();
     }
     if (graph->edge_bet != NULL) free(graph->edge_bet);
     if (graph->degree != NULL) free(graph->degree);
     if (graph->sample != NULL) free(graph->sample);
 
-    // free hashtable used for node id mapping
-    hdestroy();
+    // free hashtable used for node id mapping and edge id mapping
+    freeIdmapStorage(&graph->eidmap_store);
+    hdestroy_r(&graph->edge_idmap);
 }
 
 void
@@ -237,11 +301,3 @@ int findIndex(int *arr, int low, int high, int val)
     return -1;  // value not found
 }
 
-int
-findEdgeId(SparseUGraph *graph, int src, int dest)
-{   // look up the id of the edge (src, dest)
-    int idx;
-    idx = findIndex(graph->edges, graph->index[src], graph->index[src+1]-1, dest);
-    if (idx < 0) return idx;
-    else return graph->edge_id[idx];
-}

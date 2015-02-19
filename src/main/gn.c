@@ -4,7 +4,7 @@
 int
 main (int argc, char *argv[])
 {
-    int k;
+    int k, i;
     Vector *comms;
     SparseUGraph graph;
     InputArgs args;
@@ -32,11 +32,15 @@ main (int argc, char *argv[])
     // read graph and run Girvan Newman
     readSparseUGraph(&args, &graph);
     // printSparseUGraph(&graph, graph.n);
-    girvanNewman(&graph, args.num_clusters, args.sample_rate);
-    k = labelCommunities(&graph, &comms);
+    k = girvanNewman(&graph, args.num_clusters, args.sample_rate, &comms);
 
     // output community memberships
     writeCommunities(graph.id, comms, k, args.outfile);
+    for (i = k-1; i >= 0; i--) {
+        freeVector(&comms[i]);
+    }
+    free(comms);
+    freeSparseUGraph(&graph);
     exit(EXIT_SUCCESS);
 }
 
@@ -55,23 +59,26 @@ void writeCommunities(int *idmap, Vector *comms, int k, char *outfile)
             fprintf(fpout, "%d %d\n", idmap[comms[i].data[j]], i);
         }
     }
+    fclose(fpout);
 }
 
 
 // Use the Girvan Newman (2004) algorithm to divisely
 // cluster the graph into k partitions.
-void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
+int girvanNewman(SparseUGraph *graph, int k, float sample_rate, Vector **comms)
 {
     Vector largest;     // edges with highest betweenness
     int edges_cut=0;    // num edges cut so far
     int iteration=1;    // which iteration the algorithm is on
     int src, dest, i;
+    int num_comms=0, checkpoint=k;
 
     assert(graph != NULL);
     if (graph->m <= 0) return;
 
-    while (edges_cut < k && edges_cut < graph->m) {
-        printf("running iteration %d; total edges cut: %d\n", iteration, edges_cut);
+    while (num_comms < k && edges_cut < graph->m) {
+        printf("running iteration %d; edges cut so far: %d\n",
+               iteration, edges_cut);
 
         // Calculate degree, then sample the nodes
         calculateDegreeAndSort(graph);
@@ -92,8 +99,24 @@ void girvanNewman(SparseUGraph *graph, int k, float sample_rate)
         iteration++;
         freeVector(&largest);
         // printSparseUGraph(graph, graph->n);
+
+        if (edges_cut >= checkpoint) {  // check number of communities
+            num_comms = labelCommunities(graph, comms);
+            // reset if not done
+            if (num_comms < k && edges_cut < graph->m) {
+                for (i = num_comms-1; i >= 0; i--) {
+                    freeVector(comms[i]);
+                }
+                free(*comms);
+                checkpoint += (k - num_comms);  // set next checkpoint
+                printf("communities found so far: %d\n", num_comms);
+            }
+        }
     }
-    printf("completed %d iterations; total edges cut: %d\n", iteration-1, edges_cut);
+    printf("completed %d iterations; total edges cut: %d\n",
+           iteration-1, edges_cut);
+    printf("total communities found: %d\n", num_comms);
+    return num_comms;
 }
 
 // Cut an edge from the graph by marking it with the negative
@@ -125,6 +148,7 @@ int labelCommunities(SparseUGraph *graph, Vector **comms)
     EdgeList elist;
     UnionFind *uf = uf_create(graph->n);
 
+    // build disjoint sets from graph, ignoring edges that have been cut
     for (i = 0; i < graph->n; i++) {
         for (idx = graph->index[i]; idx < graph->index[i+1]; idx++) {
             j = graph->edges[idx];
@@ -147,13 +171,12 @@ int labelCommunities(SparseUGraph *graph, Vector **comms)
     }
 
     // sort in tandem, so we have ascending roots
-    assert(graph != NULL);
-
-    // use the EdgeList to sort in tandem
+    // use the EdgeList to sort in tandem.
     // TODO: move to a more generic sorting function
     // this allocates a bunch of extra memory and sorts the id array
     // along with the degree and node_id arrays, so it wastes quite a
     // lot of resources.
+    assert(graph != NULL);
     elist.length = graph->n;
     elist.id = tcalloc(graph->n, sizeof(int));
     elist.nodes[ICOL] = roots;

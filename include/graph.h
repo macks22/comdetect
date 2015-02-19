@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 /********************************************************************/
 /*                            INCLUDES                               */
 /********************************************************************/
@@ -63,7 +65,9 @@ typedef struct {
     int *node_id;     // size = |V|
     int *sample;      // size = user specified at run time
 
-    IdmapStorage idmap;    // hash table entries for node id map
+    IdmapStorage idmap;                // hash table entries for node id map
+    IdmapStorage eidmap_store;
+    struct hsearch_data edge_idmap;    // map from "i j" pair to edge id
 
 } SparseUGraph;
 
@@ -218,7 +222,8 @@ void labelDTZidx(SparseUGraph *graph, kMedoidInfo *k_med, DTZ *dtz_idx);
 
 // Use the Girvan Newman (2004) algorithm to divisely
 // cluster the graph into k partitions.
-void girvanNewman(SparseUGraph *graph, int k, float sample_rate);
+// Returns the number of communities found (may not be k).
+int girvanNewman(SparseUGraph *graph, int k, float sample_rate, Vector **comms);
 
 // Build up the communities from the divided graph
 // using a union-find data structure
