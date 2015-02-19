@@ -25,7 +25,7 @@ addEdgeIdToMap(SparseUGraph *graph, int i, int j, int id)
 
     hsearch_r(e, ENTER, &ep, &graph->edge_idmap);
     if (ep == NULL) {
-        fprintf(stderr, "node id map hash entry failed\n");
+        fprintf(stderr, "edge id map hash entry failed for (%d %d)\n", i, j);
         error(EXIT_FAILURE);
     }
     addIdmapEntry(&graph->eidmap_store, ep);
@@ -45,7 +45,7 @@ findEdgeId(SparseUGraph *graph, int i, int j)
 
     hsearch_r(e, FIND, &ep, &graph->edge_idmap);
     if (ep == NULL) {
-        fprintf(stderr, "node id map hash entry failed\n");
+        fprintf(stderr, "edge id map hash lookup failed for (%d %d)\n", i, j);
         error(EXIT_FAILURE);
     }
     free(e.key);
@@ -103,7 +103,7 @@ rowCompressEdges(EdgeList *elist_i, SparseUGraph *graph)
                     i_end = lookupNodeId(i_end_orig);
                     graph->edges[edge_idx] = i_end;
                     eid = elist_i->id[i_idx++];
-                    graph->edge_id[edge_idx] = eid;
+                    graph->edge_id[edge_idx++] = eid;
                     addEdgeIdToMap(graph, index_idx-1, i_end, eid);
                 } else {  // j endpoint is smaller
                     j_end = lookupNodeId(j_end_orig);
