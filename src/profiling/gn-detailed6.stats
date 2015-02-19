@@ -1,0 +1,420 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 37.41    108.63   108.63        5    21.73    57.71  calculateEdgeBetweenness
+ 36.55    214.75   106.12     1585     0.07     0.10  bfs
+ 16.09    261.47    46.72 1148807002     0.00     0.00  vectorAppend
+  6.57    280.55    19.08 702501470     0.00     0.00  findEdgeId
+  0.99    283.41     2.86 459444868     0.00     0.00  enqueue
+  0.77    285.64     2.23 459444868     0.00     0.00  dequeue
+  0.51    287.12     1.48 711021935     0.00     0.00  tcalloc
+  0.27    287.90     0.78 459444868     0.00     0.00  vectorPop
+  0.14    288.31     0.41 10498626     0.00     0.00  printVector
+  0.13    288.69     0.38       11     0.03     0.03  sortEdges
+  0.12    289.04     0.35 459446453     0.00     0.00  queueIsEmpty
+  0.09    289.30     0.26        6     0.04     0.04  radixSort
+  0.07    289.51     0.21     1585     0.00     0.00  freeQueue
+  0.07    289.70     0.19                             error
+  0.06    289.88     0.18  1585414     0.00     0.00  freeVector
+  0.04    290.01     0.13                             doubleQueueSize
+  0.03    290.10     0.09  2099732     0.00     0.00  addEdgeIdToMap
+  0.02    290.17     0.07        1     0.07     0.24  rowCompressEdges
+  0.01    290.20     0.03  2099732     0.00     0.00  lookupNodeId
+  0.01    290.23     0.03        5     0.01     0.19  labelCommunities
+  0.01    290.25     0.02 10498626     0.00     0.00  uf_union
+  0.01    290.26     0.02  1585400     0.00     0.00  uf_root
+  0.00    290.27     0.01  1585411     0.00     0.00  newVector
+  0.00    290.28     0.01        6     0.00     0.05  removeDuplicates
+  0.00    290.29     0.01        2     0.01     0.01  freeIdmapStorage
+  0.00    290.30     0.01        1     0.01     0.06  mapNodeIds
+  0.00    290.30     0.00  1049866     0.00     0.00  addIdmapEntry
+  0.00    290.30     0.00   317080     0.00     0.00  addNodeIdToMap
+  0.00    290.30     0.00     1585     0.00     0.00  newQueue
+  0.00    290.30     0.00      207     0.00     0.00  trealloc
+  0.00    290.30     0.00       11     0.00     0.00  findLargest
+  0.00    290.30     0.00        6     0.00     0.00  newEdgeList
+  0.00    290.30     0.00        5     0.00     0.03  calculateDegreeAndSort
+  0.00    290.30     0.00        5     0.00     0.04  freeBFSInfo
+  0.00    290.30     0.00        5     0.00     0.00  initVector
+  0.00    290.30     0.00        5     0.00     0.00  newBFSInfo
+  0.00    290.30     0.00        5     0.00     0.00  sampleNodes
+  0.00    290.30     0.00        5     0.00     0.00  uf_create
+  0.00    290.30     0.00        2     0.00     0.00  freeEdgeList
+  0.00    290.30     0.00        1     0.00     0.00  copyEdgeList
+  0.00    290.30     0.00        1     0.00     0.00  newIdmapStorage
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.00% of 290.30 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.8    0.00  289.68                 girvanNewman [1]
+              108.63  179.94       5/5           calculateEdgeBetweenness [2]
+                0.03    0.90       5/5           labelCommunities [9]
+                0.00    0.17       5/5           calculateDegreeAndSort [22]
+                0.00    0.00       9/1585414     freeVector [20]
+                0.00    0.00       5/5           sampleNodes [37]
+-----------------------------------------------
+              108.63  179.94       5/5           girvanNewman [1]
+[2]     99.4  108.63  179.94       5         calculateEdgeBetweenness [2]
+              106.12   52.31    1585/1585        bfs [3]
+               19.08    1.46 702501470/702501470     findEdgeId [5]
+                0.78    0.00 459444868/459444868     vectorPop [10]
+                0.00    0.18       5/5           freeBFSInfo [21]
+                0.00    0.01       5/5           newBFSInfo [30]
+                0.00    0.00   21522/1148807002     vectorAppend [4]
+                0.00    0.00       5/1585411     newVector [29]
+                0.00    0.00       1/711021935     tcalloc [8]
+                0.00    0.00       4/207         trealloc [41]
+-----------------------------------------------
+              106.12   52.31    1585/1585        calculateEdgeBetweenness [2]
+[3]     54.6  106.12   52.31    1585         bfs [3]
+               46.65    0.00 1147200080/1148807002     vectorAppend [4]
+                2.86    0.00 459444868/459444868     enqueue [6]
+                2.23    0.00 459444868/459444868     dequeue [7]
+                0.35    0.00 459446453/459446453     queueIsEmpty [13]
+                0.21    0.00    1585/1585        freeQueue [18]
+                0.00    0.00    1585/1585        newQueue [34]
+-----------------------------------------------
+                0.00    0.00   21522/1148807002     calculateEdgeBetweenness [2]
+                0.06    0.00 1585400/1148807002     labelCommunities [9]
+               46.65    0.00 1147200080/1148807002     bfs [3]
+[4]     16.1   46.72    0.00 1148807002         vectorAppend [4]
+                0.00    0.00     203/207         trealloc [41]
+-----------------------------------------------
+               19.08    1.46 702501470/702501470     calculateEdgeBetweenness [2]
+[5]      7.1   19.08    1.46 702501470         findEdgeId [5]
+                1.46    0.00 702501470/711021935     tcalloc [8]
+-----------------------------------------------
+                2.86    0.00 459444868/459444868     bfs [3]
+[6]      1.0    2.86    0.00 459444868         enqueue [6]
+-----------------------------------------------
+                2.23    0.00 459444868/459444868     bfs [3]
+[7]      0.8    2.23    0.00 459444868         dequeue [7]
+-----------------------------------------------
+                0.00    0.00       1/711021935     newIdmapStorage [39]
+                0.00    0.00       1/711021935     calculateDegreeAndSort [22]
+                0.00    0.00       1/711021935     calculateEdgeBetweenness [2]
+                0.00    0.00       1/711021935     readSparseUGraph [14]
+                0.00    0.00       2/711021935     mapNodeIds [25]
+                0.00    0.00       3/711021935     copyEdgeList [38]
+                0.00    0.00       3/711021935     rowCompressEdges [17]
+                0.00    0.00       5/711021935     initVector [36]
+                0.00    0.00       5/711021935     sampleNodes [37]
+                0.00    0.00      18/711021935     newEdgeList [35]
+                0.00    0.00      20/711021935     newBFSInfo [30]
+                0.00    0.00      20/711021935     labelCommunities [9]
+                0.00    0.00      33/711021935     sortEdges [12]
+                0.00    0.00    1585/711021935     newQueue [34]
+                0.00    0.00  634160/711021935     addNodeIdToMap [33]
+                0.00    0.00 1585411/711021935     newVector [29]
+                0.00    0.00 2099732/711021935     lookupNodeId [26]
+                0.01    0.00 4199464/711021935     addEdgeIdToMap [24]
+                1.46    0.00 702501470/711021935     findEdgeId [5]
+[8]      0.5    1.48    0.00 711021935         tcalloc [8]
+-----------------------------------------------
+                0.03    0.90       5/5           girvanNewman [1]
+[9]      0.3    0.03    0.90       5         labelCommunities [9]
+                0.41    0.00 10498626/10498626     printVector [11]
+                0.01    0.22       5/6           removeDuplicates [15]
+                0.17    0.00       5/11          sortEdges [12]
+                0.06    0.00 1585400/1148807002     vectorAppend [4]
+                0.02    0.00 10498626/10498626     uf_union [27]
+                0.02    0.00 1585400/1585400     uf_root [28]
+                0.00    0.00       6/1585411     newVector [29]
+                0.00    0.00      20/711021935     tcalloc [8]
+                0.00    0.00       5/5           uf_create [43]
+-----------------------------------------------
+                0.78    0.00 459444868/459444868     calculateEdgeBetweenness [2]
+[10]     0.3    0.78    0.00 459444868         vectorPop [10]
+-----------------------------------------------
+                0.41    0.00 10498626/10498626     labelCommunities [9]
+[11]     0.1    0.41    0.00 10498626         printVector [11]
+-----------------------------------------------
+                0.03    0.00       1/11          rowCompressEdges [17]
+                0.17    0.00       5/11          calculateDegreeAndSort [22]
+                0.17    0.00       5/11          labelCommunities [9]
+[12]     0.1    0.38    0.00      11         sortEdges [12]
+                0.00    0.00      33/711021935     tcalloc [8]
+                0.00    0.00      11/11          findLargest [42]
+-----------------------------------------------
+                0.35    0.00 459446453/459446453     bfs [3]
+[13]     0.1    0.35    0.00 459446453         queueIsEmpty [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     0.1    0.00    0.29                 readSparseUGraph [14]
+                0.07    0.17       1/1           rowCompressEdges [17]
+                0.01    0.05       1/1           mapNodeIds [25]
+                0.00    0.00       1/6           newEdgeList [35]
+                0.00    0.00       1/1           newIdmapStorage [39]
+                0.00    0.00       1/711021935     tcalloc [8]
+                0.00    0.00       1/2           freeEdgeList [44]
+-----------------------------------------------
+                0.00    0.04       1/6           mapNodeIds [25]
+                0.01    0.22       5/6           labelCommunities [9]
+[15]     0.1    0.01    0.26       6         removeDuplicates [15]
+                0.26    0.00       6/6           radixSort [16]
+-----------------------------------------------
+                0.26    0.00       6/6           removeDuplicates [15]
+[16]     0.1    0.26    0.00       6         radixSort [16]
+-----------------------------------------------
+                0.07    0.17       1/1           readSparseUGraph [14]
+[17]     0.1    0.07    0.17       1         rowCompressEdges [17]
+                0.09    0.01 2099732/2099732     addEdgeIdToMap [24]
+                0.03    0.00       1/11          sortEdges [12]
+                0.03    0.00 2099732/2099732     lookupNodeId [26]
+                0.00    0.00       3/711021935     tcalloc [8]
+                0.00    0.00       1/1           copyEdgeList [38]
+                0.00    0.00       1/2           freeEdgeList [44]
+-----------------------------------------------
+                0.21    0.00    1585/1585        bfs [3]
+[18]     0.1    0.21    0.00    1585         freeQueue [18]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     0.1    0.19    0.00                 error [19]
+-----------------------------------------------
+                0.00    0.00       9/1585414     girvanNewman [1]
+                0.18    0.00 1585405/1585414     freeBFSInfo [21]
+[20]     0.1    0.18    0.00 1585414         freeVector [20]
+-----------------------------------------------
+                0.00    0.18       5/5           calculateEdgeBetweenness [2]
+[21]     0.1    0.00    0.18       5         freeBFSInfo [21]
+                0.18    0.00 1585405/1585414     freeVector [20]
+-----------------------------------------------
+                0.00    0.17       5/5           girvanNewman [1]
+[22]     0.1    0.00    0.17       5         calculateDegreeAndSort [22]
+                0.17    0.00       5/11          sortEdges [12]
+                0.00    0.00       5/6           newEdgeList [35]
+                0.00    0.00       1/711021935     tcalloc [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[23]     0.0    0.13    0.00                 doubleQueueSize [23]
+-----------------------------------------------
+                0.09    0.01 2099732/2099732     rowCompressEdges [17]
+[24]     0.0    0.09    0.01 2099732         addEdgeIdToMap [24]
+                0.01    0.00 4199464/711021935     tcalloc [8]
+                0.00    0.00 1049866/1049866     addIdmapEntry [40]
+-----------------------------------------------
+                0.01    0.05       1/1           readSparseUGraph [14]
+[25]     0.0    0.01    0.05       1         mapNodeIds [25]
+                0.00    0.04       1/6           removeDuplicates [15]
+                0.00    0.00  317080/317080      addNodeIdToMap [33]
+                0.00    0.00       2/711021935     tcalloc [8]
+-----------------------------------------------
+                0.03    0.00 2099732/2099732     rowCompressEdges [17]
+[26]     0.0    0.03    0.00 2099732         lookupNodeId [26]
+                0.00    0.00 2099732/711021935     tcalloc [8]
+-----------------------------------------------
+                0.02    0.00 10498626/10498626     labelCommunities [9]
+[27]     0.0    0.02    0.00 10498626         uf_union [27]
+-----------------------------------------------
+                0.02    0.00 1585400/1585400     labelCommunities [9]
+[28]     0.0    0.02    0.00 1585400         uf_root [28]
+-----------------------------------------------
+                0.00    0.00       5/1585411     calculateEdgeBetweenness [2]
+                0.00    0.00       6/1585411     labelCommunities [9]
+                0.01    0.00 1585400/1585411     newBFSInfo [30]
+[29]     0.0    0.01    0.00 1585411         newVector [29]
+                0.00    0.00 1585411/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.01       5/5           calculateEdgeBetweenness [2]
+[30]     0.0    0.00    0.01       5         newBFSInfo [30]
+                0.01    0.00 1585400/1585411     newVector [29]
+                0.00    0.00      20/711021935     tcalloc [8]
+                0.00    0.00       5/5           initVector [36]
+-----------------------------------------------
+                0.01    0.00       2/2           freeSparseUGraph [32]
+[31]     0.0    0.01    0.00       2         freeIdmapStorage [31]
+-----------------------------------------------
+                                                 <spontaneous>
+[32]     0.0    0.00    0.01                 freeSparseUGraph [32]
+                0.01    0.00       2/2           freeIdmapStorage [31]
+-----------------------------------------------
+                0.00    0.00  317080/317080      mapNodeIds [25]
+[33]     0.0    0.00    0.00  317080         addNodeIdToMap [33]
+                0.00    0.00  634160/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00    1585/1585        bfs [3]
+[34]     0.0    0.00    0.00    1585         newQueue [34]
+                0.00    0.00    1585/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00       1/6           readSparseUGraph [14]
+                0.00    0.00       5/6           calculateDegreeAndSort [22]
+[35]     0.0    0.00    0.00       6         newEdgeList [35]
+                0.00    0.00      18/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00       5/5           newBFSInfo [30]
+[36]     0.0    0.00    0.00       5         initVector [36]
+                0.00    0.00       5/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00       5/5           girvanNewman [1]
+[37]     0.0    0.00    0.00       5         sampleNodes [37]
+                0.00    0.00       5/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00       1/1           rowCompressEdges [17]
+[38]     0.0    0.00    0.00       1         copyEdgeList [38]
+                0.00    0.00       3/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00       1/1           readSparseUGraph [14]
+[39]     0.0    0.00    0.00       1         newIdmapStorage [39]
+                0.00    0.00       1/711021935     tcalloc [8]
+-----------------------------------------------
+                0.00    0.00 1049866/1049866     addEdgeIdToMap [24]
+[40]     0.0    0.00    0.00 1049866         addIdmapEntry [40]
+-----------------------------------------------
+                0.00    0.00       4/207         calculateEdgeBetweenness [2]
+                0.00    0.00     203/207         vectorAppend [4]
+[41]     0.0    0.00    0.00     207         trealloc [41]
+-----------------------------------------------
+                0.00    0.00      11/11          sortEdges [12]
+[42]     0.0    0.00    0.00      11         findLargest [42]
+-----------------------------------------------
+                0.00    0.00       5/5           labelCommunities [9]
+[43]     0.0    0.00    0.00       5         uf_create [43]
+-----------------------------------------------
+                0.00    0.00       1/2           rowCompressEdges [17]
+                0.00    0.00       1/2           readSparseUGraph [14]
+[44]     0.0    0.00    0.00       2         freeEdgeList [44]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [24] addEdgeIdToMap         [44] freeEdgeList           [13] queueIsEmpty
+  [40] addIdmapEntry          [31] freeIdmapStorage       [16] radixSort
+  [33] addNodeIdToMap         [18] freeQueue              [15] removeDuplicates
+   [3] bfs                    [20] freeVector             [17] rowCompressEdges
+  [22] calculateDegreeAndSort [36] initVector             [37] sampleNodes
+   [2] calculateEdgeBetweenness [9] labelCommunities      [12] sortEdges
+  [38] copyEdgeList           [26] lookupNodeId            [8] tcalloc
+   [7] dequeue                [25] mapNodeIds             [41] trealloc
+  [23] doubleQueueSize        [30] newBFSInfo             [43] uf_create
+   [6] enqueue                [35] newEdgeList            [28] uf_root
+  [19] error                  [39] newIdmapStorage        [27] uf_union
+   [5] findEdgeId             [34] newQueue                [4] vectorAppend
+  [42] findLargest            [29] newVector              [10] vectorPop
+  [21] freeBFSInfo            [11] printVector
